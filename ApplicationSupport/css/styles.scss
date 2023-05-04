@@ -3,18 +3,99 @@
 //--COLORS
 $color--dark-primary: #13121c;
 $color--light-primary: #282638;
+$color--xlight: #413f53;
+$color--highlight: #502ae4;
+
+//BORDERS
+$border--radius-small: 10px;
+$border--radius-large: 30px;
+
+//PADDING
+$padding--small: 20px;
+$padding--main: 30px;
+
+//FONT
+$font--bold: 700;
+$font--light: 300;
+$font--large: 1.25rem;
+$font--bodycopy: 1rem;
+$font--small: .75rem;
+
+//TRANSITION
+$timing--slow: 1s;
+$timing--normal: .5s;
+$timing--fast: .25s;
+
+
+//RESETS
+h1 {
+  margin: 0;
+  font-size: $font--large;
+}
 
 
 //GLOBAL
 body {
   background: $color--dark-primary;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Asap', sans-serif;
+  flex-flow: row wrap;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+#app-data {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  color: $color--xlight;
+  font-weight: $font--light;
+  font-size: $font--small;
+  letter-spacing: .1rem;
 }
 
 
 //MAIN PAGE
 #primary-container {
-  background: red;
-  width: 50%;
-  height: 200px;
+  background: $color--light-primary;
+  min-width: 800px;
+  // height: 200px;
+  border-radius: $border--radius-small;
+  color: white;
+  display: flex;
+
+  & div {
+    display: flex;
+  }
+}
+
+#template-select {
+  width: 25%;
+  border-right: 1px solid $color--xlight;
+  padding: $padding--small;
+  flex-flow: row wrap;
+  justify-content: center;
+
+  & h1 {
+    margin-bottom: 24px;
+  }
+}
+
+.btn {
+  background: $color--xlight;
+  padding: 10px 30px;
+  border-radius: $border--radius-large;
+  margin-bottom: 12px;
+  font-weight: 700;
+  transition: all $timing--fast;
+  cursor: pointer;
+
+  &:hover {
+    background: $color--highlight;
+  }
 }
