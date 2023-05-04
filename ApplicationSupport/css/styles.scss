@@ -8,7 +8,13 @@ $color--light-primary: #282638;
 //GLOBAL
 body {
   background: $color--dark-primary;
+  display: flex;
 }
 
 
 //MAIN PAGE
+#primary-container {
+  background: red;
+  width: 50%;
+  height: 200px;
+}

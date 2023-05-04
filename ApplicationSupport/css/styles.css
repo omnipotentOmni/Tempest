@@ -1,3 +1,10 @@
 body {
   background: #13121c;
+  display: flex;
+}
+
+#primary-container {
+  background: red;
+  width: 50%;
+  height: 200px;
 }/*# sourceMappingURL=styles.css.map */
