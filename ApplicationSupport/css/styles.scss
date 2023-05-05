@@ -13,6 +13,7 @@ $border--radius-large: 30px;
 $border--standard-xlight: 2px solid $color--xlight;
 
 //PADDING
+$padding--xxsmall: 5px;
 $padding--xsmall: 10px;
 $padding--small: 20px;
 $padding--main: 30px;
@@ -24,6 +25,7 @@ $font--xlarge: 2rem;
 $font--large: 1.25rem;
 $font--bodycopy: 1rem;
 $font--small: .75rem;
+$font--xsmall: .5rem;
 
 //TRANSITION
 $timing--slow: 1s;
@@ -231,6 +233,7 @@ body {
 #brand-selection {
   width: 80%;
   height: 30px;
+  position: relative;
 }
 
 #brand-selection-content {
@@ -244,12 +247,20 @@ body {
   box-sizing: border-box;
   background: $color--light-primary;
   padding: $padding--xsmall;
-  text-transform: uppercase;
   font-size: $font--small;
-  font-weight: $font--bold;
   letter-spacing: .2rem;
   border-radius: $border--radius-small;
   position: relative;
+  z-index: 1000;
+
+  &.open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &.open #brand-dd-menu {
+    height: auto;
+  }
 }
 
 .overflow-text {
@@ -263,6 +274,8 @@ body {
   overflow: hidden;
   white-space: nowrap;
   position: relative;
+  text-transform: uppercase;
+  font-weight: $font--bold;
 }
 
 
@@ -302,6 +315,40 @@ body {
     opacity: 1;
   }
 }
+
+#brand-dd-menu {
+  background: $color--dark-primary;
+  width: 225px;
+  position: absolute;
+  right: 0px;
+  z-index: 0;
+  top: 33.5px;
+  height: 0;
+  overflow: hidden;
+}
+
+.dd-item {
+  width: 100%;
+  padding: $padding--xxsmall;
+  background: $color--xlight;
+  opacity: .5;
+  font-size: $font--small;
+  text-transform: inherit;
+  font-weight: $font--bodycopy;
+  cursor: pointer;
+  transition: $timing--fast;
+
+  &:nth-child(odd) {
+    background: $color--light-primary;
+  }
+
+  &:hover {
+    opacity: .8;
+    padding-left: $padding--xsmall;
+    border-left: 5px solid white;
+  }
+}
+
 
 
 
