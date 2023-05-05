@@ -17,32 +17,33 @@
         <div id="template-select">
           <h1>Select your Template</h1>
           <div class="container">
-            <div class="btn active">
+            <div class="btn templateBtn" onclick="templateType(this)" data-type="doximity">
               <img src="../images/app-images/logo--doximity_ko.png">
             </div>
             <div class="break"></div>
-            <div class="btn">
+            <div class="btn templateBtn" onclick="templateType(this)" data-type="epocrates">
               <img src="../images/app-images/logo--ecpocrates_ko.png">
             </div>
+            <div id="submit-btn" class="btn active">Build Template</div>
           </div>
         </div>
         <div id="template-data">
           <div id="template-data-header">
-            <div id="header-brand" class="header-item active">
-              <div id="icon-brand-select" class="header-bar complete">
+            <div id="header-brand" class="header-item active" onclick="swapWindow(this)">
+              <div id="icon-brand-select" class="header-bar">
               </div>
               <div id="header-brand-select" class="header-text">
                 Select your Brand
               </div>
             </div>
-            <div id="header-code" class="header-item active">
+            <div id="header-code" class="header-item" onclick="swapWindow(this)">
               <div id="icon-code-select" class="header-bar">
               </div>
               <div id="header-brand-select" class="header-text">
                 Upload your Data Files
               </div>
             </div>
-            <div id="header-images" class="header-item">
+            <div id="header-images" class="header-item" onclick="swapWindow(this)">
               <div id="icon-images-select" class="header-bar">
               </div>
               <div id="header-brand-select" class="header-text">
@@ -52,35 +53,21 @@
           </div>
           <div class="break"></div>
           <div id="template-main-content"> <!-- THIS IS WHERE THE CONTENT OF THE TEMPLATE UPLOADES GO -->
-            <div class="selection-header">Brand Selection</div>
-            <div id="brand-selection">
-              <div id="brand-selection-content">
-                <div id="brand-selection-label">
-                  Select your Brand from the List:
-                </div>
-                <div id="brand-selection-display" class="">
-                  <div id="brand-selection-name"> <!-- NEED JS SUPPORT FOR OVERFLOW TEXT-->
-                    ISENTRESS-ISENTRESS HD-mobile-Persistent-Disclaimer
-                  </div>
-                  <div class="overflow-text">...</div>
-                  <div id="brand-dd" class="dd-carrot">
-                    <img src="../images/app-images/icon-carrot.svg">
-                  </div>
-                  <div id="brand-dd-menu">
-                    <div class="dd-item">Item 1</div>
-                    <div class="dd-item">Item 2</div>
-                    <div class="dd-item">Item 3</div>
-                    <div class="dd-item">Item 4</div>
-                  </div>
-                </div>
+            <div class="selection-header">Uploading Data Files</div>
+            <div id="drag-upload-section">
+              <div id="alert-upload" class="upload-section">
+                <strong>Alert HTML</strong>
+                <div class="drag-box">Drag/Drop to upload Alert HTML</div>
+                <em>or</em>
+                <div class="break"></div>
+                <div class="btn">Upload Alert HTML</div>
               </div>
-              <div class="break"></div>
-              <div class="break"></div>
-              <div id="brand-selection-default">
-                <div id="default-selection-label">Use Selected Brand as Default?</div>
-                <div id="selection-button-base">
-                  <div id="selection-slider"></div>
-                </div>
+              <div id="coversheet-upload" class="upload-section">
+                <strong>Coversheet(CS) HTML</strong>
+                <div class="drag-box">Drag/Drop to upload Coversheet HTML</div>
+                <em>or</em>
+                <div class="break"></div>
+                <div class="btn">Upload CS HTML</div>
               </div>
             </div>
           </div>

@@ -6,15 +6,28 @@ function $log(arg) {
 }
 
 //----------------------------------------------------------DOCUMENT.GET - $get(parent,#/.) - document.get...
-function $get(arg,source) {
-  if (!source) {
-    source = document;
+function $get(el, parent) {
+
+  if (!parent) {
+    parent = document;
   }
-  let type = arg[0];
-  let name = arg.slice(1);
-  if (type === '.') {
-    return source.getElementsByClassName(name);
-  }else if (type === '#') {
-    return source.getElementById(name);
+
+  let value;
+  let type = el.substring(1, el);
+  let elName = el.substring(1);
+
+  if (type === '#') {
+    value = parent.getElementById(elName);
+  } else if (type === '.') {
+    value = parent.getElementsByClassName(elName);
+  } else {
+    value = parent.getElementsByTagName(el);
   }
+  return value;
+}
+
+//----------------------------------------------------------ADD - $add(CLASSNAME) - classList.add...
+function $class(source,className,action) {
+  console.log(source,className,action);
+  return source.classList[action](className);
 }

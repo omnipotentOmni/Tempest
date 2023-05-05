@@ -28,6 +28,7 @@ $font--small: .75rem;
 $font--xsmall: .5rem;
 
 //TRANSITION
+$timing--instant: 0s;
 $timing--slow: 1s;
 $timing--normal: .5s;
 $timing--fast: .25s;
@@ -37,6 +38,10 @@ $timing--fast: .25s;
 h1 {
   margin: 0;
   font-size: $font--large;
+}
+
+p {
+  margin: 0;
 }
 
 
@@ -75,15 +80,20 @@ body {
 .dd-carrot {
   position: absolute;
   width: 20px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 20%;
+  // transform: translateY(-50%);
   right: 5px;
   opacity: .5;
-  transition: $timing--fast;
+  transition: all $timing--fast;
+  transform: rotate(0deg);
   cursor: pointer;
 
   &:hover {
     opacity: 1;
+  }
+
+  &.active {
+    transform: rotate(90deg);
   }
 }
 
@@ -110,6 +120,7 @@ body {
   flex-flow: row wrap;
   justify-content: center;
   align-content: flex-start;
+  position: relative;
 
   & h1 {
     margin-bottom: 24px;
@@ -130,11 +141,26 @@ body {
   & .active {
     background: $color--highlight;
     opacity: 1;
-    pointer-events: none;
   }
 
   & .container {
     justify-content: center;
+  }
+
+  & #submit-btn {
+    position: absolute;
+    bottom: 25px;
+    opacity: .5;
+    pointer-events: none;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &.active {
+      pointer-events: all;
+      background: $color--highlight;
+    }
   }
 
 }
@@ -182,6 +208,7 @@ body {
   &.active {
     font-weight: 700;
     opacity: 1;
+    pointer-events: none;
 
     & .header-bar {
       height: 10px;
@@ -244,7 +271,7 @@ body {
 #brand-selection-display {
   margin-left: $padding--xsmall;
   width: 225px;
-  box-sizing: border-box;
+  // box-sizing: border-box;
   background: $color--light-primary;
   padding: $padding--xsmall;
   font-size: $font--small;
@@ -252,14 +279,16 @@ body {
   border-radius: $border--radius-small;
   position: relative;
   z-index: 1000;
+  transition: $timing--slow;
 
   &.open {
+    transition: $timing--instant;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
 
   &.open #brand-dd-menu {
-    height: auto;
+    max-height: 100px;
   }
 }
 
@@ -269,10 +298,10 @@ body {
 }
 
 #brand-selection-name {
-  width: 160px;
-  text-overflow: ellipsis;
+  width: 210px;
+  white-space: nowrap; 
   overflow: hidden;
-  white-space: nowrap;
+  text-overflow: ellipsis;
   position: relative;
   text-transform: uppercase;
   font-weight: $font--bold;
@@ -306,7 +335,6 @@ body {
   height: 15px;
   width: 15px;
   border-radius: 100%;
-  background: $color--xlight;
   cursor: pointer;
   opacity: .5;
   transition: $timing--fast;
@@ -314,17 +342,34 @@ body {
   &:hover {
     opacity: 1;
   }
+
+  &.non-active {
+    left: 3px;
+    background: $color--xlight;
+  }
+
+  &.active {
+    left: 27px;
+    background: $color--green;
+    opacity: 1;
+  }
 }
 
 #brand-dd-menu {
   background: $color--dark-primary;
-  width: 225px;
+  width: 245px;
   position: absolute;
   right: 0px;
   z-index: 0;
   top: 33.5px;
-  height: 0;
+  max-height: 0;
   overflow: hidden;
+  transition: $timing--fast;
+
+  &.active {
+    height: 100px;
+    overflow: scroll;
+  }
 }
 
 .dd-item {
@@ -334,6 +379,7 @@ body {
   opacity: .5;
   font-size: $font--small;
   text-transform: inherit;
+  letter-spacing: 0;
   font-weight: $font--bodycopy;
   cursor: pointer;
   transition: $timing--fast;
@@ -349,6 +395,50 @@ body {
   }
 }
 
+//UPLOAD SECTION
+#drag-upload-section {
+  width: 90%;
+}
+
+.upload-section {
+  height: 300px;
+  width: 45%;
+  margin: $padding--xsmall;
+  padding: $padding--xsmall;
+  background: $color--light-primary;
+  box-sizing: border-box;
+  justify-content: center;
+  border-radius: $border--radius-small;
+
+  & .btn {
+    margin-top: 12px;
+    color: white;
+    align-self: flex-end;
+    opacity: .5;
+
+    &:hover {
+      opacity: 1;
+      background: $color--highlight;
+    }
+  }
+}
+
+.drag-box {
+  display: flex;
+  width: 100%;
+  height: 150px;
+  border: 3px dashed $color--xlight;
+  border-radius: $border--radius-small;
+  opacity: .8;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  font-size: $font--large;
+  font-weight: $font--light;
+  font-style: italic;
+  color: $color--xlight;
+  margin: 12px 0;
+}
 
 
 
