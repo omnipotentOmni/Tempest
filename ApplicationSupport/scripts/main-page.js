@@ -51,19 +51,27 @@ function swapWindow(selection) {
 
   //LOAD IN THE CONTENT
   let windowTitle = selection.dataset.title;
-  console.log(selection.dataset.title);
   var xhr = new XMLHttpRequest();
 
   xhr.open('GET',`./templates/_${windowTitle}.htm` );
   xhr.responseType = 'document';
 
-  console.log(xhr);
   xhr.onload = function() {
     if (xhr.status === 200) {
+
       var htmlContent = xhr.response.documentElement.outerHTML;
       let stage = $get('#template-main-content');
       
       stage.innerHTML = htmlContent;
+
+      //LOAD WINDOW SPECIFIC SCRIPTS
+      let functionName = selection.dataset.function;
+      if (typeof window[functionName] === 'function') {
+        window[functionName]();
+      }
+
+    }else {
+      alert(`error, ${windowTitle}, did not load. Please contact Support.`);
     }
   };
 
@@ -71,6 +79,85 @@ function swapWindow(selection) {
 
 }
 
+//DRAG FILE UPLOAD
+function htmlSelection() {
+  let dragBox = $get('.drag-box');
+
+  //OVERRIDING DEFAULT DRAG BEHAVIOR
+  for (let item of dragBox) {
+    ['drageneter','dragover','dragleave','drop'].forEach(eventName =>  {
+      item.addEventListener(eventName, preventDefaults, false);
+      document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      item.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      item.addEventListener(eventName, unhighlight, false);
+    });
+
+    item.addEventListener('drop', handleDrop, false);
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    function highlight() {
+      $class(item,'active','add');
+    };
+
+    function unhighlight() {
+      $class(item,'active','remove');
+    };
+
+    function handleDrop(e) {
+      e.preventDefault();
+
+      const dt = e.dataTransfer.files;
+      const file = dt[0];
+
+      let filePath = file.webkitRelativePath;
+
+      let fileInput = $get('#drag-file-input');
+
+      console.log(fileInput,fileInput.value);
+
+      fileInput.files = e.dataTransfer.files;
+
+      fileInput.addEventListener('change', handleUpload, false);
+
+      function handleUpload(event) {
+        console.log(event);
+      }
+
+
+      // fileInput.files.onchange = function() {
+      //   console.log('hello');
+      //   console.log(fileInput.value);
+      // }
+
+      // const dt = e.dataTransfer;
+      // const files = dt.files;
+
+      // let filePath = files[0].path;
+      // console.log(filePath);
+
+      // handleFiles(files);
+    };
+
+    function handleFiles(files) {
+      item.dataset.fileload = true;
+      $class(item,'active','add');
+      console.log(files);
+    }
+
+
+  }
+
+}
 
 //BRAND DROPDOWN
 function brandDropDown(close) {
