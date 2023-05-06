@@ -33,14 +33,14 @@ function templateType(el) {
   if (!toggle) {
     $class(el,'active','add');
   }else {
-    console.log('toggle');
     $class(el,'active','remove');
   }
 }
 
 //WINDOW CHOICES
 function swapWindow(selection) {
-  console.log(selection);
+
+  //SET THE HEADERS
   let windows = $get('.header-item');
 
   for (let window of windows) {
@@ -48,7 +48,29 @@ function swapWindow(selection) {
   }
 
   $class(selection,'active','add');
+
+  //LOAD IN THE CONTENT
+  let windowTitle = selection.dataset.title;
+  console.log(selection.dataset.title);
+  var xhr = new XMLHttpRequest();
+
+  xhr.open('GET',`./templates/_${windowTitle}.htm` );
+  xhr.responseType = 'document';
+
+  console.log(xhr);
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      var htmlContent = xhr.response.documentElement.outerHTML;
+      let stage = $get('#template-main-content');
+      
+      stage.innerHTML = htmlContent;
+    }
+  };
+
+  xhr.send();
+
 }
+
 
 //BRAND DROPDOWN
 function brandDropDown(close) {
@@ -62,7 +84,6 @@ function brandDropDown(close) {
 
 function setBrand(brand) {
   let name = $get('#brand-selection-name');
-  console.log(name.clientWidth);
   name.textContent = brand.textContent;
 }
 

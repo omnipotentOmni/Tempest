@@ -28,6 +28,5 @@ function $get(el, parent) {
 
 //----------------------------------------------------------ADD - $add(CLASSNAME) - classList.add...
 function $class(source,className,action) {
-  console.log(source,className,action);
   return source.classList[action](className);
 }
