@@ -5,11 +5,14 @@
 // – Page Switch
 // – Brand Selection Brand Drop-Down List
 // – Default Selection
+// – Brand Selection Window
+// – HTML Selection Window
+// – DragDrop & Click to Upload **NEEDS WORK IN ELECTRON ENV**
 
 //ON DECK
+// – Image Selection Window
 // – Build the Brand List
 // – Save User Settings
-// – Save Pages as 'Templates'
 
 //BUGS
 // – NEED TO FIX FILE UPLOAD (IN ELECTRON)
@@ -120,19 +123,16 @@ function htmlSelection() {
       const dt = e.dataTransfer.files;
       const file = dt[0];
 
-      let filePath = file.webkitRelativePath;
+      // let filePath = file.webkitRelativePath;
 
-      let fileInput = $get('#drag-file-input');
+      // let fileInput = $get('#drag-file-input');
 
-      fileInput.files = e.dataTransfer.files;
+      // fileInput.files = e.dataTransfer.files;
 
-      fileInput.addEventListener('change', handleUpload, false);
+      // fileInput.addEventListener('change', handleUpload, false);
 
       //ADD THE FILE UPLOAD DISPLAY
-      let fileUploadDisplay = $get('.file-upload-container',item.parentElement)[0];  
-      fileUploadDisplay.style.display = 'flex';
-      let fileNameDisplay = $get('.file-upload-name',fileUploadDisplay)[0];
-      fileNameDisplay.textContent = file.name;
+      uploadFile(item.parentElement,file);
       
 
       function handleUpload(event) {
@@ -160,7 +160,28 @@ function htmlSelection() {
       console.log(files);
     }
   }
+}
 
+//INPUT CLICK
+function fileUploadInput(e) {
+  let type = e.dataset.type;
+  input = $get(`#${type}-upload-input`);
+  input.click();
+
+  input.addEventListener('change',handleUpload,false);
+
+  function handleUpload(evt) {
+    let file = evt.target.files[0];
+    uploadFile(e.parentElement,file);
+  }
+}
+
+//UPLOAD FILE
+function uploadFile(parent,file) {
+  let fileUploadDisplay = $get('.file-upload-container',parent)[0];  
+  fileUploadDisplay.style.display = 'flex';
+  let fileNameDisplay = $get('.file-upload-name',fileUploadDisplay)[0];
+  fileNameDisplay.textContent = file.name;
 }
 
 //UNLOAD FILE

@@ -7,8 +7,8 @@
     </div>
     <em>or</em>
     <div class="break"></div>
-    <input type="file" id="drag-file-input" class="hidden">
-    <div class="btn">Upload Alert HTML</div>
+    <input type="file" id="alert-upload-input" class="hidden">
+    <div class="btn" data-type="alert" onclick="fileUploadInput(this)">Upload Alert HTML</div>
     <div class="file-upload-container" style="display: none;">
       <p class="file-upload-name"></p>
       <div class="file-delete-icon-wrapper">
@@ -23,7 +23,8 @@
     </div>
     <em>or</em>
     <div class="break"></div>
-    <div class="btn">Upload CS HTML</div>
+    <input type="file" id="coversheet-upload-input" class="hidden">
+    <div class="btn" data-type="coversheet" onclick="fileUploadInput(this)">Upload CS HTML</div>
     <div class="file-upload-container" style="display: none;">
       <p class="file-upload-name"></p>
       <div class="file-delete-icon-wrapper">
