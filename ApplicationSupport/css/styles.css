@@ -183,9 +183,12 @@ body {
   border-radius: 10px;
   padding: 20px;
   box-sizing: border-box;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   position: relative;
+}
+#template-main-content:has(> #brand-selection) {
+  align-items: center;
 }
 
 .selection-header {
@@ -331,10 +334,11 @@ body {
 
 #drag-upload-section {
   width: 90%;
+  margin-top: 85px;
+  align-self: flex-start;
 }
 
 .upload-section {
-  height: 300px;
   width: 45%;
   margin: 10px;
   padding: 10px;
@@ -342,8 +346,10 @@ body {
   box-sizing: border-box;
   justify-content: center;
   border-radius: 10px;
+  align-self: flex-start;
 }
 .upload-section .btn {
+  margin-top: 6px;
   color: white;
   align-self: flex-start;
   opacity: 0.5;
@@ -356,8 +362,8 @@ body {
 .drag-box {
   display: flex;
   width: 100%;
-  height: 100px;
-  border: 3px dashed #413f53;
+  height: 75px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   opacity: 0.5;
   align-content: center;
@@ -371,6 +377,7 @@ body {
   margin-top: 12px;
   margin-bottom: 6px;
   transition: 0.25s;
+  position: relative;
 }
 .drag-box::before {
   padding: 0 30px;
@@ -379,10 +386,61 @@ body {
   content: attr(data-text);
 }
 .drag-box.active {
-  border-color: #502ae4;
+  border-color: white;
+}
+.drag-box.active .drag-box-inner {
+  opacity: 1;
 }
 .drag-box.active::before {
+  content: "Drop to Upload";
+}
+
+.drag-box-inner {
+  position: absolute;
+  width: 90%;
+  height: 70%;
+  border-radius: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 3px dashed #502ae4;
   opacity: 0;
+  transition: 0.25s;
+}
+
+.file-upload-container {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  align-items: center;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  margin-top: 12px;
+  margin-bottom: 3px;
+  font-size: 0.7rem;
+  flex-flow: row nowrap;
+  position: relative;
+}
+.file-upload-container .file-delete-icon-wrapper {
+  position: absolute;
+  right: 5px;
+  border-radius: 30px;
+  opacity: 0.25;
+  transition: 0.25s;
+  cursor: pointer;
+}
+.file-upload-container .file-delete-icon-wrapper:hover {
+  opacity: 1;
+  background: #e42a49;
+}
+.file-upload-container img {
+  width: 20px;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(286deg) brightness(103%) contrast(103%);
+}
+
+.file-upload-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 20px;
 }
 
 #app-data {

@@ -6,8 +6,11 @@ $color--light-primary: #282638;
 $color--xlight: #413f53;
 $color--highlight: #502ae4;
 $color--green: #2ae497;
+$color--warning: #e42a49;
+$color--white50: rgba(255,255,255,.5);
 
 //BORDERS
+$border--radius-xsmall: 5px;
 $border--radius-small: 10px;
 $border--radius-large: 30px;
 $border--standard-xlight: 2px solid $color--xlight;
@@ -25,7 +28,7 @@ $font--xlarge: 2rem;
 $font--large: 1.25rem;
 $font--medium: 1rem;
 $font--small: .75rem;
-$font--xsmall: .5rem;
+$font--xsmall: .7rem;
 
 //TRANSITION
 $timing--instant: 0s;
@@ -63,7 +66,6 @@ body {
   display: flex;
   flex-flow: row wrap;
   align-self: flex-start;
-
 }
 
 .btn {
@@ -247,9 +249,13 @@ body {
   border-radius: $border--radius-small;
   padding: $padding--small;
   box-sizing: border-box;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   position: relative;
+
+  &:has(> #brand-selection) {
+    align-items: center;
+  }
 }
 
 .selection-header {
@@ -415,10 +421,12 @@ body {
 //UPLOAD SECTION
 #drag-upload-section {
   width: 90%;
+  margin-top: 85px;
+  align-self: flex-start;
 }
 
 .upload-section {
-  height: 300px;
+  // height: 300px;
   width: 45%;
   margin: $padding--xsmall;
   padding: $padding--xsmall;
@@ -426,9 +434,10 @@ body {
   box-sizing: border-box;
   justify-content: center;
   border-radius: $border--radius-small;
+  align-self: flex-start;
 
   & .btn {
-    // margin-top: 6px;
+    margin-top: 6px;
     color: white;
     align-self: flex-start;
     opacity: .5;
@@ -443,8 +452,8 @@ body {
 .drag-box {
   display: flex;
   width: 100%;
-  height: 100px;
-  border: 3px dashed $color--xlight;
+  height: 75px;
+  border: 1px solid $color--white50;
   border-radius: $border--radius-small;
   opacity: .5;
   align-content: center;
@@ -458,6 +467,7 @@ body {
   margin-top: 12px;
   margin-bottom: 6px;
   transition: $timing--fast;
+  position: relative;
 
   &::before {
     padding: 0 $padding--main;
@@ -467,16 +477,72 @@ body {
   }
 
   &.active {
-    border-color: $color--highlight;
+    border-color: white;
+
+    & .drag-box-inner {
+      opacity: 1;
+    }
     
     &::before {
-      opacity: 0;
+      content: "Drop to Upload"
     }
   }
 
-  
 }
 
+.drag-box-inner {
+  position: absolute;
+  width: 90%;
+  height: 70%;
+  border-radius: $border--radius-xsmall;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 3px dashed $color--highlight;
+  opacity: 0;
+  transition: $timing--fast;
+}
+
+.file-upload-container {
+  width: 100%;
+  border: 1px solid $color--white50;
+  align-items: center;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  margin-top: 12px;
+  margin-bottom: 3px;
+  font-size: $font--xsmall;
+  flex-flow: row nowrap;
+  position: relative;
+
+  & .file-delete-icon-wrapper {
+    position: absolute;
+    right: 5px;
+    border-radius: $border--radius-large;
+    opacity: .25;
+    transition: $timing--fast;
+    cursor: pointer;
+    
+
+    &:hover {
+      opacity: 1;
+      background: $color--warning;
+    }
+  }
+
+  & img {
+    width: 20px;
+    
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(286deg) brightness(103%) contrast(103%);
+  }
+
+}
+
+.file-upload-name {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 20px;
+}
 
 
 

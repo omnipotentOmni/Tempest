@@ -12,6 +12,7 @@
 // – Save Pages as 'Templates'
 
 //BUGS
+// – NEED TO FIX FILE UPLOAD (IN ELECTRON)
 
 
 
@@ -113,7 +114,7 @@ function htmlSelection() {
       $class(item,'active','remove');
     };
 
-    function handleDrop(e) {
+    function handleDrop(e) { 
       e.preventDefault();
 
       const dt = e.dataTransfer.files;
@@ -123,11 +124,16 @@ function htmlSelection() {
 
       let fileInput = $get('#drag-file-input');
 
-      console.log(fileInput,fileInput.value);
-
       fileInput.files = e.dataTransfer.files;
 
       fileInput.addEventListener('change', handleUpload, false);
+
+      //ADD THE FILE UPLOAD DISPLAY
+      let fileUploadDisplay = $get('.file-upload-container',item.parentElement)[0];  
+      fileUploadDisplay.style.display = 'flex';
+      let fileNameDisplay = $get('.file-upload-name',fileUploadDisplay)[0];
+      fileNameDisplay.textContent = file.name;
+      
 
       function handleUpload(event) {
         console.log(event);
@@ -153,10 +159,15 @@ function htmlSelection() {
       $class(item,'active','add');
       console.log(files);
     }
-
-
   }
 
+}
+
+//UNLOAD FILE
+function unloadFile(el) {
+  let container = el.parentElement.parentElement;
+
+  container.style.display = 'none';
 }
 
 //BRAND DROPDOWN

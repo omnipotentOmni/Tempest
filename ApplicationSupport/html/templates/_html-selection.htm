@@ -2,17 +2,33 @@
 <div id="drag-upload-section">
   <div id="alert-upload" class="upload-section">
     <strong>Alert HTML</strong>
-    <div id="alert-drag-box" class="drag-box" data-text="Drag/Drop to upload Alert HTML" data-fileload="false"></div>
+    <div id="alert-drag-box" class="drag-box" data-text="Drag Alert HTML" data-fileload="false">
+      <div class="drag-box-inner"></div>
+    </div>
     <em>or</em>
     <div class="break"></div>
     <input type="file" id="drag-file-input" class="hidden">
     <div class="btn">Upload Alert HTML</div>
+    <div class="file-upload-container" style="display: none;">
+      <p class="file-upload-name"></p>
+      <div class="file-delete-icon-wrapper">
+        <img class="file-delete" src="/ApplicationSupport/images/app-images/icon--x-close.png" onclick="unloadFile(this)">
+      </div>
+    </div>
   </div>
   <div id="coversheet-upload" class="upload-section">
     <strong>Coversheet(CS) HTML</strong>
-    <div id="coversheet-drag-box" data-text="Drag/Drop to upload Coversheet HTML" class="drag-box"></div>
+    <div id="coversheet-drag-box" data-text="Drag Coversheet HTML" class="drag-box">
+      <div class="drag-box-inner"></div>
+    </div>
     <em>or</em>
     <div class="break"></div>
     <div class="btn">Upload CS HTML</div>
+    <div class="file-upload-container" style="display: none;">
+      <p class="file-upload-name"></p>
+      <div class="file-delete-icon-wrapper">
+        <img class="file-delete" src="/ApplicationSupport/images/app-images/icon--x-close.png" onclick="unloadFile(this)">
+      </div>
+    </div>
   </div>
 </div>
