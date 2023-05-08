@@ -6,7 +6,7 @@
     </div>
     <div id="brand-selection-display" class="">
       <p id="brand-selection-name">ISENTRESS-ISENTRESS HD-mobile-Persistent-Disclaimer</p>
-      <div id="brand-dd" class="dd-carrot" onclick="brandDropDown()">
+      <div id="brand-dd" class="dd-carrot" onclick="brandDropDown(this)">
         <img src="../images/app-images/icon-carrot.svg">
       </div>
       <div id="brand-dd-menu">
@@ -21,8 +21,8 @@
   <div class="break"></div>
   <div id="brand-selection-default">
     <div id="default-selection-label">Use Selected Brand as Default?</div>
-    <div id="selection-button-base">
-      <div id="selection-slider" class="non-active" onclick="defaultSelection()"></div>
+    <div id="selection-button-base" onclick="defaultSelection()">
+      <div id="selection-slider" class="non-active"></div>
     </div>
   </div>
 </div>

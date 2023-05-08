@@ -160,24 +160,24 @@ function htmlSelection() {
 }
 
 //BRAND DROPDOWN
-function brandDropDown(close) {
-  if (!close) {
-    let carrot = event.target.parentElement;
-    let ddMenu = $get('#brand-selection-display');
-    $class(carrot,'active','toggle');
-    $class(ddMenu,'open','toggle');
-  }
+function brandDropDown(icon) {
+  let carrot = icon;
+  let ddMenu = $get('#brand-selection-display');
+  $class(carrot,'active','toggle');
+  $class(ddMenu,'open','toggle');
 }
 
 function setBrand(brand) {
   let name = $get('#brand-selection-name');
   name.textContent = brand.textContent;
+
+  brandDropDown($get('#brand-dd'));
 }
 
 
 //DEFAULT SELECTOR
 function defaultSelection() {
-  let slider = event.target;
+  let slider = $get('#selection-slider');
 
   if ($class(slider,'non-active','contains')) {
     $class(slider,'non-active','remove');

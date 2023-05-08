@@ -58,6 +58,10 @@ body {
   transform: rotate(90deg);
 }
 
+.hidden {
+  display: none;
+}
+
 #primary-container {
   background: #282638;
   width: 1000px;
@@ -249,30 +253,36 @@ body {
 
 #selection-button-base {
   margin-left: 10px;
-  width: 45px;
-  height: 20px;
+  width: 55px;
+  height: 30px;
   background: #282638;
   border-radius: 30px;
   position: relative;
   box-sizing: border-box;
   padding: 2.5px;
   align-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  transition: 0.25s;
+  cursor: pointer;
+}
+#selection-button-base:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+#selection-button-base:hover #selection-slider {
+  opacity: 1;
 }
 
 #selection-slider {
   position: absolute;
-  height: 15px;
-  width: 15px;
+  height: 20px;
+  width: 20px;
   border-radius: 100%;
   cursor: pointer;
   opacity: 0.5;
   transition: 0.25s;
 }
-#selection-slider:hover {
-  opacity: 1;
-}
 #selection-slider.non-active {
-  left: 3px;
+  left: 4px;
   background: #413f53;
 }
 #selection-slider.active {
@@ -316,6 +326,7 @@ body {
   opacity: 0.8;
   padding-left: 10px;
   border-left: 5px solid white;
+  background: #502ae4;
 }
 
 #drag-upload-section {

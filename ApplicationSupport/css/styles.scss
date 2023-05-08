@@ -102,7 +102,7 @@ body {
 }
 
 .hidden {
-  // display: none;
+  display: none;
 }
 
 //MAIN PAGE
@@ -328,31 +328,39 @@ body {
 
 #selection-button-base {
   margin-left: 10px;
-  width: 45px;
-  height: 20px;
+  width: 55px;
+  height: 30px;
   background: $color--light-primary;
   border-radius: $border--radius-large;
   position: relative;
   box-sizing: border-box;
   padding: 2.5px;
   align-items: center;
+  border: 2px solid rgba(255,255,255,.25);
+  transition: $timing--fast;
+  cursor: pointer;
+
+  &:hover {
+    border-color: rgba(255,255,255,.5);
+
+    & #selection-slider {
+      opacity: 1;
+    }
+  }
+
 }
 
 #selection-slider {
   position: absolute;
-  height: 15px;
-  width: 15px;
+  height: 20px;
+  width: 20px;
   border-radius: 100%;
   cursor: pointer;
   opacity: .5;
   transition: $timing--fast;
 
-  &:hover {
-    opacity: 1;
-  }
-
   &.non-active {
-    left: 3px;
+    left: 4px;
     background: $color--xlight;
   }
 
@@ -400,6 +408,7 @@ body {
     opacity: .8;
     padding-left: $padding--xsmall;
     border-left: 5px solid white;
+    background: $color--highlight;
   }
 }
 
