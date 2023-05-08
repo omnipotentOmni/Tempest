@@ -1,3 +1,8 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 h1 {
   margin: 0;
   font-size: 1.25rem;
@@ -18,6 +23,27 @@ body {
   align-items: center;
   font-family: "Asap", sans-serif;
   flex-flow: row wrap;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+#window-mask {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #13121c;
+  position: absolute;
+  z-index: 900;
+  opacity: 0;
+}
+#window-mask.hide-mask {
+  display: none;
+}
+#window-mask.show-mask {
+  display: block;
+  opacity: 0.8;
 }
 
 .container {
@@ -34,6 +60,10 @@ body {
   font-weight: 700;
   transition: all 0.25s;
   cursor: pointer;
+}
+.btn.small {
+  font-size: 0.75rem;
+  padding: 5px 15px;
 }
 
 .break {
@@ -218,7 +248,7 @@ body {
   letter-spacing: 0.2rem;
   border-radius: 10px;
   position: relative;
-  z-index: 1000;
+  z-index: 800;
   transition: 1s;
 }
 #brand-selection-display.open {
@@ -245,7 +275,7 @@ body {
   font-weight: 700;
 }
 
-#brand-selection-default {
+#brand-selection-default, #image-selection-default {
   margin-top: 10px;
   font-size: 0.75rem;
   align-items: center;
@@ -332,7 +362,7 @@ body {
   background: #502ae4;
 }
 
-#drag-upload-section {
+#drag-upload-section, #image-upload-section {
   width: 90%;
   margin-top: 85px;
   align-self: flex-start;
@@ -357,6 +387,13 @@ body {
 .upload-section .btn:hover {
   opacity: 1;
   background: #502ae4;
+}
+
+#image-upload-section {
+  position: relative;
+}
+#image-upload-section .btn {
+  margin-top: 12px;
 }
 
 .drag-box {
@@ -407,10 +444,16 @@ body {
   transition: 0.25s;
 }
 
+.image-file-container {
+  width: 100%;
+}
+
 .file-upload-container {
   width: 100%;
+  height: 35px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   align-items: center;
+  align-content: center;
   padding: 10px 10px;
   box-sizing: border-box;
   margin-top: 12px;
@@ -441,6 +484,63 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   margin-right: 20px;
+}
+
+#image-preview-window {
+  position: absolute;
+  width: 80%;
+  height: 200px;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  overflow: hidden;
+  filter: drop-shadow(0 0 0.75rem #13121c);
+}
+
+#image-preview-header {
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  background: #13121c;
+  font-size: 0.75rem;
+}
+
+#image-preview-close {
+  align-self: flex-end;
+  height: 30px;
+  padding-bottom: 20px;
+  width: 100%;
+  background: #13121c;
+  justify-content: center;
+}
+#image-preview-close .btn {
+  background: #502ae4;
+  opacity: 0.5;
+  transition: 0.25s;
+}
+#image-preview-close .btn:hover {
+  opacity: 1;
+}
+
+#alternate-image-upload .note {
+  font-style: oblique;
+  font-size: 0.7rem;
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+.preview {
+  opacity: 0.5;
+  transition: 0.25s;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.preview:hover {
+  opacity: 1;
+  filter: invert(69%) sepia(70%) saturate(476%) hue-rotate(97deg) brightness(96%) contrast(90%);
 }
 
 #app-data {

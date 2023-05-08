@@ -1,0 +1,32 @@
+<div class="selection-header">Upload HTML Files</div>
+<div id="image-upload-section">
+  <div id="image-preview-window" style="display: none;">
+    <div id="image-preview-header"></div>
+    <div id="image-preview-image"></div>
+    <div id="image-preview-close">
+      <div class="btn small" onclick="previewImage()">Close Preview</div>
+    </div>
+  </div>
+  <div id="primary-image-upload" class="upload-section">
+    <strong>Primary Image</strong>
+    <div class="break"></div>
+    <div class="image-file-container"></div>
+    <input type="file" id="primary-image-upload-input" class="hidden" accept="image/jpeg,image/jpg,image/png,image/gif">
+    <div class="btn" data-type="primary-image" onclick="fileUploadInput(this)">Upload Primary Image</div>
+    <div id="image-selection-default" class="FPO">
+      <div id="default-selection-label">Use FPO Image?</div>
+      <div id="selection-button-base" class="FPO" onclick="defaultSelection()">
+        <div id="selection-slider" class="active"></div>
+      </div>
+    </div>
+  </div>
+  <div id="alternate-image-upload" class="upload-section">
+    <strong>Alernate Image(s)</strong>
+    <div class="break"></div>
+    <div class="image-file-container"></div>
+    <input type="file" id="alt-image-upload-input" class="hidden" accept="image/jpeg,image/jpg,image/png,image/gif" multiple>
+    <div class="btn" data-type="alt-image" onclick="fileUploadInput(this)">Upload Alt Image</div>
+    <p class="note">Alternate Images are Optional.</p>
+    <p class="note">Multiple Images can be Uploaded.</p>
+  </div>
+</div>

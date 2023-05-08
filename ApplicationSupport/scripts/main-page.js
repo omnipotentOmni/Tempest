@@ -8,14 +8,14 @@
 // – Brand Selection Window
 // – HTML Selection Window
 // – DragDrop & Click to Upload **NEEDS WORK IN ELECTRON ENV**
+// – IMAGE SELECTION WINDOW
 
 //ON DECK
-// – Image Selection Window
 // – Build the Brand List
 // – Save User Settings
 
 //BUGS
-// – NEED TO FIX FILE UPLOAD (IN ELECTRON)
+// – HTML / IMAGE UPLOADS NEED TO BE CONFGIURED FOR ELECTRON
 
 
 
@@ -165,6 +165,7 @@ function htmlSelection() {
 //INPUT CLICK
 function fileUploadInput(e) {
   let type = e.dataset.type;
+
   input = $get(`#${type}-upload-input`);
   input.click();
 
@@ -172,7 +173,13 @@ function fileUploadInput(e) {
 
   function handleUpload(evt) {
     let file = evt.target.files[0];
-    uploadFile(e.parentElement,file);
+
+    if (type.includes('image')) {
+      buildImage(e.parentElement,file);
+    }else {
+      uploadFile(e.parentElement,file);
+    }
+    input.removeEventListener('change',handleUpload,false);
   }
 }
 
@@ -187,7 +194,12 @@ function uploadFile(parent,file) {
 //UNLOAD FILE
 function unloadFile(el) {
   let container = el.parentElement.parentElement;
+  let root = container.parentElement;
+  let input = $get('input',root)[0];
 
+  if (input.files.length) {
+    input.value = '';
+  }
   container.style.display = 'none';
 }
 
@@ -206,7 +218,6 @@ function setBrand(brand) {
   brandDropDown($get('#brand-dd'));
 }
 
-
 //DEFAULT SELECTOR
 function defaultSelection() {
   let slider = $get('#selection-slider');
@@ -218,4 +229,81 @@ function defaultSelection() {
     $class(slider,'non-active','add');
     $class(slider,'active','remove');
   }
+
+  let slideParent = event.target.parentElement.parentElement.parentElement;
+  if (slideParent.id.includes('image') && slider.classList.contains('active')) {
+    let images = $get('.image-file-container',slideParent)[0];
+    images.innerHTML = '';
+  }
+}
+
+//ADD IMAGE TO WINDOW
+function buildImage(parent,file) {
+
+  let fileWrapper = $get('.image-file-container',parent)[0];
+  let newImage = document.createElement('div');
+  newImage.classList = 'file-upload-container';
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', './templates/_image-file-upload.htm');
+  xhr.responseType = 'document';
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      var htmlContent = xhr.response.documentElement.outerHTML;
+      newImage.innerHTML = htmlContent;
+      let name = $get('.file-upload-name',newImage)[0];
+      name.textContent = file.name;
+
+      if (parent.id.includes('primary')) {
+        if (fileWrapper.innerHTML == '') {
+          $get('#selection-button-base').click();
+        }
+        fileWrapper.innerHTML = '';
+      }
+
+      fileWrapper.appendChild(newImage);
+
+      
+    }
+  };
+
+  xhr.send();
+}
+
+//DELETE IMAGE
+function deleteImageFile(e) {
+  let parent = e.parentElement.parentElement.parentElement.parentElement;
+  e.parentElement.parentElement.remove();
+
+  if (parent.id.includes('primary')) {
+    $get('#selection-button-base').click();
+  }
+
+  unloadFile(e);
+}
+
+
+//OPEN PREVIEW
+function previewImage(e) {
+
+  let mask = $get('#window-mask');
+  let previewWindow = $get('#image-preview-window');
+
+  toggleMask(mask);
+  if (previewWindow.style.display !== 'none') {
+    previewWindow.style.display = 'none';
+  }else {
+    previewWindow.style.display = 'flex';
+    let imageName = $get('.file-upload-name',e.parentElement)[0];
+    let previewTitle = $get('#image-preview-header');
+    previewTitle.textContent = imageName.textContent;
+  }
+
+  
+}
+
+function toggleMask(e) {
+  $class(e,'hide-mask','toggle');
+  $class(e,'show-mask','toggle');
 }
