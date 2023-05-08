@@ -18,6 +18,7 @@
 // – Add for Saving Template
 
 //BUGS
+// – REMOVING AN IMAGE BY CLICKING 'FPO' DOES NOT UNLOAD THE IMAGE – needs to unload the file
 // – HTML / IMAGE UPLOADS NEED TO BE CONFGIURED FOR ELECTRON
 
 
