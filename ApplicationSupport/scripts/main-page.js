@@ -11,8 +11,11 @@
 // – IMAGE SELECTION WINDOW
 
 //ON DECK
+// – Doximity Alert (Desktop) Build
 // – Build the Brand List
 // – Save User Settings
+// – Save Session Settings
+// – Add for Saving Template
 
 //BUGS
 // – HTML / IMAGE UPLOADS NEED TO BE CONFGIURED FOR ELECTRON
