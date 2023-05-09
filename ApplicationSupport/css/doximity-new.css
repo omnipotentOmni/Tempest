@@ -13,9 +13,17 @@ body {
   background: #cddaed;
 }
 
+.break {
+  width: 100%;
+  height: 0;
+}
+
 .variable-container {
   border: 1px solid red;
   box-sizing: border-box;
+}
+.variable-container.blue {
+  border-color: blue;
 }
 
 .variable-text {
@@ -56,7 +64,7 @@ body {
   margin-right: auto;
 }
 #container-main.mobile #template-version #template-version-text::before {
-  content: "Mobile Layout";
+  content: "Mobile View";
 }
 #container-main.mobile #header {
   width: 100%;
@@ -67,7 +75,7 @@ body {
   justify-content: center;
 }
 #container-main.mobile #header img {
-  width: 127px;
+  width: 160px;
   position: absolute;
   left: 0;
 }
@@ -106,6 +114,19 @@ body {
 }
 #container-main.mobile #column-left .alert-char-count span {
   color: #d3acca;
+}
+#container-main.mobile #column-left #header-options {
+  padding: 8px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+#container-main.mobile #column-left #header-options .variable-image-item {
+  width: 125px;
+  height: 75px;
+  margin: 8px;
+  background: #6e6e6e;
+  box-sizing: border-box;
 }
 #container-main.mobile #column-center {
   margin: 0 auto;
@@ -158,7 +179,6 @@ body {
   background: #b6b8b9;
   justify-content: center;
   align-items: center;
-  border: 1px solid blue;
   box-sizing: border-box;
 }
 #container-main.mobile #column-center #doximity-preview-container #preview-image.fpo {
@@ -173,7 +193,6 @@ body {
   margin: 3px 0;
   padding: 5px;
   font-size: 0.75rem;
-  font-weight: 700;
   box-sizing: border-box;
 }
 #container-main.mobile #column-center #doximity-preview-container #preview-footer {
@@ -205,4 +224,69 @@ body {
   margin-right: 30px;
   height: 300px;
   border: 2px solid #a1a1a1;
+}
+#container-main.mobile #column-right #alert-header {
+  display: flex;
+  flex-flow: row wrap;
+  align-self: flex-start;
+  width: 100%;
+}
+#container-main.mobile #column-right #alert-header .dox-image {
+  align-self: flex-start;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 22px;
+}
+#container-main.mobile #column-right #alert-header #alert-header-logo {
+  align-self: flex-start;
+  width: 37px;
+  display: flex;
+  justify-content: center;
+  margin-left: 10px;
+}
+#container-main.mobile #column-right #alert-header #alert-header-logo img {
+  width: 32px;
+}
+#container-main.mobile #column-right #alert-header #alert-header-copy {
+  margin-left: 10px;
+  flex: 1;
+  padding-right: auto;
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin-right: 14px;
+}
+#container-main.mobile #column-right #alert-header #alert-header-copy #alert-header-bold {
+  width: 40px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+#container-main.mobile #column-right #alert-header #alert-header-copy #alert-header-body {
+  margin-right: auto;
+  color: #6e6e6e;
+  font-size: 0.88rem;
+}
+#container-main.mobile #column-right #alert-header #alert-header-copy #alert-sponsored {
+  width: 70px;
+  color: #6e6e6e;
+  position: absolute;
+  right: 0;
+  font-size: 0.9rem;
+}
+#container-main.mobile #column-right #alert-header #alert-pi-med-guide {
+  margin-top: 16px;
+  display: flex;
+  width: 100%;
+  margin-left: 14px;
+  color: #6e6e6e;
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+}
+#container-main.mobile #column-right #alert-header #alert-pi-med-guide .text {
+  margin-right: 8px;
+}
+#container-main.mobile #column-right #alert-header #alert-brand-chip img {
+  max-width: 100%;
+  height: auto;
 }/*# sourceMappingURL=doximity-new.css.map */

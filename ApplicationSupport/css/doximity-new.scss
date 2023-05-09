@@ -13,9 +13,18 @@ body {
   background: #cddaed;
 }
 
+.break {
+  width: 100%;
+  height: 0;
+}
+
 .variable-container {
   border: 1px solid red;
   box-sizing: border-box;
+
+  &.blue {
+    border-color: blue;
+  }
 }
 
 .variable-text {
@@ -58,7 +67,7 @@ body {
         margin-right:auto;
   
         &::before {
-          content: "Mobile Layout";
+          content: "Mobile View";
         }
       }
 
@@ -73,7 +82,7 @@ body {
       justify-content: center;
     
       & img {
-        width: 127px;
+        width: 160px;
         position: absolute;
         left: 0;
       }
@@ -122,6 +131,21 @@ body {
           color: #d3acca;
         }
       }
+
+      & #header-options {
+        padding: 8px;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+
+        & .variable-image-item {
+          width: 125px;
+          height: 75px;
+          margin: 8px;
+          background: #6e6e6e;
+          box-sizing: border-box;
+        }
+      }
     }
 
     & #column-center {
@@ -149,6 +173,7 @@ body {
             width: 37px;
             display: flex;
             justify-content: center;
+
             & img {
               width: 20px;
             }
@@ -182,7 +207,6 @@ body {
           background: #b6b8b9;
           justify-content: center;
           align-items: center;
-          border: 1px solid blue;
           box-sizing: border-box;
   
           &.fpo {
@@ -200,7 +224,7 @@ body {
           margin: 3px 0;
           padding: 5px;
           font-size: .75rem;
-          font-weight: 700;
+          // font-weight: 700;
           box-sizing: border-box;
         }
   
@@ -242,6 +266,83 @@ body {
       margin-right: 30px;
       height: 300px;
       border: 2px solid #a1a1a1;
+
+      & #alert-header {
+        display: flex;
+        flex-flow: row wrap;
+        align-self: flex-start;
+        width: 100%;
+
+        & .dox-image {
+          align-self: flex-start;
+          max-width: 100%;
+          height: auto;
+          margin-bottom: 22px;
+        }
+
+        & #alert-header-logo {
+          align-self: flex-start;
+          width: 37px;
+          display: flex;
+          justify-content: center;
+          margin-left: 10px;
+
+          & img {
+            width: 32px;
+          }
+        }
+
+        & #alert-header-copy {
+          margin-left: 10px;
+          flex: 1;
+          padding-right: auto;
+          position: relative;
+          display: flex;
+          flex-flow: row wrap;
+          align-items: center;
+          margin-right: 14px;
+
+          & #alert-header-bold {
+            width: 40px;
+            font-size: .85rem;
+            font-weight: 700;
+          }
+
+          & #alert-header-body {
+            margin-right: auto;
+            color: #6e6e6e;
+            font-size: .88rem;
+          }
+
+          & #alert-sponsored {
+            width: 70px;
+            color: #6e6e6e;
+            position: absolute;
+            right: 0;
+            font-size: .9rem;
+          }
+        }
+
+        & #alert-pi-med-guide {
+          margin-top: 16px;
+          display: flex;
+          width: 100%;
+          margin-left: 14px;
+          color: #6e6e6e;
+          font-size: .9rem;
+          margin-bottom: 14px;
+
+          & .text {
+            margin-right: 8px;
+          }
+        }
+
+        & #alert-brand-chip img{
+          max-width: 100%;
+          height: auto;
+        }
+        
+      }
     }
   }
 }
