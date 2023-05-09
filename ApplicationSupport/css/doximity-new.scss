@@ -46,10 +46,28 @@ body {
   box-sizing: border-box;
 
   &.mobile {
+
+    & #template-version {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 25px;
+
+      & #template-version-text {
+        padding: 5px 10px;
+        border: 2px solid black;
+        margin-right:auto;
+  
+        &::before {
+          content: "Mobile Layout";
+        }
+      }
+
+    }
+
     & #header {
       width: 100%;
-      height: 404px;
       position: relative;
+      margin-bottom: 50px;
       font-size: 0.8rem;
       display: flex;
       justify-content: center;
@@ -109,86 +127,121 @@ body {
     & #column-center {
       margin: 0 auto;
       margin-top: 30px;
+      margin-right: 0px;
       width: 33%;
       height: 100%;
-    }
 
-    & #doximity-preview-container {
-      width: 312px;
-      height: 100px;
-      border: 6px solid #e6e7e9;
-      padding: 5px;
-      box-sizing: border-box;
-
-      & #preview-header {
-        height: 26px;
-        display: flex;
-        align-items: center;
-
-        & #preview-logo {
-          width: 37px;
+      & #doximity-preview-container {
+        width: 312px;
+        border: 6px solid #e6e7e9;
+        padding: 5px;
+        padding-bottom: 0px;
+        box-sizing: border-box;
+  
+        & #preview-header {
+          height: 26px;
           display: flex;
-          justify-content: center;
-          & img {
-            width: 20px;
+          align-items: center;
+          position: relative;
+          margin-bottom: 5px;
+  
+          & #preview-logo {
+            width: 37px;
+            display: flex;
+            justify-content: center;
+            & img {
+              width: 20px;
+            }
           }
-        }
-
-        & #preview-header-copy {
-          width: 100%;
-          font-size: .7rem;
-          
-          & #preview-header-bold {
-            font-weight: 700;
+  
+          & #preview-header-copy {
+            width: 100%;
+            font-size: .7rem;
+            
+            & #preview-header-bold {
+              font-weight: 700;
+            }
+  
+            & #preview-header-body {
+              color: #a1a1a1;
+            }
           }
-
-          & #preview-header-body {
+  
+          & #preview-sponsored {
+            font-size: .7rem;
             color: #a1a1a1;
+            position: absolute;
+            right: 0;
+            top: 0;
+          }
+  
+        }
+  
+        & #preview-image {
+          height: 150px;
+          background: #b6b8b9;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid blue;
+          box-sizing: border-box;
+  
+          &.fpo {
+            display: flex;
+            font-weight: 700;
+            font-size: 3rem;
+  
+            &::before {
+              content: 'FPO';
+            }
           }
         }
-
+  
+        & #preview-title {
+          margin: 3px 0;
+          padding: 5px;
+          font-size: .75rem;
+          font-weight: 700;
+          box-sizing: border-box;
+        }
+  
+        & #preview-footer {
+          border-top: 2px solid #e6e7e9;
+          display: flex;
+          height: 35px;
+          align-items: center;
+          position: relative;
+  
+          & img {
+            width: 23px;
+            margin-right: 8px;
+          }
+  
+          & #preview-pi-med-guide {
+            display: flex;
+            position: absolute;
+            right: 0;
+  
+            & .text {
+              margin-left: 8px;
+              color: #a1a1a1;
+              font-size: .7rem;
+            }
+          }
+        }
+  
+        
       }
 
-      
     }
 
-    
-
-    
-
-    
-
-    
-
-    
+    #column-right {
+      width: 375px !important;
+      max-width: 375px !important;
+      min-width: 375px !important;
+      margin-top: 30px;
+      margin-right: 30px;
+      height: 300px;
+      border: 2px solid #a1a1a1;
+    }
   }
 }
-
-// #header {
-//   width: 100%;
-//   height: 404px;
-//   position: relative;
-//   font-family: Arial, sans-serif;
-//   font-size: 0.8rem;
-//   display: flex;
-//   justify-content: center;
-
-//   & img {
-//     width: 127px;
-//     position: absolute;
-//     left: 0;
-//   }
-// }
-
-// #header-disclaimer {
-//   margin-top: 10px;
-//   width: 315px;
-//   padding: 10px;
-//   box-sizing: border-box;
-//   border: 1px solid red;
-// }
-
-// #alert-data {
-//   display: flex;
-//   align-self: flex-start;
-// }
