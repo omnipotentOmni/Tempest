@@ -7,10 +7,15 @@ html {
 body {
   margin: 0 auto;
   padding: 0px;
-  width: 1400px;
   min-height: 100%;
   display: block;
   background: #cddaed;
+}
+body.mobile {
+  width: 1400px;
+}
+body.desktop {
+  width: 2296px;
 }
 
 .break {
@@ -53,20 +58,58 @@ body {
   flex-flow: row wrap;
   box-sizing: border-box;
 }
-#container-main.mobile #template-version {
+
+#column-left {
+  width: 300px;
+}
+#column-left #alert-headlines {
+  width: 100%;
+}
+#column-left #title-options {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 30px;
+}
+#column-left .title-item {
+  margin-bottom: 10px;
+}
+#column-left .alert-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+#column-left .alert-char-count {
+  font-size: 0.8rem;
+  color: #b6b8b9;
+}
+#column-left .alert-char-count span {
+  color: #d3acca;
+}
+#column-left #header-options {
+  padding: 8px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+#column-left #header-options .variable-image-item {
+  width: 125px;
+  height: 75px;
+  margin: 8px;
+  background: #6e6e6e;
+  box-sizing: border-box;
+}
+
+#template-version {
   display: flex;
   flex-direction: column;
   margin-bottom: 25px;
 }
-#container-main.mobile #template-version #template-version-text {
+#template-version #template-version-text {
   padding: 5px 10px;
   border: 2px solid black;
   margin-right: auto;
 }
-#container-main.mobile #template-version #template-version-text::before {
-  content: "Mobile View";
-}
-#container-main.mobile #header {
+
+#header {
   width: 100%;
   position: relative;
   margin-bottom: 50px;
@@ -74,59 +117,27 @@ body {
   display: flex;
   justify-content: center;
 }
-#container-main.mobile #header img {
+#header img {
   width: 160px;
   position: absolute;
   left: 0;
 }
-#container-main.mobile #header-disclaimer {
+
+#header-disclaimer {
   margin-top: 10px;
   width: 315px;
   padding: 10px;
   box-sizing: border-box;
   border: 1px solid red;
 }
-#container-main.mobile #alert-data {
+
+#alert-data {
   display: flex;
   align-self: flex-start;
 }
-#container-main.mobile #column-left {
-  width: 300px;
-}
-#container-main.mobile #column-left #alert-headlines {
-  width: 100%;
-}
-#container-main.mobile #column-left #title-options {
-  width: 100%;
-  padding: 5px;
-  margin-bottom: 30px;
-}
-#container-main.mobile #column-left .title-item {
-  margin-bottom: 10px;
-}
-#container-main.mobile #column-left .alert-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-#container-main.mobile #column-left .alert-char-count {
-  font-size: 0.8rem;
-  color: #b6b8b9;
-}
-#container-main.mobile #column-left .alert-char-count span {
-  color: #d3acca;
-}
-#container-main.mobile #column-left #header-options {
-  padding: 8px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-}
-#container-main.mobile #column-left #header-options .variable-image-item {
-  width: 125px;
-  height: 75px;
-  margin: 8px;
-  background: #6e6e6e;
-  box-sizing: border-box;
+
+#container-main.mobile #template-version-text::before {
+  content: "Mobile View";
 }
 #container-main.mobile #column-center {
   margin: 0 auto;
@@ -287,6 +298,181 @@ body {
   margin-right: 8px;
 }
 #container-main.mobile #column-right #alert-header #alert-brand-chip img {
+  max-width: 100%;
+  height: auto;
+}
+
+#container-main.desktop #template-version-text::before {
+  content: "Desktop View";
+}
+#container-main.desktop #column-center {
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-right: 0px;
+  width: 33%;
+  height: 100%;
+  justify-content: center;
+}
+#container-main.desktop #column-center #doximity-preview-container {
+  width: 425px;
+  border: 6px solid #e6e7e9;
+  padding-bottom: 0px;
+  box-sizing: border-box;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-header {
+  padding: 15px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-bottom: 1px solid #babcbe;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-header #preview-logo {
+  display: flex;
+  justify-content: center;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-header #preview-logo img {
+  width: 27px;
+  margin-right: 10px;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-header #preview-header-copy {
+  width: 100%;
+  font-size: 0.7rem;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-header #preview-header-copy #preview-header-bold {
+  font-weight: 700;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-header #preview-header-copy #preview-header-body {
+  color: #a1a1a1;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-header #preview-sponsored {
+  font-size: 0.7rem;
+  color: #a1a1a1;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-image {
+  height: 200px;
+  background: #b6b8b9;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-image.fpo {
+  display: flex;
+  font-weight: 700;
+  font-size: 3rem;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-image.fpo::before {
+  content: "FPO";
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-title {
+  margin: 8px;
+  padding: 7px;
+  padding-right: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-footer {
+  margin: 5px 15px;
+  padding-top: 10px;
+  padding-bottom: 17px;
+  border-top: 2px solid #e6e7e9;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-footer img {
+  width: 23px;
+  margin-right: 8px;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-footer #preview-pi-med-guide {
+  display: flex;
+  position: absolute;
+  right: 0;
+}
+#container-main.desktop #column-center #doximity-preview-container #preview-footer #preview-pi-med-guide .text {
+  margin-left: 8px;
+  color: #a1a1a1;
+  font-size: 0.7rem;
+}
+#container-main.desktop #column-right {
+  width: 1048px !important;
+  max-width: 1048px !important;
+  min-width: 1048px !important;
+  padding: 40px;
+  margin-top: 30px;
+  margin-right: 30px;
+  border: 2px solid black;
+}
+#container-main.desktop #column-right #alert-header {
+  display: flex;
+  flex-flow: row wrap;
+  align-self: flex-start;
+  width: 100%;
+}
+#container-main.desktop #column-right #alert-header .dox-image {
+  align-self: flex-start;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 22px;
+}
+#container-main.desktop #column-right #alert-header #alert-header-logo {
+  align-self: flex-start;
+  width: 37px;
+  display: flex;
+  justify-content: center;
+  margin-left: 180px;
+}
+#container-main.desktop #column-right #alert-header #alert-header-logo img {
+  width: 32px;
+}
+#container-main.desktop #column-right #alert-header #alert-header-copy {
+  margin-left: 10px;
+  flex: 1;
+  padding-right: auto;
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin-right: 14px;
+}
+#container-main.desktop #column-right #alert-header #alert-header-copy #alert-header-bold {
+  width: 40px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+#container-main.desktop #column-right #alert-header #alert-header-copy #alert-header-body {
+  margin-right: auto;
+  color: #6e6e6e;
+  font-size: 0.88rem;
+}
+#container-main.desktop #column-right #alert-header #alert-header-copy #alert-sponsored {
+  margin-right: 180px;
+  width: 70px;
+  color: #6e6e6e;
+  position: absolute;
+  right: 0;
+  font-size: 0.9rem;
+}
+#container-main.desktop #column-right #alert-header #alert-pi-med-guide {
+  margin: 0px 180px;
+  margin-top: 16px;
+  margin-bottom: 14px;
+  display: flex;
+  width: 100%;
+  color: #6e6e6e;
+  font-size: 0.9rem;
+}
+#container-main.desktop #column-right #alert-header #alert-pi-med-guide .text {
+  margin-right: 8px;
+}
+#container-main.desktop #column-right #alert-header #alert-brand-chip {
+  margin: 0 180px;
+}
+#container-main.desktop #column-right #alert-header #alert-brand-chip img {
   max-width: 100%;
   height: auto;
 }/*# sourceMappingURL=doximity-new.css.map */
