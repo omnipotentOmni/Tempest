@@ -228,6 +228,7 @@ body {
           justify-content: center;
           align-items: center;
           box-sizing: border-box;
+          margin: 0 -5px;
   
           &.fpo {
             display: flex;
@@ -244,7 +245,7 @@ body {
           margin: 3px 0;
           padding: 5px;
           font-size: .75rem;
-          // font-weight: 700;
+          font-weight: 700;
           box-sizing: border-box;
         }
   
@@ -284,7 +285,8 @@ body {
       min-width: 375px !important;
       margin-top: 30px;
       margin-right: 30px;
-      height: 300px;
+      display: flex;
+      align-self: flex-start;
       border: 2px solid #a1a1a1;
 
       & #alert-header {
@@ -298,6 +300,11 @@ body {
           max-width: 100%;
           height: auto;
           margin-bottom: 22px;
+
+          &.desktop {
+            display: none;
+          }
+
         }
 
         & #alert-header-logo {
@@ -361,8 +368,30 @@ body {
           max-width: 100%;
           height: auto;
         }
-        
       }
+
+      & #alert-footer {
+        margin-top: 13px;
+        margin: 0px 15px;
+        width: 100%;
+
+        & #alert-footer-icons {
+          display: flex;
+          flex-flow: row wrap;
+          align-items: flex-start;
+          margin-top: 29px;
+
+          & .footer-icon {
+            width: 22.5px;
+            margin-right: 10.6px;
+          }
+
+          & #footer-app {
+            width: 100%;
+            margin-top: 8px;
+          }
+        }
+      }    
     }
   }
 }
@@ -516,6 +545,13 @@ body {
           max-width: 100%;
           height: auto;
           margin-bottom: 22px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid #eeeeee;
+
+          &.mobile {
+            display: none;
+          }
+
         }
 
         & #alert-header-logo {
@@ -527,6 +563,10 @@ body {
 
           & img {
             width: 32px;
+
+            &.mobile {
+              display: none;
+            }
           }
         }
 
@@ -578,13 +618,34 @@ body {
 
         & #alert-brand-chip {
           margin: 0 180px;
-          
+
           & img {
           max-width: 100%;
           height: auto;
           }
         }
-        
+      }
+      & #alert-footer {
+        margin-top: 13px;
+        margin: 0px 180px;
+        border-top: 1px solid #eeeeee;
+        width: 100%;
+
+        & #alert-footer-icons {
+          display: flex;
+          flex-flow: row wrap;
+          align-items: flex-start;
+          margin-top: 29px;
+
+          & .footer-icon {
+            width: 28px;
+            margin-right: 14.5px;
+          }
+
+          & #footer-app {
+            display: none;
+          }
+        }
       }
     }
   }
