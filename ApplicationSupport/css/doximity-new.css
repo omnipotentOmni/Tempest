@@ -309,7 +309,6 @@ body.desktop {
 }
 #container-main.mobile #column-right #alert-footer {
   margin-top: 13px;
-  margin: 0px 15px;
   width: 100%;
 }
 #container-main.mobile #column-right #alert-footer #alert-footer-icons {
@@ -321,6 +320,9 @@ body.desktop {
 #container-main.mobile #column-right #alert-footer #alert-footer-icons .footer-icon {
   width: 22.5px;
   margin-right: 10.6px;
+}
+#container-main.mobile #column-right #alert-footer #alert-footer-icons .footer-icon:first-of-type {
+  margin-left: 15px;
 }
 #container-main.mobile #column-right #alert-footer #alert-footer-icons #footer-app {
   width: 100%;

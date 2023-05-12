@@ -372,7 +372,6 @@ body {
 
       & #alert-footer {
         margin-top: 13px;
-        margin: 0px 15px;
         width: 100%;
 
         & #alert-footer-icons {
@@ -384,11 +383,16 @@ body {
           & .footer-icon {
             width: 22.5px;
             margin-right: 10.6px;
+            
+            &:first-of-type {
+              margin-left: 15px;
+            }
           }
 
           & #footer-app {
             width: 100%;
             margin-top: 8px;
+
           }
         }
       }    
