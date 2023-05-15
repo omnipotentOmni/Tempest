@@ -336,7 +336,8 @@ body {
   }
 
   &.open #brand-dd-menu {
-    max-height: 100px;
+    max-height: 200px;
+    overflow: scroll;
   }
 }
 

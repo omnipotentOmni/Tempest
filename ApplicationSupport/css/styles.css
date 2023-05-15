@@ -257,7 +257,8 @@ body {
   border-bottom-right-radius: 0;
 }
 #brand-selection-display.open #brand-dd-menu {
-  max-height: 100px;
+  max-height: 200px;
+  overflow: scroll;
 }
 
 .overflow-text {

@@ -46,45 +46,50 @@ function templateType(el) {
 }
 
 //WINDOW CHOICES
-function swapWindow(selection) {
-
-  //SET THE HEADERS
+async function swapWindow(selection) {
   let windows = $get('.header-item');
-
   for (let window of windows) {
-    $class(window,'active','remove');
+    $class(window, 'active', 'remove');
   }
+  $class(selection, 'active', 'add');
 
-  $class(selection,'active','add');
-
-  //LOAD IN THE CONTENT
   let windowTitle = selection.dataset.title;
-  var xhr = new XMLHttpRequest();
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', `./templates/_${windowTitle}.htm`);
+  xhr.responseType = 'text';
 
-  xhr.open('GET',`./templates/_${windowTitle}.htm` );
-  xhr.responseType = 'document';
+  const sendRequest = new Promise((resolve, reject) => {
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        let parser = new DOMParser();
+        let htmlDoc = parser.parseFromString(xhr.responseText, 'text/html');
+        let htmlContent = htmlDoc.documentElement.innerHTML;
 
-  xhr.onload = function() {
-    if (xhr.status === 200) {
+        let stage = $get('#template-main-content');
+        stage.innerHTML = htmlContent;
 
-      var htmlContent = xhr.response.documentElement.outerHTML;
-      let stage = $get('#template-main-content');
-      
-      stage.innerHTML = htmlContent;
-
-      //LOAD WINDOW SPECIFIC SCRIPTS
-      let functionName = selection.dataset.function;
-      if (typeof window[functionName] === 'function') {
-        window[functionName]();
+        let functionName = selection.dataset.function;
+        if (typeof window[functionName] === 'function') {
+          window[functionName]();
+        }
+        resolve();
+      } else {
+        reject(new Error(`Error: ${windowTitle} did not load. Please contact Support.`));
       }
+    };
 
-    }else {
-      alert(`error, ${windowTitle}, did not load. Please contact Support.`);
-    }
-  };
+    xhr.onerror = function () {
+      reject(new Error('An error occurred while making the request.'));
+    };
 
-  xhr.send();
+    xhr.send(); // Send the request
+  });
 
+  await sendRequest;
+
+  if (windowTitle === 'brand-selection') {
+    loadBrands();
+  }
 }
 
 //DRAG FILE UPLOAD
@@ -310,4 +315,56 @@ function previewImage(e) {
 function toggleMask(e) {
   $class(e,'hide-mask','toggle');
   $class(e,'show-mask','toggle');
+}
+
+
+
+//LOADING THE BRANDS
+async function loadBrands() {
+
+  //CREATING THE BRAND DATA (DROP DOWN)
+  let brandData;
+  try {
+    const response = await fetch('/ApplicationData/BrandData/brand-list.json');
+    if (response.ok) {
+      brandData = await response.json();
+    } else {
+      throw new Error('Error loading Brand Data');
+    }
+  } catch (error) {
+    console.error('An error occured while loading Brand Data:', error);
+  }
+
+  //CREATING THE INDIVIDUAL DROP DOWN ITEMS
+  let brandTemplate;
+  try {
+    let response = await fetch('/ApplicationSupport/html/templates/_brand-item.htm');
+    if (response.ok) {
+      brandTemplate = await response.text();
+    } else {
+      throw new Error('Error loading Brand Template');
+    }
+  } catch (error) {
+    console.error('An error occured loading in the template:', error);
+  }
+
+  console.log(brandData.length);
+  console.log(brandTemplate);
+
+  //LOADING THE BRANDS INTO THE DD MENU
+  let ddMenu = $get('#brand-dd-menu');
+  for (let el of brandData) {
+    const parser = new DOMParser();  //MAKE THIS A MODULE
+    const serializer = new XMLSerializer();
+      
+      const parsedDocument = parser.parseFromString(brandTemplate, 'text/html');
+      const htmlElement = parsedDocument.body;
+
+      let newEl = htmlElement.firstChild;
+      newEl.textContent = el.BrandName;
+
+      console.log(newEl);
+
+      ddMenu.appendChild(newEl);
+  }
 }
