@@ -1,0 +1,23 @@
+{
+  "name": "tempest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omnipotentOmni/Tempest.git"
+  },
+  "author": "John McCall",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/omnipotentOmni/Tempest/issues"
+  },
+  "homepage": "https://github.com/omnipotentOmni/Tempest#readme",
+  "devDependencies": {
+    "electron": "^24.3.0"
+  }
+}

@@ -21,11 +21,17 @@
 // – REMOVING AN IMAGE BY CLICKING 'FPO' DOES NOT UNLOAD THE IMAGE – needs to unload the file
 // – HTML / IMAGE UPLOADS NEED TO BE CONFGIURED FOR ELECTRON
 
-
+// const appPath = app.getAppPath();
 
 //--------------------------------------------------------MAIN
 
 //TEMPLATE SELECTION
+const path = require('path');
+
+const { ipcRenderer } = require('electron');
+let dir = ipcRenderer.sendSync('get-dir-path');
+
+let __dir = path.join(dir, 'Tempest');
 
 let templateSelector = $get('#template-select');
 let templateItem = $get('.templateBtn',templateSelector);
@@ -33,13 +39,19 @@ let templateItem = $get('.templateBtn',templateSelector);
 let activeWindow = '';
 
 let sessionData = {
-  "BrandSelection" : {
+  "brand-selection" : {
     "Brand" : "",
     "Default" : false,
   },
-  "DataFiles" : {
-    "Alert" : "",
-    "Coversheet" : ""
+  "html-selection" : {
+    "Alert" : {
+      "name" : "",
+      "path" : ""
+    },
+    "Coversheet" : {
+      "name" : "",
+      "path" : ""
+    }
   },
   "Image Files" : {
     "PrimaryImage" : {
@@ -110,7 +122,7 @@ async function swapWindow(selection) {
 
   await sendRequest;
 
-  if (windowTitle === 'BrandSelection') {
+  if (windowTitle === 'brand-selection') {
     loadBrands();
   }
   loadSessionData();
@@ -206,13 +218,14 @@ function fileUploadInput(e) {
 
   function handleUpload(evt) {
     let file = evt.target.files[0];
-
     if (type.includes('image')) {
       buildImage(e.parentElement,file);
     }else {
       uploadFile(e.parentElement,file);
     }
     input.removeEventListener('change',handleUpload,false);
+
+    setSessionData(type,file);
   }
 }
 
@@ -353,7 +366,7 @@ async function loadBrands() {
   //CREATING THE BRAND DATA (DROP DOWN)
   let brandData;
   try {
-    const response = await fetch('/ApplicationData/BrandData/brand-list.json');
+    const response = await fetch(`${__dir}/ApplicationData/BrandData/brand-list.json`);
     if (response.ok) {
       brandData = await response.json();
     } else {
@@ -366,7 +379,7 @@ async function loadBrands() {
   //CREATING THE INDIVIDUAL DROP DOWN ITEMS
   let brandTemplate;
   try {
-    let response = await fetch('/ApplicationSupport/html/templates/_brand-item.htm');
+    let response = await fetch('../html/templates/_brand-item.htm');
     if (response.ok) {
       brandTemplate = await response.text();
     } else {
@@ -396,25 +409,43 @@ async function loadBrands() {
 //SET SESSION DATA
 function setSessionData(action,value) {
   let dataKey;
-  if(activeWindow === 'BrandSelection') { // SETTING THE DATA FOR BRAND-SELECTION
+  if (activeWindow === 'brand-selection') { // SETTING THE DATA FOR BRAND-SELECTION
+    
     if (action === 'brand-select') {
       dataKey = 'Brand';
     };
     if (action === 'default-slider') {
       dataKey = 'Default';
     };
+
+    if (dataKey) {
+      sessionData[activeWindow][dataKey] = value;
+    }
+
   };
 
-  if (dataKey) {
-    sessionData[activeWindow][dataKey] = value;
+  if (activeWindow === 'html-selection') { // SETTING THE DATA FOR HTML UPLOAD
+    
+    if (action === 'alert') {
+      dataKey = 'Alert'
+    };
+    if (action === 'coversheet') {
+      dataKey = 'Coversheet'
+    };
+
+    if (dataKey) {
+      sessionData[activeWindow][dataKey].name = value.name;
+      sessionData[activeWindow][dataKey].path = value.path;
+    }
   }
+  console.log(sessionData);
 }
 
 
 
 //LOAD AND APPLY SESSION DATA
 function loadSessionData() {
-  if (activeWindow === 'BrandSelection') { //SETTING THE SESSION DATA FOR BRAND-SELECTION
+  if (activeWindow === 'brand-selection') { //SETTING THE SESSION DATA FOR BRAND-SELECTION
     let brand = $get('#brand-selection-name');
     if (sessionData[activeWindow].Brand) {
       brand.textContent = sessionData[activeWindow].Brand;
