@@ -334,7 +334,7 @@ body {
   top: 33.5px;
   max-height: 0;
   overflow: hidden;
-  transition: 0.25s;
+  transition: 0.5s;
 }
 #brand-dd-menu.active {
   height: 100px;
@@ -451,7 +451,7 @@ body {
 
 .file-upload-container {
   width: 100%;
-  height: 35px;
+  height: 50px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   align-items: center;
   align-content: center;

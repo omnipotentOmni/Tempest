@@ -421,7 +421,7 @@ body {
   top: 33.5px;
   max-height: 0;
   overflow: hidden;
-  transition: $timing--fast;
+  transition: $timing--normal;
 
   &.active {
     height: 100px;
@@ -550,7 +550,7 @@ body {
 
 .file-upload-container {
   width: 100%;
-  height: 35px;
+  height: 50px;
   border: 1px solid $color--white50;
   align-items: center;
   align-content: center;

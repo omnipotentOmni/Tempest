@@ -30,6 +30,28 @@
 let templateSelector = $get('#template-select');
 let templateItem = $get('.templateBtn',templateSelector);
 
+let activeWindow = '';
+
+let sessionData = {
+  "BrandSelection" : {
+    "Brand" : "",
+    "Default" : false,
+  },
+  "DataFiles" : {
+    "Alert" : "",
+    "Coversheet" : ""
+  },
+  "Image Files" : {
+    "PrimaryImage" : {
+      "ImagePath" : "",
+      "FPO" : true
+    },
+    "Alternate Images" : []
+  }
+};
+
+console.log(sessionData)
+
 function templateType(el) {
   let toggle = false;
   if ($class(el,'active','contains')) {
@@ -54,6 +76,7 @@ async function swapWindow(selection) {
   $class(selection, 'active', 'add');
 
   let windowTitle = selection.dataset.title;
+  activeWindow = windowTitle;
   let xhr = new XMLHttpRequest();
   xhr.open('GET', `./templates/_${windowTitle}.htm`);
   xhr.responseType = 'text';
@@ -87,9 +110,10 @@ async function swapWindow(selection) {
 
   await sendRequest;
 
-  if (windowTitle === 'brand-selection') {
+  if (windowTitle === 'BrandSelection') {
     loadBrands();
   }
+  loadSessionData();
 }
 
 //DRAG FILE UPLOAD
@@ -225,6 +249,7 @@ function setBrand(brand) {
   name.textContent = brand.textContent;
 
   brandDropDown($get('#brand-dd'));
+  setSessionData('brand-select',brand.textContent);
 }
 
 //DEFAULT SELECTOR
@@ -234,9 +259,12 @@ function defaultSelection() {
   if ($class(slider,'non-active','contains')) {
     $class(slider,'non-active','remove');
     $class(slider,'active','add');
+    setSessionData('default-slider',$class(slider,'active','contains'));
+    
   }else {
     $class(slider,'non-active','add');
     $class(slider,'active','remove');
+    setSessionData('default-slider',$class(slider,'active','contains'));
   }
 
   let slideParent = event.target.parentElement.parentElement.parentElement;
@@ -348,9 +376,6 @@ async function loadBrands() {
     console.error('An error occured loading in the template:', error);
   }
 
-  console.log(brandData.length);
-  console.log(brandTemplate);
-
   //LOADING THE BRANDS INTO THE DD MENU
   let ddMenu = $get('#brand-dd-menu');
   for (let el of brandData) {
@@ -363,8 +388,43 @@ async function loadBrands() {
       let newEl = htmlElement.firstChild;
       newEl.textContent = el.BrandName;
 
-      console.log(newEl);
-
       ddMenu.appendChild(newEl);
+  }
+}
+
+
+//SET SESSION DATA
+function setSessionData(action,value) {
+  let dataKey;
+  if(activeWindow === 'BrandSelection') { // SETTING THE DATA FOR BRAND-SELECTION
+    if (action === 'brand-select') {
+      dataKey = 'Brand';
+    };
+    if (action === 'default-slider') {
+      dataKey = 'Default';
+    };
+  };
+
+  if (dataKey) {
+    sessionData[activeWindow][dataKey] = value;
+  }
+}
+
+
+
+//LOAD AND APPLY SESSION DATA
+function loadSessionData() {
+  if (activeWindow === 'BrandSelection') { //SETTING THE SESSION DATA FOR BRAND-SELECTION
+    let brand = $get('#brand-selection-name');
+    if (sessionData[activeWindow].Brand) {
+      brand.textContent = sessionData[activeWindow].Brand;
+    }
+
+    let slider = $get('#selection-slider');
+    if (sessionData[activeWindow].Default) {
+      $class(slider,'active','add');
+      $class(slider,'non-active','remove');
+    }
+    
   }
 }
