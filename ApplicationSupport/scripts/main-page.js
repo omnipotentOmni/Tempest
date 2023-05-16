@@ -53,14 +53,16 @@ let sessionData = {
       "path" : ""
     }
   },
-  "Image Files" : {
-    "PrimaryImage" : {
+  "image-selection" : {
+    "Primary" : {
       "ImagePath" : "",
       "FPO" : true
     },
-    "Alternate Images" : []
+    "Alternate" : []
   }
 };
+
+//alertnate images = [{name : '',path : ''}]
 
 console.log(sessionData)
 
@@ -225,13 +227,17 @@ function fileUploadInput(e) {
     }
     input.removeEventListener('change',handleUpload,false);
 
-    setSessionData(type,file);
+    if (activeWindow === 'html-selection') {
+      setSessionData(type,file);
+    };
   }
 }
 
 //UPLOAD FILE
 function uploadFile(parent,file) {
-  let fileUploadDisplay = $get('.file-upload-container',parent)[0];  
+  console.log('clicked');
+  let fileUploadDisplay = $get('.file-upload-container',parent)[0];
+  fileUploadDisplay.dataset.filePath = file.path;
   fileUploadDisplay.style.display = 'flex';
   let fileNameDisplay = $get('.file-upload-name',fileUploadDisplay)[0];
   fileNameDisplay.textContent = file.name;
@@ -239,7 +245,9 @@ function uploadFile(parent,file) {
 
 //UNLOAD FILE
 function unloadFile(el) {
+  console.log('clicked'); //FOR BOTH HTML AND EMAILS
   let container = el.parentElement.parentElement;
+  
   let root = container.parentElement;
   let input = $get('input',root)[0];
 
@@ -247,6 +255,15 @@ function unloadFile(el) {
     input.value = '';
   }
   container.style.display = 'none';
+
+  if (activeWindow === 'html-selection') {
+    let type = container.parentElement.id.substr(0,container.parentElement.id.indexOf('-'));
+    type = type.charAt(0).toUpperCase() + type.slice(1);
+
+    sessionData[activeWindow][type].name = '';
+    sessionData[activeWindow][type].path = '';
+    console.log(sessionData);
+  };
 }
 
 //BRAND DROPDOWN
@@ -290,6 +307,10 @@ function defaultSelection() {
 //ADD IMAGE TO WINDOW
 function buildImage(parent,file) {
 
+  console.log('clicked–image-add');
+  let type = parent.id.substr(0,parent.id.indexOf('-'));
+  console.log(type);
+
   let fileWrapper = $get('.image-file-container',parent)[0];
   let newImage = document.createElement('div');
   newImage.classList = 'file-upload-container';
@@ -313,8 +334,7 @@ function buildImage(parent,file) {
       }
 
       fileWrapper.appendChild(newImage);
-
-      
+      setSessionData(type,file);
     }
   };
 
@@ -438,24 +458,43 @@ function setSessionData(action,value) {
       sessionData[activeWindow][dataKey].path = value.path;
     }
   }
-  console.log(sessionData);
+
+  if (activeWindow === 'image-selection') {
+    console.log(action,value);
+  }
 }
 
 
 
 //LOAD AND APPLY SESSION DATA
 function loadSessionData() {
+  let data = sessionData[activeWindow];
   if (activeWindow === 'brand-selection') { //SETTING THE SESSION DATA FOR BRAND-SELECTION
     let brand = $get('#brand-selection-name');
-    if (sessionData[activeWindow].Brand) {
+    if (data.Brand) {
       brand.textContent = sessionData[activeWindow].Brand;
     }
 
     let slider = $get('#selection-slider');
-    if (sessionData[activeWindow].Default) {
+    if (data.Default) {
       $class(slider,'active','add');
       $class(slider,'non-active','remove');
     }
-    
   }
+
+  if(activeWindow === 'html-selection') { //SETTING THE SESSION DATA FOR HTML-UPLOADS
+    let uploadTypes = ['Alert','Coversheet'];
+    
+    for (let i = 0; i < uploadTypes.length; i++) {
+      let parent = $get(`#${uploadTypes[i].toLowerCase()}-upload`);
+      if (data[uploadTypes[i]].path.length) {
+        let uploadData = {
+          path : data[uploadTypes[i]].path,
+          name : data[uploadTypes[i]].name
+        };
+        uploadFile(parent,uploadData)
+      }
+    }
+  }
+
 }
