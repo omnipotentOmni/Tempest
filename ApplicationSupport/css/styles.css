@@ -531,7 +531,7 @@ body {
   opacity: 1;
 }
 
-#alternate-image-upload .note {
+#alternate-image-upload .note, #image-upload-section .note {
   font-style: oblique;
   font-size: 0.7rem;
   text-align: center;

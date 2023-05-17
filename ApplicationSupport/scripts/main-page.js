@@ -40,8 +40,8 @@ let activeWindow = '';
 
 let sessionData = {
   "brand-selection" : {
-    "Brand" : "",
-    "Default" : false,
+    "brand" : "",
+    "default" : false,
   },
   "html-selection" : {
     "Alert" : {
@@ -54,11 +54,12 @@ let sessionData = {
     }
   },
   "image-selection" : {
-    "Primary" : {
-      "ImagePath" : "",
-      "FPO" : true
+    "primary" : {
+      "name" : "",
+      "path" : "",
+      "fpo" : true
     },
-    "Alternate" : []
+    "alternate" : []
   }
 };
 
@@ -245,9 +246,9 @@ function uploadFile(parent,file) {
 
 //UNLOAD FILE
 function unloadFile(el) {
-  console.log('clicked'); //FOR BOTH HTML AND EMAILS
+  console.log('clicked'); //FOR BOTH HTML AND IMAGES
   let container = el.parentElement.parentElement;
-  
+
   let root = container.parentElement;
   let input = $get('input',root)[0];
 
@@ -259,11 +260,23 @@ function unloadFile(el) {
   if (activeWindow === 'html-selection') {
     let type = container.parentElement.id.substr(0,container.parentElement.id.indexOf('-'));
     type = type.charAt(0).toUpperCase() + type.slice(1);
+    console.log(type);
 
     sessionData[activeWindow][type].name = '';
     sessionData[activeWindow][type].path = '';
     console.log(sessionData);
   };
+
+  if (activeWindow === 'image-selection') {
+    let type = input.id.substr(0,input.id.indexOf('-'));
+    
+    sessionData[activeWindow][type].name = '';
+    sessionData[activeWindow][type].path = '';
+
+    if (type === 'primary') {
+      sessionData[activeWindow][type].fpo = true;
+    }
+  }
 }
 
 //BRAND DROPDOWN
@@ -306,10 +319,8 @@ function defaultSelection() {
 
 //ADD IMAGE TO WINDOW
 function buildImage(parent,file) {
-
-  console.log('clicked–image-add');
+  console.log(parent,file);
   let type = parent.id.substr(0,parent.id.indexOf('-'));
-  console.log(type);
 
   let fileWrapper = $get('.image-file-container',parent)[0];
   let newImage = document.createElement('div');
@@ -326,12 +337,14 @@ function buildImage(parent,file) {
       let name = $get('.file-upload-name',newImage)[0];
       name.textContent = file.name;
 
-      if (parent.id.includes('primary')) {
-        if (fileWrapper.innerHTML == '') {
-          $get('#selection-button-base').click();
-        }
-        fileWrapper.innerHTML = '';
-      }
+      //FPO – FPO WAS REMOVED
+
+      // if (parent.id.includes('primary')) {
+      //   if (fileWrapper.innerHTML == '') {
+      //     $get('#selection-button-base').click();
+      //   }
+      //   fileWrapper.innerHTML = '';
+      // }
 
       fileWrapper.appendChild(newImage);
       setSessionData(type,file);
@@ -346,9 +359,11 @@ function deleteImageFile(e) {
   let parent = e.parentElement.parentElement.parentElement.parentElement;
   e.parentElement.parentElement.remove();
 
-  if (parent.id.includes('primary')) {
-    $get('#selection-button-base').click();
-  }
+  //FPO – FPO WAS REMOVED
+  
+  // if (parent.id.includes('primary')) {
+  //   $get('#selection-button-base').click();
+  // }
 
   unloadFile(e);
 }
@@ -428,18 +443,19 @@ async function loadBrands() {
 
 //SET SESSION DATA
 function setSessionData(action,value) {
+  let dataType = sessionData[activeWindow];
   let dataKey;
   if (activeWindow === 'brand-selection') { // SETTING THE DATA FOR BRAND-SELECTION
     
     if (action === 'brand-select') {
-      dataKey = 'Brand';
+      dataKey = 'brand';
     };
     if (action === 'default-slider') {
-      dataKey = 'Default';
+      dataKey = 'default';
     };
 
     if (dataKey) {
-      sessionData[activeWindow][dataKey] = value;
+      dataType[dataKey] = value;
     }
 
   };
@@ -454,13 +470,20 @@ function setSessionData(action,value) {
     };
 
     if (dataKey) {
-      sessionData[activeWindow][dataKey].name = value.name;
-      sessionData[activeWindow][dataKey].path = value.path;
+      dataType[dataKey].name = value.name;
+      dataType[dataKey].path = value.path;
     }
   }
 
   if (activeWindow === 'image-selection') {
-    console.log(action,value);
+    if (action === 'primary') {
+      dataType.primary.name = value.name;
+      dataType.primary.path = value.path;
+      setSessionData('default-slider',false);
+    };
+    if (action === 'default-slider') {
+      dataType.primary.fpo = value;
+    };
   }
 }
 
@@ -471,12 +494,12 @@ function loadSessionData() {
   let data = sessionData[activeWindow];
   if (activeWindow === 'brand-selection') { //SETTING THE SESSION DATA FOR BRAND-SELECTION
     let brand = $get('#brand-selection-name');
-    if (data.Brand) {
-      brand.textContent = sessionData[activeWindow].Brand;
+    if (data.brand) {
+      brand.textContent = sessionData[activeWindow].brand;
     }
 
     let slider = $get('#selection-slider');
-    if (data.Default) {
+    if (data.default) {
       $class(slider,'active','add');
       $class(slider,'non-active','remove');
     }
@@ -494,6 +517,17 @@ function loadSessionData() {
         };
         uploadFile(parent,uploadData)
       }
+    }
+  }
+
+  if(activeWindow === 'image-selection') {
+    if (data.primary.name) {
+      let parent = $get('#primary-image-upload');
+      let primaryImage = {
+        "name" : data.primary.name,
+        "path" : data.primary.path
+      };
+      buildImage(parent,primaryImage);
     }
   }
 
