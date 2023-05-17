@@ -559,7 +559,7 @@ body {
   margin-top: 12px;
   margin-bottom: 3px;
   font-size: $font--xsmall;
-  flex-flow: row nowrap;
+  flex-flow: row nowrap !important;
   position: relative;
 
   & .file-delete-icon-wrapper {
@@ -647,6 +647,10 @@ body {
     font-size: $font--xsmall;
     text-align: center;
     padding-bottom: $padding--xxsmall;
+
+    & .image-file-container {
+      flex-wrap: nowrap;
+    }
   }
 }
 

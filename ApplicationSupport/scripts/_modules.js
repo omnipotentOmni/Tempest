@@ -26,7 +26,16 @@ function $get(el, parent) {
   return value;
 }
 
-//----------------------------------------------------------ADD - $add(CLASSNAME) - classList.add...
+//----------------------------------------------------------CLASS LIST MODIFICATION - $add(CLASSNAME) - classList.add...
 function $class(source,className,action) {
   return source.classList[action](className);
+}
+
+
+
+
+//----------------------------------------------------------RANDOM KEY GENERATOR - $genKey(string) – returns a random key w/ prefix
+function $genKey(prefix) {
+  let key = prefix + (Math.random() + 1).toString(36).slice(2,12);
+  return key;
 }

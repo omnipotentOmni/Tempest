@@ -460,7 +460,7 @@ body {
   margin-top: 12px;
   margin-bottom: 3px;
   font-size: 0.7rem;
-  flex-flow: row nowrap;
+  flex-flow: row nowrap !important;
   position: relative;
 }
 .file-upload-container .file-delete-icon-wrapper {
@@ -536,6 +536,9 @@ body {
   font-size: 0.7rem;
   text-align: center;
   padding-bottom: 5px;
+}
+#alternate-image-upload .note .image-file-container, #image-upload-section .note .image-file-container {
+  flex-wrap: nowrap;
 }
 
 .preview {

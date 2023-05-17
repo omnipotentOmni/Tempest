@@ -39,16 +39,19 @@ let templateItem = $get('.templateBtn',templateSelector);
 let activeWindow = '';
 
 let sessionData = {
+  "template-selection" : {
+    "type" : ""
+  },
   "brand-selection" : {
     "brand" : "",
     "default" : false,
   },
   "html-selection" : {
-    "Alert" : {
+    "alert" : {
       "name" : "",
       "path" : ""
     },
-    "Coversheet" : {
+    "coversheet" : {
       "name" : "",
       "path" : ""
     }
@@ -77,6 +80,7 @@ function templateType(el) {
   }
   if (!toggle) {
     $class(el,'active','add');
+    sessionData['template-selection'].type = el.dataset.type;
   }else {
     $class(el,'active','remove');
   }
@@ -221,6 +225,11 @@ function fileUploadInput(e) {
 
   function handleUpload(evt) {
     let file = evt.target.files[0];
+    if (activeWindow === 'image-selection') {
+      let el = evt.target.id;
+      let type = el.substr(0,el.indexOf('-'));
+      file.id = $genKey(`${type}-image-`);
+    }
     if (type.includes('image')) {
       buildImage(e.parentElement,file);
     }else {
@@ -246,13 +255,26 @@ function uploadFile(parent,file) {
 
 //UNLOAD FILE
 function unloadFile(el) {
+  console.log(el.parentElement.parentElement); // gets the id of primary or alt
   console.log('clicked'); //FOR BOTH HTML AND IMAGES
   let container = el.parentElement.parentElement;
 
-  let root = container.parentElement;
+  let root;
+
+  if (activeWindow === 'html-selction') {
+    root = container.parentElement;
+  };
+
+  if (activeWindow === 'image-selection') {
+    let type = container.id.substr(0,container.id.indexOf('-'));
+    root = $get(`#${type}-image-upload`);
+    console.log(root);
+  }
+
   let input = $get('input',root)[0];
 
   if (input.files.length) {
+    console.log('removing');
     input.value = '';
   }
   container.style.display = 'none';
@@ -260,21 +282,26 @@ function unloadFile(el) {
   if (activeWindow === 'html-selection') {
     let type = container.parentElement.id.substr(0,container.parentElement.id.indexOf('-'));
     type = type.charAt(0).toUpperCase() + type.slice(1);
-    console.log(type);
 
     sessionData[activeWindow][type].name = '';
     sessionData[activeWindow][type].path = '';
-    console.log(sessionData);
   };
 
   if (activeWindow === 'image-selection') {
     let type = input.id.substr(0,input.id.indexOf('-'));
-    
-    sessionData[activeWindow][type].name = '';
-    sessionData[activeWindow][type].path = '';
+    let data = sessionData[activeWindow][type];
 
     if (type === 'primary') {
-      sessionData[activeWindow][type].fpo = true;
+      data.name = '';
+      data.path = '';  
+      data.fpo = true;
+    };
+
+    if (type === 'alternate') {
+      let imgDelete = container.id;
+      const indexToRemove = data.findIndex(obj => obj.name === imgDelete);
+
+      data.splice(indexToRemove, 1);
     }
   }
 }
@@ -318,13 +345,16 @@ function defaultSelection() {
 }
 
 //ADD IMAGE TO WINDOW
-function buildImage(parent,file) {
-  console.log(parent,file);
+function buildImage(parent,file,reload) {
+
   let type = parent.id.substr(0,parent.id.indexOf('-'));
+
+  
 
   let fileWrapper = $get('.image-file-container',parent)[0];
   let newImage = document.createElement('div');
   newImage.classList = 'file-upload-container';
+  newImage.id = file.id;
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', './templates/_image-file-upload.htm');
@@ -345,9 +375,14 @@ function buildImage(parent,file) {
       //   }
       //   fileWrapper.innerHTML = '';
       // }
-
+      if (activeWindow === 'image-selection' && sessionData[activeWindow][type].name.length) {
+        fileWrapper.innerHTML = '';
+      }
       fileWrapper.appendChild(newImage);
-      setSessionData(type,file);
+
+      if (!reload) {
+        setSessionData(type,file);
+      }
     }
   };
 
@@ -360,7 +395,7 @@ function deleteImageFile(e) {
   e.parentElement.parentElement.remove();
 
   //FPO – FPO WAS REMOVED
-  
+
   // if (parent.id.includes('primary')) {
   //   $get('#selection-button-base').click();
   // }
@@ -462,12 +497,7 @@ function setSessionData(action,value) {
 
   if (activeWindow === 'html-selection') { // SETTING THE DATA FOR HTML UPLOAD
     
-    if (action === 'alert') {
-      dataKey = 'Alert'
-    };
-    if (action === 'coversheet') {
-      dataKey = 'Coversheet'
-    };
+    dataKey = action;
 
     if (dataKey) {
       dataType[dataKey].name = value.name;
@@ -479,11 +509,19 @@ function setSessionData(action,value) {
     if (action === 'primary') {
       dataType.primary.name = value.name;
       dataType.primary.path = value.path;
-      setSessionData('default-slider',false);
+      setSessionData('default-slider');
     };
     if (action === 'default-slider') {
       dataType.primary.fpo = value;
     };
+    if (action === 'alternate') {
+      let img = {
+        "id" : value.id,
+        "name" : value.name,
+        "path" : value.path
+      };
+      dataType.alternate.push(img);
+    }
   }
 }
 
@@ -506,7 +544,7 @@ function loadSessionData() {
   }
 
   if(activeWindow === 'html-selection') { //SETTING THE SESSION DATA FOR HTML-UPLOADS
-    let uploadTypes = ['Alert','Coversheet'];
+    let uploadTypes = ['alert','coversheet'];
     
     for (let i = 0; i < uploadTypes.length; i++) {
       let parent = $get(`#${uploadTypes[i].toLowerCase()}-upload`);
@@ -527,8 +565,38 @@ function loadSessionData() {
         "name" : data.primary.name,
         "path" : data.primary.path
       };
-      buildImage(parent,primaryImage);
+      buildImage(parent,primaryImage,true);
+    };
+    if (data.alternate.length) {
+      let parent = $get('#alternate-image-upload');
+      for (let el of data.alternate) {
+        let image = {
+          "id" : el.id,
+          "name" : el.name,
+          "path" : el.path
+        };
+        buildImage(parent, image,true);
+      }
     }
   }
-
 }
+
+function checkData() {
+
+  //CHECK ALERT TYPE – an alert type IS required
+  let alert = sessionData['template-selection'].type;
+  
+  //CHECK BRAND – brand IS required
+  let brand = sessionData['brand-selection'].brand;
+
+  //CHECK HTML – alert & coversheet ARE required
+  let alertHTML = sessionData['html-selection'].alert.name;
+  let coversheetHTML = sessionData['html-selection'].coversheet.name;
+
+  //CHECK IMAGES – images are optional, Primary image will show as "FPO" if not selected
+  let primaryImage = sessionData['image-selection'].primary.name;
+  let alternateImage = sessionData['image-selection'].alternate; //IS AN ARRAY AND WILL NEED TO ITERATE THROUGH
+
+  console.log(sessionData);
+}
+
