@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" id="main-html">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,10 +25,16 @@
             <div class="btn templateBtn" onclick="templateType(this)" data-type="epocrates">
               <img src="../images/app-images/logo--ecpocrates_ko.png">
             </div>
-            <div id="submit-btn" class="btn active" onclick="checkData()">Build Template</div>
+            <div class="break"></div>
+            <div id="completion-section">
+              <div class="completion-image incomplete" id="icon-brand" data-complete="Missing"></div>
+              <div class="completion-image incomplete" id="icon-html" data-complete="Missing"></div>
+              <div class="completion-image incomplete" id="icon-image" data-complete="No Images Selected"></div>
+            </div>
+            <div id="submit-btn" class="btn disable" onclick="buildTemplate()">Build Template</div>
           </div>
         </div>
-        <div id="template-data">
+        <div id="template-data" class="disable">
           <div id="template-data-header">
             <div id="header-brand" class="header-item" onclick="swapWindow(this)" data-title="brand-selection" data-function="brandSelection">
               <div id="icon-brand-select" class="header-bar">

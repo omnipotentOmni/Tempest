@@ -66,24 +66,29 @@ let sessionData = {
   }
 };
 
-//alertnate images = [{name : '',path : ''}]
-
 console.log(sessionData)
 
 function templateType(el) {
+  let templateData = $get('#template-data');
   let toggle = false;
   if ($class(el,'active','contains')) {
     toggle = true;
   }
   for (let item of templateItem) {
     $class(item,'active','remove');
+    sessionData['template-selection'].type = '';
+    $class(templateData,'disable','add');
   }
   if (!toggle) {
     $class(el,'active','add');
     sessionData['template-selection'].type = el.dataset.type;
+    $class(templateData,'disable','remove');
   }else {
     $class(el,'active','remove');
+    sessionData['template-selection'].type = '';
+    $class(templateData,'disable','add');
   }
+  checkData();
 }
 
 //WINDOW CHOICES
@@ -96,6 +101,7 @@ async function swapWindow(selection) {
 
   let windowTitle = selection.dataset.title;
   activeWindow = windowTitle;
+
   let xhr = new XMLHttpRequest();
   xhr.open('GET', `./templates/_${windowTitle}.htm`);
   xhr.responseType = 'text';
@@ -132,6 +138,7 @@ async function swapWindow(selection) {
   if (windowTitle === 'brand-selection') {
     loadBrands();
   }
+  
   loadSessionData();
 }
 
@@ -245,7 +252,6 @@ function fileUploadInput(e) {
 
 //UPLOAD FILE
 function uploadFile(parent,file) {
-  console.log('clicked');
   let fileUploadDisplay = $get('.file-upload-container',parent)[0];
   fileUploadDisplay.dataset.filePath = file.path;
   fileUploadDisplay.style.display = 'flex';
@@ -256,7 +262,6 @@ function uploadFile(parent,file) {
 //UNLOAD FILE
 function unloadFile(el) {
   console.log(el.parentElement.parentElement); // gets the id of primary or alt
-  console.log('clicked'); //FOR BOTH HTML AND IMAGES
   let container = el.parentElement.parentElement;
 
   let root;
@@ -268,26 +273,35 @@ function unloadFile(el) {
   if (activeWindow === 'image-selection') {
     let type = container.id.substr(0,container.id.indexOf('-'));
     root = $get(`#${type}-image-upload`);
-    console.log(root);
   }
 
   let input = $get('input',root)[0];
 
   if (input.files.length) {
-    console.log('removing');
     input.value = '';
   }
   container.style.display = 'none';
 
   if (activeWindow === 'html-selection') {
     let type = container.parentElement.id.substr(0,container.parentElement.id.indexOf('-'));
-    type = type.charAt(0).toUpperCase() + type.slice(1);
+
+    console.log(sessionData,activeWindow,type);
 
     sessionData[activeWindow][type].name = '';
     sessionData[activeWindow][type].path = '';
   };
 
   if (activeWindow === 'image-selection') {
+
+    let primaryContainer = $get('#primary-image-upload');
+    let primaryImage = $get('.image-file-container',primaryContainer)[0];
+    let altImageContainer = $get('#alternate-image-upload');  
+    if (!primaryImage.innerHTML) {
+      $class(altImageContainer, 'disable', 'add');
+    }else {
+      $class(altImageContainer, 'disable', 'remove');
+    }
+
     let type = input.id.substr(0,input.id.indexOf('-'));
     let data = sessionData[activeWindow][type];
 
@@ -304,6 +318,7 @@ function unloadFile(el) {
       data.splice(indexToRemove, 1);
     }
   }
+  checkData();
 }
 
 //BRAND DROPDOWN
@@ -375,7 +390,7 @@ function buildImage(parent,file,reload) {
       //   }
       //   fileWrapper.innerHTML = '';
       // }
-      if (activeWindow === 'image-selection' && sessionData[activeWindow][type].name.length) {
+      if (activeWindow === 'image-selection' && !sessionData[activeWindow][type].length) {
         fileWrapper.innerHTML = '';
       }
       fileWrapper.appendChild(newImage);
@@ -432,7 +447,6 @@ function toggleMask(e) {
 
 //LOADING THE BRANDS
 async function loadBrands() {
-
   //CREATING THE BRAND DATA (DROP DOWN)
   let brandData;
   try {
@@ -506,6 +520,16 @@ function setSessionData(action,value) {
   }
 
   if (activeWindow === 'image-selection') {
+
+    let primaryContainer = $get('#primary-image-upload');
+    let primaryImage = $get('.image-file-container',primaryContainer)[0];
+    let altImageContainer = $get('#alternate-image-upload');  
+    if (!primaryImage.innerHTML) {
+      $class(altImageContainer, 'disable', 'add');
+    }else {
+      $class(altImageContainer, 'disable', 'remove');
+    }
+
     if (action === 'primary') {
       dataType.primary.name = value.name;
       dataType.primary.path = value.path;
@@ -523,6 +547,7 @@ function setSessionData(action,value) {
       dataType.alternate.push(img);
     }
   }
+  checkData();
 }
 
 
@@ -559,6 +584,14 @@ function loadSessionData() {
   }
 
   if(activeWindow === 'image-selection') {
+
+    let altImageContainer = $get('#alternate-image-upload');  
+    if (!data.primary.name) {
+      $class(altImageContainer, 'disable', 'add');
+    }else {
+      $class(altImageContainer, 'disable', 'remove');
+    }
+
     if (data.primary.name) {
       let parent = $get('#primary-image-upload');
       let primaryImage = {
@@ -579,24 +612,102 @@ function loadSessionData() {
       }
     }
   }
+  checkData();
 }
 
+
+//CHECK TO SEE IF REQUIRED ELEMENTS ARE FILLED IN
 function checkData() {
+  let btn = $get('#submit-btn');
 
   //CHECK ALERT TYPE – an alert type IS required
   let alert = sessionData['template-selection'].type;
   
   //CHECK BRAND – brand IS required
   let brand = sessionData['brand-selection'].brand;
+  let brandIcon = $get('#icon-brand');
+
+  if (brand.length) {
+    brandIcon.dataset.complete = 'Complete'
+    $class(brandIcon,'complete','add');
+  }else {
+    brandIcon.dataset.complete = 'Missing'
+    $class(brandIcon,'complete','remove');
+  }
 
   //CHECK HTML – alert & coversheet ARE required
   let alertHTML = sessionData['html-selection'].alert.name;
   let coversheetHTML = sessionData['html-selection'].coversheet.name;
+  let htmlIcon = $get('#icon-html');
+
+  if (alertHTML && coversheetHTML) {
+    htmlIcon.dataset.complete = 'Complete'
+    $class(htmlIcon,'complete','add');
+  }else {
+    htmlIcon.dataset.complete = 'Missing'
+    $class(htmlIcon,'complete','remove');
+  }
 
   //CHECK IMAGES – images are optional, Primary image will show as "FPO" if not selected
   let primaryImage = sessionData['image-selection'].primary.name;
   let alternateImage = sessionData['image-selection'].alternate; //IS AN ARRAY AND WILL NEED TO ITERATE THROUGH
+  let imageIcon = $get('#icon-image');
 
+  if (primaryImage) {
+    $class(imageIcon,'complete','add');
+    if (alternateImage.length) {
+      imageIcon.dataset.complete = 'Primary & Alt Image Loaded';
+    }else {
+      imageIcon.dataset.complete = 'Primary Image Loaded';
+    }
+  }else {
+    $class(imageIcon,'complete','remove');
+    imageIcon.dataset.complete = 'No Images Selected';
+  }
+
+  if (alert && brand.length && alertHTML && coversheetHTML) {
+    $class(btn,'disable','remove');
+  }else {
+    $class(btn,'disable','add');
+  }
+}
+
+
+
+
+async function buildTemplate() {
   console.log(sessionData);
+  let html = $get('#main-html');
+  html.innerHTML = '';
+  
+
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', `./templates/doximity.htm`);
+  xhr.responseType = 'text';
+
+  const sendRequest = new Promise((resolve, reject) => {
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        let parser = new DOMParser();
+        let htmlDoc = parser.parseFromString(xhr.responseText, 'text/html');
+        let htmlContent = htmlDoc.documentElement.innerHTML;
+
+        html.innerHTML = htmlContent;
+
+        resolve();
+      } else {
+        reject(new Error(`Error: Template did not load. Please contact Support.`));
+      }
+    };
+
+    xhr.onerror = function () {
+      reject(new Error('An error occurred while making the request.'));
+    };
+
+    xhr.send(); // Send the request
+  });
+
+  await sendRequest;
+  ipcRenderer.send('resize-window');
 }
 

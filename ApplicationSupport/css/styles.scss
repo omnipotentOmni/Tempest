@@ -7,6 +7,7 @@ $color--xlight: #413f53;
 $color--highlight: #502ae4;
 $color--green: #2ae497;
 $color--warning: #e42a49;
+$color--hazard: #e4ce2a;
 $color--white50: rgba(255,255,255,.5);
 
 //BORDERS
@@ -36,6 +37,12 @@ $timing--slow: 1s;
 $timing--normal: .5s;
 $timing--fast: .25s;
 
+//ICONS
+$img-icon-brand: url(../images/app-images/icon--brand.png);
+$img-icon-html: url(../images/app-images/icon--html.png);
+$img-icon-image: url(../images/app-images/icon--image.png);
+
+
 
 //RESETS
 html, body {
@@ -55,6 +62,7 @@ p {
 
 //GLOBAL
 .disable {
+  opacity: .5;
   pointer-events: none;
 }
 
@@ -170,7 +178,7 @@ body {
     margin-bottom: 24px;
   }
 
-  & img {
+  & .templateBtn img {
     width: 100px;
   }
 
@@ -194,19 +202,114 @@ body {
   & #submit-btn {
     position: absolute;
     bottom: 25px;
-    opacity: .5;
-    pointer-events: none;
+    opacity: 1;
+    background: $color--highlight;
+
+    &.disable {
+      opacity: .25;
+      background: $color--xlight;
+    }
 
     &:hover {
       opacity: 1;
-    }
-
-    &.active {
-      pointer-events: all;
       background: $color--highlight;
     }
   }
 
+}
+
+#completion-section {
+  display: flex;
+  flex-flow: row wrap;
+  width: 75px;
+  height: 325px;
+  align-content: center;
+  justify-content: center;
+}
+
+$prefix: 'Hello World';
+
+.completion-image {
+  display: flex;
+  flex-flow: row wrap;
+  // margin: 0 30px;
+  background: $color--xlight;
+  width: 50px;
+  height: 50px;
+  margin: 25px 0px;
+  border-radius: 100%;
+  background-repeat: no-repeat;
+  background-size: 35px;
+  background-position: center;
+  position: relative;
+  font-size: $font--small;
+  transition: all $timing--fast;
+
+  &.complete {
+    background-color: $color--green;
+    animation-name: sizeAnimation;
+    animation-duration: $timing--normal;
+    animation-fill-mode: forwards;
+
+    @keyframes sizeAnimation {
+      0% {
+        width: 50px;
+        height: 50px;
+      }
+      50% {
+        width: 75px;
+        height: 75px;
+        margin: 12.5px 0px;
+      }
+      100% {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+  &::after {
+    position: absolute;
+    width: 125px;
+    text-align: center;
+    left: 50%;
+    content: " ";
+    transform: translateX(-50%);
+    top: -35px;
+    opacity: 0;
+    transition: all $timing--fast;
+    white-space: pre;
+  }
+
+  &:hover::after {
+    opacity: .5;
+    transition: all $timing--fast;
+  }
+
+
+
+  &#icon-brand {
+    background-image: $img-icon-brand;
+    &:hover::after {
+      content: "Brand Selection:\A" attr(data-complete);
+    }
+  }
+
+  &#icon-html {
+    background-image: $img-icon-html;
+
+    &:hover::after {
+      content: "HTML Selection:\A" attr(data-complete);
+    }
+  }
+
+  &#icon-image {
+    background-image: $img-icon-image;
+
+    &:hover::after {
+      content: "Image Selection:\A" attr(data-complete);
+    }
+  }
 }
 
 //MAIN PAGE - RIGHT

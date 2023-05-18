@@ -13,6 +13,7 @@ p {
 }
 
 .disable {
+  opacity: 0.5;
   pointer-events: none;
 }
 
@@ -117,7 +118,7 @@ body {
 #template-select h1 {
   margin-bottom: 24px;
 }
-#template-select img {
+#template-select .templateBtn img {
   width: 100px;
 }
 #template-select .btn {
@@ -136,15 +137,96 @@ body {
 #template-select #submit-btn {
   position: absolute;
   bottom: 25px;
-  opacity: 0.5;
-  pointer-events: none;
+  opacity: 1;
+  background: #502ae4;
+}
+#template-select #submit-btn.disable {
+  opacity: 0.25;
+  background: #413f53;
 }
 #template-select #submit-btn:hover {
   opacity: 1;
-}
-#template-select #submit-btn.active {
-  pointer-events: all;
   background: #502ae4;
+}
+
+#completion-section {
+  display: flex;
+  flex-flow: row wrap;
+  width: 75px;
+  height: 325px;
+  align-content: center;
+  justify-content: center;
+}
+
+.completion-image {
+  display: flex;
+  flex-flow: row wrap;
+  background: #413f53;
+  width: 50px;
+  height: 50px;
+  margin: 25px 0px;
+  border-radius: 100%;
+  background-repeat: no-repeat;
+  background-size: 35px;
+  background-position: center;
+  position: relative;
+  font-size: 0.75rem;
+  transition: all 0.25s;
+}
+.completion-image.complete {
+  background-color: #2ae497;
+  animation-name: sizeAnimation;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+@keyframes sizeAnimation {
+  0% {
+    width: 50px;
+    height: 50px;
+  }
+  50% {
+    width: 75px;
+    height: 75px;
+    margin: 12.5px 0px;
+  }
+  100% {
+    width: 50px;
+    height: 50px;
+  }
+}
+.completion-image::after {
+  position: absolute;
+  width: 125px;
+  text-align: center;
+  left: 50%;
+  content: " ";
+  transform: translateX(-50%);
+  top: -35px;
+  opacity: 0;
+  transition: all 0.25s;
+  white-space: pre;
+}
+.completion-image:hover::after {
+  opacity: 0.5;
+  transition: all 0.25s;
+}
+.completion-image#icon-brand {
+  background-image: url(../images/app-images/icon--brand.png);
+}
+.completion-image#icon-brand:hover::after {
+  content: "Brand Selection:\a" attr(data-complete);
+}
+.completion-image#icon-html {
+  background-image: url(../images/app-images/icon--html.png);
+}
+.completion-image#icon-html:hover::after {
+  content: "HTML Selection:\a" attr(data-complete);
+}
+.completion-image#icon-image {
+  background-image: url(../images/app-images/icon--image.png);
+}
+.completion-image#icon-image:hover::after {
+  content: "Image Selection:\a" attr(data-complete);
 }
 
 #template-data {

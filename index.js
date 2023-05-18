@@ -32,6 +32,11 @@ ipcMain.on('get-dir-path', (event) => {
   event.returnValue = dir;
 });
 
+ipcMain.on('resize-window', (event) => {
+  const mainWindow = BrowserWindow.getFocusedWindow(); 
+  mainWindow.setSize(1400, 900);
+})
+
 const icon = __dirname + 'icon.icns';
 
 
