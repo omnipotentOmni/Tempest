@@ -37,6 +37,11 @@ ipcMain.on('resize-window', (event) => {
   mainWindow.setSize(1400, 900);
 })
 
+ipcMain.on('resize-window-default', (event) => {
+  const mainWindow = BrowserWindow.getFocusedWindow(); 
+  mainWindow.setSize(1060, 700);
+})
+
 const icon = __dirname + 'icon.icns';
 
 

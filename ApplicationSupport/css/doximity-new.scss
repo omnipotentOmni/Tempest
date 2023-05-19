@@ -63,6 +63,14 @@ body {
   box-sizing: border-box;
 }
 
+#preview-image {
+  overflow: hidden;
+
+  & img {
+    width: 100%;
+  }
+}
+
 //---------------------------------------------------------COLUMN LEFT - GLOBAL
 
 #column-left {
@@ -106,8 +114,12 @@ body {
       width: 125px;
       height: 75px;
       margin: 8px;
-      background: #6e6e6e;
       box-sizing: border-box;
+      overflow: hidden;
+
+      & img {
+        width: 100%;
+      }
     }
   }
 }
@@ -233,7 +245,8 @@ body {
           &.fpo {
             display: flex;
             font-weight: 700;
-            font-size: 3rem;
+            font-size: 4rem;
+            color: #fff;
   
             &::before {
               content: 'FPO';
@@ -479,7 +492,8 @@ body {
           &.fpo {
             display: flex;
             font-weight: 700;
-            font-size: 3rem;
+            font-size: 4rem;
+            color: #fff;
   
             &::before {
               content: 'FPO';

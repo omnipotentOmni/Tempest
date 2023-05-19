@@ -27,6 +27,7 @@
 
 //TEMPLATE SELECTION
 const path = require('path');
+var fs = require('fs');
 
 const { ipcRenderer } = require('electron');
 let dir = ipcRenderer.sendSync('get-dir-path');
@@ -678,8 +679,8 @@ function checkData() {
 async function buildTemplate() {
   console.log(sessionData);
   let html = $get('#main-html');
-  html.innerHTML = '';
-  
+  let htmlContent;
+  // html.innerHTML = '';
 
   let xhr = new XMLHttpRequest();
   xhr.open('GET', `./templates/doximity.htm`);
@@ -690,7 +691,7 @@ async function buildTemplate() {
       if (xhr.status === 200) {
         let parser = new DOMParser();
         let htmlDoc = parser.parseFromString(xhr.responseText, 'text/html');
-        let htmlContent = htmlDoc.documentElement.innerHTML;
+        htmlContent = htmlDoc.documentElement.innerHTML;
 
         html.innerHTML = htmlContent;
 
@@ -709,5 +710,92 @@ async function buildTemplate() {
 
   await sendRequest;
   ipcRenderer.send('resize-window');
+
+  // ----------- PROCESS UPLOADED TITLES
+  let alertTitles = [];
+  for (let title of gatherTitles()) {
+    alertTitles.push(title.textContent);
+  }
+  let titleContainer = $get('#title-options');
+  let primaryTitle = $get('#preview-title');
+  primaryTitle.textContent = alertTitles[0];
+  for (let title of alertTitles) {
+    titleContainer.appendChild(processTitles(title));
+  }
+
+  // ----------- PROCESS UPLOADED IMAGES
+  let altImages = [];
+  processImages();
+
 }
 
+ipcRenderer.send('resize-window-default');
+
+
+
+
+
+function gatherTitles() {
+  let data = sessionData['html-selection'].coversheet.path;
+  let csData = fs.readFileSync(data, { encoding: 'utf8', flag: 'r' });
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(csData, 'text/html');
+  const csTitles = doc.querySelectorAll('.body_copy');
+  return csTitles;
+}
+
+function processTitles(data) {
+  let url = fs.readFileSync(`${__dir}/ApplicationSupport/html/templates/_title-item.htm`);
+  let parser = new DOMParser();
+  let doc = parser.parseFromString(url, 'text/html');
+
+  let titleBlob = $get('.title-item',doc)[0];
+  let titleText = $get('.alert-title',titleBlob)[0];
+  let titleChar = $get('.alert-char-count',titleBlob)[0].getElementsByTagName('span')[0];
+
+  titleText.textContent = data;
+  titleChar.textContent = data.length;
+
+  return titleBlob;
+}
+
+function processImages() {
+  let images = [];
+  let data = sessionData['image-selection'];
+  
+  //getting the primary image
+  let primaryImage = $get('#preview-image');
+  if (data.primary.fpo) {
+    $class(primaryImage,'fpo','add');
+  }else {
+    let image = document.createElement('img');
+    image.src = data.primary.path;
+    primaryImage.appendChild(image);
+  }
+
+  //getting alternate images
+  if (data.alternate.length) {
+    $class(primaryImage,'variable-container','add');
+    $class(primaryImage, 'blue','add');
+    let alternateImages = $get('#header-options');
+    alternateImages.appendChild(buildAltImage(data.primary.path));
+
+    for (let el of data.alternate) {
+      alternateImages.appendChild(buildAltImage(el.path));
+    };
+
+    function buildAltImage(path) {
+      let imageContainer = document.createElement('div');
+      imageContainer.classList = 'variable-image-item';
+      let img = document.createElement('img');
+      img.src = path;
+      imageContainer.appendChild(img);
+
+      return imageContainer;
+    }
+  }else {
+    let altContainer = $get('#alert-image-options');
+    altContainer.style.display = 'none';
+  }
+  
+}

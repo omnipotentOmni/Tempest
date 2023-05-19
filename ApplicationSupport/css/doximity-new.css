@@ -59,6 +59,13 @@ body.desktop {
   box-sizing: border-box;
 }
 
+#preview-image {
+  overflow: hidden;
+}
+#preview-image img {
+  width: 100%;
+}
+
 #column-left {
   width: 300px;
 }
@@ -94,8 +101,11 @@ body.desktop {
   width: 125px;
   height: 75px;
   margin: 8px;
-  background: #6e6e6e;
   box-sizing: border-box;
+  overflow: hidden;
+}
+#column-left #header-options .variable-image-item img {
+  width: 100%;
 }
 
 #template-version {
@@ -196,7 +206,8 @@ body.desktop {
 #container-main.mobile #column-center #doximity-preview-container #preview-image.fpo {
   display: flex;
   font-weight: 700;
-  font-size: 3rem;
+  font-size: 4rem;
+  color: #fff;
 }
 #container-main.mobile #column-center #doximity-preview-container #preview-image.fpo::before {
   content: "FPO";
@@ -389,7 +400,8 @@ body.desktop {
 #container-main.desktop #column-center #doximity-preview-container #preview-image.fpo {
   display: flex;
   font-weight: 700;
-  font-size: 3rem;
+  font-size: 4rem;
+  color: #fff;
 }
 #container-main.desktop #column-center #doximity-preview-container #preview-image.fpo::before {
   content: "FPO";
