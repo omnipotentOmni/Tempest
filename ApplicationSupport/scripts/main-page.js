@@ -67,6 +67,38 @@ let sessionData = {
   }
 };
 
+function testingEnv() {
+sessionData = {
+  "template-selection": {
+      "type": "doximity"
+  },
+  "brand-selection": {
+      "brand": "Brand 03",
+      "default": false
+  },
+  "html-selection": {
+      "alert": {
+          "name": "Doximity Alert_US-MMR-00003.html",
+          "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Doximity Alert_US-MMR-00003.html"
+      },
+      "coversheet": {
+          "name": "Title sheet_US-MMR-00003.html",
+          "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Title sheet_US-MMR-00003.html"
+      }
+  },
+  "image-selection": {
+      "primary": {
+          "name": "",
+          "path": "",
+          "fpo": true
+      },
+      "alternate": []
+  }
+}
+checkData();
+let btn = $get('#submit-btn').click();
+}
+
 console.log(sessionData)
 
 function templateType(el) {
@@ -727,6 +759,33 @@ async function buildTemplate() {
   let altImages = [];
   processImages();
 
+  // ----------- APPLY SELECTED BRAND
+  let brand = getBrand();
+  console.log(brand);
+  let brandChip = $get('#alert-brand-chip');
+
+  let img = document.createElement('img');
+  img.src = `${__dir}/ApplicationSupport/images/brand-chips/${brand['Brand Chips'].mobile}`;
+  brandChip.appendChild(img);
+
+  // ----------- ADD IFRAME
+  let alert = $get('#alert-body');
+
+  let frame = $get('#alert-display');
+  frame.src = sessionData['html-selection'].alert.path;
+
+  frame.addEventListener('load', () => {
+    let iframeContainer = frame.contentWindow.document.getElementById('campaign-alert-container');
+    iframeContainer.style.paddingBottom = '0px';
+    let contentHeight = frame.contentWindow.document.body.scrollHeight;
+    frame.style.height = contentHeight + 'px';
+
+    let title = frame.contentWindow.document.getElementsByTagName('h1')[0];
+    title.style.border = '1px solid red';
+    title.style.margin = '-5px';
+    title.style.padding = '5px';
+
+  });
 }
 
 ipcRenderer.send('resize-window-default');
@@ -796,6 +855,50 @@ function processImages() {
   }else {
     let altContainer = $get('#alert-image-options');
     altContainer.style.display = 'none';
-  }
+  };
+}
+
+//GETTING THE BRAND
+function getBrand() {
+  let brandMaster = JSON.parse(fs.readFileSync(`${__dir}/ApplicationData/BrandData/brand-list.json`));
+  let selectedBrand = sessionData['brand-selection'].brand;
+
   
+
+  return brandMaster.find(obj => obj.BrandName === selectedBrand);
+}
+
+
+
+//-------------------------------------------------------- TEMPLATE
+function switchView(type,el) {
+  let currentActive = $get('.active-view')[0];
+  let targetView = el;
+
+  if (currentActive) {
+    $class(currentActive,'active-view','remove');
+  };
+  $class(targetView,'active-view','add');
+  
+  let body = document.getElementsByTagName('body')[0];
+  let content = $get('#container-main');
+
+
+  body.classList = type;
+  content.classList = type;
+
+  //UPDATING THE HEIGHT OF THE IFRAME
+  let frame = $get('#alert-display');
+  let iframeContainer = frame.contentWindow.document.getElementById('campaign-alert-container');
+  let contentHeight = frame.contentWindow.document.body.scrollHeight;
+  frame.style.height = contentHeight + 'px';
+
+  //SWAPPING OUT THE IMAGE
+  let brandChip = $get('#alert-brand-chip').getElementsByTagName('img')[0];
+  let brand = getBrand();
+  console.log(type);
+  brandChip.src = `${__dir}/ApplicationSupport/images/brand-chips/${brand['Brand Chips'][type]}`;
+
+  console.log(document.body.scrollWidth);
+
 }

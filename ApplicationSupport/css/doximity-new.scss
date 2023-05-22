@@ -1,3 +1,7 @@
+$color--highlight: #502ae4;
+$timing--fast: .25s;
+$color--light-primary: #282638;
+
 html {
   padding: 0px;
   margin: 0px;
@@ -68,6 +72,86 @@ body {
 
   & img {
     width: 100%;
+  }
+}
+
+#alert-display {
+  border: none;
+}
+
+#template-controls {
+  position: fixed;
+  right: 10px;
+  top: 0px;
+  padding: 10px;
+  display: flex;
+  background: rgba(255,255,255,.5);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding-top: 30px;
+  z-index: 9000;
+  backdrop-filter: blur(5px);
+
+
+  & .template-control-icon {
+    width: 35px;
+    height: 35px;
+    background: #fff;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border: 2px solid $color--highlight;
+    margin-right: 10px;
+    cursor: pointer;
+    
+
+
+    & img {
+      transition: $timing--fast;
+      height: 20px;
+      filter: invert(15%) sepia(24%) saturate(691%) hue-rotate(207deg) brightness(90%) contrast(95%);
+    }
+
+    &:hover img{
+      filter: invert(17%) sepia(100%) saturate(3422%) hue-rotate(251deg) brightness(88%) contrast(105%);
+    }
+
+    &.active-view {
+      background: $color--highlight;
+      border-color: $color--highlight;
+      pointer-events: none;
+
+      & img {
+        filter: invert(99%) sepia(100%) saturate(0%) hue-rotate(303deg) brightness(103%) contrast(100%);
+      }
+    }
+  }
+}
+
+#submit-btn-container {
+  border-left: 2px solid black;
+  display: flex;
+  align-items: center;
+}
+
+#submit-btn {
+  margin-left: 10px;
+  border: 2px solid $color--highlight;
+  color: $color--light-primary;
+  background: #fff;
+  border-radius: 30px;
+  padding: 10px 30px;
+  font-family: 'Asap', sans-serif;
+  font-weight: 400;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: $timing--fast;
+
+  &:hover {
+    color: #fff;
+    background: $color--highlight;
   }
 }
 
@@ -383,6 +467,11 @@ body {
         }
       }
 
+      & #alert-display {
+        max-width: 375px;
+        min-width: 375px;
+      }
+
       & #alert-footer {
         margin-top: 13px;
         width: 100%;
@@ -577,7 +666,7 @@ body {
           width: 37px;
           display: flex;
           justify-content: center;
-          margin-left: 180px;
+          margin-left: 224px;
 
           & img {
             width: 32px;
@@ -611,7 +700,7 @@ body {
           }
 
           & #alert-sponsored {
-            margin-right: 180px;
+            margin-right: 224px;
             width: 70px;
             color: #6e6e6e;
             position: absolute;
@@ -621,7 +710,7 @@ body {
         }
 
         & #alert-pi-med-guide {
-          margin: 0px 180px;
+          margin: 0px 224px;
           margin-top: 16px;
           margin-bottom: 14px;
           display: flex;
@@ -635,7 +724,7 @@ body {
         }
 
         & #alert-brand-chip {
-          margin: 0 180px;
+          margin: 0 224px;
 
           & img {
           max-width: 100%;
@@ -643,9 +732,20 @@ body {
           }
         }
       }
+
+      & #alert-display {
+        width: 600px;
+        min-width: 600px;
+        max-width: 600px;
+      }
+
+      & #alert-body {
+        margin: 0 224px;
+      }
+
       & #alert-footer {
         margin-top: 13px;
-        margin: 0px 180px;
+        margin: 0px 224px;
         border-top: 1px solid #eeeeee;
         width: 100%;
 

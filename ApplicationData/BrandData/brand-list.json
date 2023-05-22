@@ -2,8 +2,8 @@
   {
     "BrandName" : "Brand 01",
     "Brand Chips" : {
-      "Mobile" : "/ApplicationSupport/images/brand-chips/doximity_mobile_brand01.png",
-      "Desktop" : "/ApplicationSupport/images/brand-chips/doximity_mobile_brand01.png"
+      "mobile" : "doximity_mobile_brand01.png",
+      "desktop" : "doximity_desktop_brand01.png"
 
     },
     "PiMedGuide" : {
@@ -14,8 +14,8 @@
   {
     "BrandName" : "Brand 02",
     "Brand Chips" : {
-      "Mobile" : "/ApplicationSupport/images/brand-chips/doximity_mobile_brand02.png",
-      "Desktop" : "/ApplicationSupport/images/brand-chips/doximity_mobile_brand02.png"
+      "mobile" : "doximity_mobile_brand02.png",
+      "desktop" : "doximity_desktop_brand02.png"
 
     },
     "PiMedGuide" : {
@@ -26,8 +26,8 @@
   {
     "BrandName" : "Brand 03",
     "Brand Chips" : {
-      "Mobile" : "/ApplicationSupport/images/brand-chips/doximity_mobile_brand03.png",
-      "Desktop" : "/ApplicationSupport/images/brand-chips/doximity_mobile_brand03.png"
+      "mobile" : "doximity_mobile_brand03.png",
+      "desktop" : "doximity_desktop_brand03.png"
 
     },
     "PiMedGuide" : {
@@ -38,8 +38,8 @@
   {
     "BrandName" : "Brand 04",
     "Brand Chips" : {
-      "Mobile" : "/ApplicationSupport/images/brand-chips/doximity_mobile_brand04.png",
-      "Desktop" : "/ApplicationSupport/images/brand-chips/doximity_mobile_brand04.png"
+      "mobile" : "doximity_mobile_brand04.png",
+      "desktop" : "doximity_desktop_brand04.png"
 
     },
     "PiMedGuide" : {
@@ -50,8 +50,8 @@
   {
     "BrandName" : "Brand 05",
     "Brand Chips" : {
-      "Mobile" : "/ApplicationSupport/images/brand-chips/doximity_mobile_brand05.png",
-      "Desktop" : "/ApplicationSupport/images/brand-chips/doximity_mobile_brand05.png"
+      "mobile" : "doximity_mobile_brand05.png",
+      "desktop" : "doximity_desktop_brand05.png"
 
     },
     "PiMedGuide" : {

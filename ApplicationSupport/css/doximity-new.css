@@ -66,6 +66,78 @@ body.desktop {
   width: 100%;
 }
 
+#alert-display {
+  border: none;
+}
+
+#template-controls {
+  position: fixed;
+  right: 10px;
+  top: 0px;
+  padding: 10px;
+  display: flex;
+  background: rgba(255, 255, 255, 0.5);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding-top: 30px;
+  z-index: 9000;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+#template-controls .template-control-icon {
+  width: 35px;
+  height: 35px;
+  background: #fff;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  border: 2px solid #502ae4;
+  margin-right: 10px;
+  cursor: pointer;
+}
+#template-controls .template-control-icon img {
+  transition: 0.25s;
+  height: 20px;
+  filter: invert(15%) sepia(24%) saturate(691%) hue-rotate(207deg) brightness(90%) contrast(95%);
+}
+#template-controls .template-control-icon:hover img {
+  filter: invert(17%) sepia(100%) saturate(3422%) hue-rotate(251deg) brightness(88%) contrast(105%);
+}
+#template-controls .template-control-icon.active-view {
+  background: #502ae4;
+  border-color: #502ae4;
+  pointer-events: none;
+}
+#template-controls .template-control-icon.active-view img {
+  filter: invert(99%) sepia(100%) saturate(0%) hue-rotate(303deg) brightness(103%) contrast(100%);
+}
+
+#submit-btn-container {
+  border-left: 2px solid black;
+  display: flex;
+  align-items: center;
+}
+
+#submit-btn {
+  margin-left: 10px;
+  border: 2px solid #502ae4;
+  color: #282638;
+  background: #fff;
+  border-radius: 30px;
+  padding: 10px 30px;
+  font-family: "Asap", sans-serif;
+  font-weight: 400;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.25s;
+}
+#submit-btn:hover {
+  color: #fff;
+  background: #502ae4;
+}
+
 #column-left {
   width: 300px;
 }
@@ -318,6 +390,10 @@ body.desktop {
   max-width: 100%;
   height: auto;
 }
+#container-main.mobile #column-right #alert-display {
+  max-width: 375px;
+  min-width: 375px;
+}
 #container-main.mobile #column-right #alert-footer {
   margin-top: 13px;
   width: 100%;
@@ -468,7 +544,7 @@ body.desktop {
   width: 37px;
   display: flex;
   justify-content: center;
-  margin-left: 180px;
+  margin-left: 224px;
 }
 #container-main.desktop #column-right #alert-header #alert-header-logo img {
   width: 32px;
@@ -497,7 +573,7 @@ body.desktop {
   font-size: 0.88rem;
 }
 #container-main.desktop #column-right #alert-header #alert-header-copy #alert-sponsored {
-  margin-right: 180px;
+  margin-right: 224px;
   width: 70px;
   color: #6e6e6e;
   position: absolute;
@@ -505,7 +581,7 @@ body.desktop {
   font-size: 0.9rem;
 }
 #container-main.desktop #column-right #alert-header #alert-pi-med-guide {
-  margin: 0px 180px;
+  margin: 0px 224px;
   margin-top: 16px;
   margin-bottom: 14px;
   display: flex;
@@ -517,15 +593,23 @@ body.desktop {
   margin-right: 8px;
 }
 #container-main.desktop #column-right #alert-header #alert-brand-chip {
-  margin: 0 180px;
+  margin: 0 224px;
 }
 #container-main.desktop #column-right #alert-header #alert-brand-chip img {
   max-width: 100%;
   height: auto;
 }
+#container-main.desktop #column-right #alert-display {
+  width: 600px;
+  min-width: 600px;
+  max-width: 600px;
+}
+#container-main.desktop #column-right #alert-body {
+  margin: 0 224px;
+}
 #container-main.desktop #column-right #alert-footer {
   margin-top: 13px;
-  margin: 0px 180px;
+  margin: 0px 224px;
   border-top: 1px solid #eeeeee;
   width: 100%;
 }

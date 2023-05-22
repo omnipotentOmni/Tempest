@@ -1,8 +1,20 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" href="../css/doximity-new.css"> <!--needs to be ../css... for prod-->
+    <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
   </head>
   <body class="mobile">
+    <div id="template-controls">
+      <div class="template-control-icon active-view" onclick="switchView('mobile',this)">
+        <img src="../images/app-images/icon--mobile.png">
+      </div>
+      <div class="template-control-icon" onclick="switchView('desktop',this)">
+        <img src="../images/app-images/icon--desktop.png">
+      </div>
+      <div id="submit-btn-container">
+        <div id="submit-btn">Create PDF</div>
+      </div>
+    </div>
     <div id="container-main" class="mobile">
       <div id="template-version">
         <p id="template-version-text"></p>
@@ -77,10 +89,11 @@
               <div class="text">Med Guide</div>
             </div>
             <div id="alert-brand-chip">
-              <img src="../images/brand-chips/vaxnunu.png">
             </div>
           </div>
-          <div id="alert-body"></div>
+          <div id="alert-body">
+            <iframe id="alert-display" src="" scrolling="no"></iframe>
+          </div>
           <div id="alert-footer">
             <div id="alert-footer-icons">
               <img class="footer-icon" src="../images/_template-images/doximity/icon--like.png">
