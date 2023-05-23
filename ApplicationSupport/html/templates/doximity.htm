@@ -5,14 +5,14 @@
   </head>
   <body class="mobile">
     <div id="template-controls">
-      <div class="template-control-icon active-view" onclick="switchView('mobile',this)">
+      <div class="template-control-icon active-view" data-view="mobile" onclick="switchView('mobile',this)">
         <img src="../images/app-images/icon--mobile.png">
       </div>
-      <div class="template-control-icon" onclick="switchView('desktop',this)">
+      <div class="template-control-icon" data-view="desktop" onclick="switchView('desktop',this)">
         <img src="../images/app-images/icon--desktop.png">
       </div>
       <div id="submit-btn-container">
-        <div id="submit-btn">Create PDF</div>
+        <div id="submit-btn" onclick="exportPDF()">Create PDF</div>
       </div>
     </div>
     <div id="container-main" class="mobile">

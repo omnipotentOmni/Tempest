@@ -28,75 +28,82 @@
 //TEMPLATE SELECTION
 const path = require('path');
 var fs = require('fs');
+const PDFMerger = require('pdf-merger-js');
+const {
+  app,
+  BrowserWindow
+} = require('electron');
 
-const { ipcRenderer } = require('electron');
+const {
+  ipcRenderer
+} = require('electron');
 let dir = ipcRenderer.sendSync('get-dir-path');
 
 let __dir = path.join(dir, 'Tempest');
 
 let templateSelector = $get('#template-select');
-let templateItem = $get('.templateBtn',templateSelector);
+let templateItem = $get('.templateBtn', templateSelector);
 
 let activeWindow = '';
 
 let sessionData = {
-  "template-selection" : {
-    "type" : ""
+  "template-selection": {
+    "type": ""
   },
-  "brand-selection" : {
-    "brand" : "",
-    "default" : false,
+  "brand-selection": {
+    "brand": "",
+    "default": false,
   },
-  "html-selection" : {
-    "alert" : {
-      "name" : "",
-      "path" : ""
+  "html-selection": {
+    "alert": {
+      "name": "",
+      "path": ""
     },
-    "coversheet" : {
-      "name" : "",
-      "path" : ""
+    "coversheet": {
+      "name": "",
+      "path": ""
     }
   },
-  "image-selection" : {
-    "primary" : {
-      "name" : "",
-      "path" : "",
-      "fpo" : true
+  "image-selection": {
+    "primary": {
+      "name": "",
+      "path": "",
+      "fpo": true
     },
-    "alternate" : []
+    "alternate": []
   }
 };
 
 function testingEnv() {
-sessionData = {
-  "template-selection": {
+  sessionData = {
+    "template-selection": {
       "type": "doximity"
-  },
-  "brand-selection": {
+    },
+    "brand-selection": {
       "brand": "Brand 03",
       "default": false
-  },
-  "html-selection": {
+    },
+    "html-selection": {
       "alert": {
-          "name": "Doximity Alert_US-MMR-00003.html",
-          "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Doximity Alert_US-MMR-00003.html"
+        "name": "Doximity Alert_US-MMR-00003.html",
+        "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Doximity Alert_US-MMR-00003.html"
       },
       "coversheet": {
-          "name": "Title sheet_US-MMR-00003.html",
-          "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Title sheet_US-MMR-00003.html"
+        "name": "Title sheet_US-MMR-00003.html",
+        "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Title sheet_US-MMR-00003.html"
       }
-  },
-  "image-selection": {
+    },
+    "image-selection": {
       "primary": {
-          "name": "",
-          "path": "",
-          "fpo": true
+        "name": "",
+        "path": "",
+        "fpo": true
       },
       "alternate": []
+    }
   }
-}
-checkData();
-let btn = $get('#submit-btn').click();
+  checkData();
+  $get('#submit-btn').click();
 }
 
 console.log(sessionData)
@@ -104,22 +111,22 @@ console.log(sessionData)
 function templateType(el) {
   let templateData = $get('#template-data');
   let toggle = false;
-  if ($class(el,'active','contains')) {
+  if ($class(el, 'active', 'contains')) {
     toggle = true;
   }
   for (let item of templateItem) {
-    $class(item,'active','remove');
+    $class(item, 'active', 'remove');
     sessionData['template-selection'].type = '';
-    $class(templateData,'disable','add');
+    $class(templateData, 'disable', 'add');
   }
   if (!toggle) {
-    $class(el,'active','add');
+    $class(el, 'active', 'add');
     sessionData['template-selection'].type = el.dataset.type;
-    $class(templateData,'disable','remove');
-  }else {
-    $class(el,'active','remove');
+    $class(templateData, 'disable', 'remove');
+  } else {
+    $class(el, 'active', 'remove');
     sessionData['template-selection'].type = '';
-    $class(templateData,'disable','add');
+    $class(templateData, 'disable', 'add');
   }
   checkData();
 }
@@ -171,7 +178,7 @@ async function swapWindow(selection) {
   if (windowTitle === 'brand-selection') {
     loadBrands();
   }
-  
+
   loadSessionData();
 }
 
@@ -181,7 +188,7 @@ function htmlSelection() {
 
   //OVERRIDING DEFAULT DRAG BEHAVIOR
   for (let item of dragBox) {
-    ['drageneter','dragover','dragleave','drop'].forEach(eventName =>  {
+    ['drageneter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
       item.addEventListener(eventName, preventDefaults, false);
       document.body.addEventListener(eventName, preventDefaults, false);
     });
@@ -202,14 +209,14 @@ function htmlSelection() {
     }
 
     function highlight() {
-      $class(item,'active','add');
+      $class(item, 'active', 'add');
     };
 
     function unhighlight() {
-      $class(item,'active','remove');
+      $class(item, 'active', 'remove');
     };
 
-    function handleDrop(e) { 
+    function handleDrop(e) {
       e.preventDefault();
 
       const dt = e.dataTransfer.files;
@@ -224,8 +231,8 @@ function htmlSelection() {
       // fileInput.addEventListener('change', handleUpload, false);
 
       //ADD THE FILE UPLOAD DISPLAY
-      uploadFile(item.parentElement,file);
-      
+      uploadFile(item.parentElement, file);
+
 
       function handleUpload(event) {
         console.log(event);
@@ -248,7 +255,7 @@ function htmlSelection() {
 
     function handleFiles(files) {
       item.dataset.fileload = true;
-      $class(item,'active','add');
+      $class(item, 'active', 'add');
       console.log(files);
     }
   }
@@ -261,40 +268,39 @@ function fileUploadInput(e) {
   input = $get(`#${type}-upload-input`);
   input.click();
 
-  input.addEventListener('change',handleUpload,false);
+  input.addEventListener('change', handleUpload, false);
 
   function handleUpload(evt) {
     let file = evt.target.files[0];
     if (activeWindow === 'image-selection') {
       let el = evt.target.id;
-      let type = el.substr(0,el.indexOf('-'));
+      let type = el.substr(0, el.indexOf('-'));
       file.id = $genKey(`${type}-image-`);
     }
     if (type.includes('image')) {
-      buildImage(e.parentElement,file);
-    }else {
-      uploadFile(e.parentElement,file);
+      buildImage(e.parentElement, file);
+    } else {
+      uploadFile(e.parentElement, file);
     }
-    input.removeEventListener('change',handleUpload,false);
+    input.removeEventListener('change', handleUpload, false);
 
     if (activeWindow === 'html-selection') {
-      setSessionData(type,file);
+      setSessionData(type, file);
     };
   }
 }
 
 //UPLOAD FILE
-function uploadFile(parent,file) {
-  let fileUploadDisplay = $get('.file-upload-container',parent)[0];
+function uploadFile(parent, file) {
+  let fileUploadDisplay = $get('.file-upload-container', parent)[0];
   fileUploadDisplay.dataset.filePath = file.path;
   fileUploadDisplay.style.display = 'flex';
-  let fileNameDisplay = $get('.file-upload-name',fileUploadDisplay)[0];
+  let fileNameDisplay = $get('.file-upload-name', fileUploadDisplay)[0];
   fileNameDisplay.textContent = file.name;
 }
 
 //UNLOAD FILE
 function unloadFile(el) {
-  console.log(el.parentElement.parentElement); // gets the id of primary or alt
   let container = el.parentElement.parentElement;
 
   let root;
@@ -304,11 +310,11 @@ function unloadFile(el) {
   };
 
   if (activeWindow === 'image-selection') {
-    let type = container.id.substr(0,container.id.indexOf('-'));
+    let type = container.id.substr(0, container.id.indexOf('-'));
     root = $get(`#${type}-image-upload`);
   }
 
-  let input = $get('input',root)[0];
+  let input = $get('input', root)[0];
 
   if (input.files.length) {
     input.value = '';
@@ -316,9 +322,7 @@ function unloadFile(el) {
   container.style.display = 'none';
 
   if (activeWindow === 'html-selection') {
-    let type = container.parentElement.id.substr(0,container.parentElement.id.indexOf('-'));
-
-    console.log(sessionData,activeWindow,type);
+    let type = container.parentElement.id.substr(0, container.parentElement.id.indexOf('-'));
 
     sessionData[activeWindow][type].name = '';
     sessionData[activeWindow][type].path = '';
@@ -327,20 +331,20 @@ function unloadFile(el) {
   if (activeWindow === 'image-selection') {
 
     let primaryContainer = $get('#primary-image-upload');
-    let primaryImage = $get('.image-file-container',primaryContainer)[0];
-    let altImageContainer = $get('#alternate-image-upload');  
+    let primaryImage = $get('.image-file-container', primaryContainer)[0];
+    let altImageContainer = $get('#alternate-image-upload');
     if (!primaryImage.innerHTML) {
       $class(altImageContainer, 'disable', 'add');
-    }else {
+    } else {
       $class(altImageContainer, 'disable', 'remove');
     }
 
-    let type = input.id.substr(0,input.id.indexOf('-'));
+    let type = input.id.substr(0, input.id.indexOf('-'));
     let data = sessionData[activeWindow][type];
 
     if (type === 'primary') {
       data.name = '';
-      data.path = '';  
+      data.path = '';
       data.fpo = true;
     };
 
@@ -358,8 +362,8 @@ function unloadFile(el) {
 function brandDropDown(icon) {
   let carrot = icon;
   let ddMenu = $get('#brand-selection-display');
-  $class(carrot,'active','toggle');
-  $class(ddMenu,'open','toggle');
+  $class(carrot, 'active', 'toggle');
+  $class(ddMenu, 'open', 'toggle');
 }
 
 function setBrand(brand) {
@@ -367,39 +371,39 @@ function setBrand(brand) {
   name.textContent = brand.textContent;
 
   brandDropDown($get('#brand-dd'));
-  setSessionData('brand-select',brand.textContent);
+  setSessionData('brand-select', brand.textContent);
 }
 
 //DEFAULT SELECTOR
 function defaultSelection() {
   let slider = $get('#selection-slider');
 
-  if ($class(slider,'non-active','contains')) {
-    $class(slider,'non-active','remove');
-    $class(slider,'active','add');
-    setSessionData('default-slider',$class(slider,'active','contains'));
-    
-  }else {
-    $class(slider,'non-active','add');
-    $class(slider,'active','remove');
-    setSessionData('default-slider',$class(slider,'active','contains'));
+  if ($class(slider, 'non-active', 'contains')) {
+    $class(slider, 'non-active', 'remove');
+    $class(slider, 'active', 'add');
+    setSessionData('default-slider', $class(slider, 'active', 'contains'));
+
+  } else {
+    $class(slider, 'non-active', 'add');
+    $class(slider, 'active', 'remove');
+    setSessionData('default-slider', $class(slider, 'active', 'contains'));
   }
 
   let slideParent = event.target.parentElement.parentElement.parentElement;
   if (slideParent.id.includes('image') && slider.classList.contains('active')) {
-    let images = $get('.image-file-container',slideParent)[0];
+    let images = $get('.image-file-container', slideParent)[0];
     images.innerHTML = '';
   }
 }
 
 //ADD IMAGE TO WINDOW
-function buildImage(parent,file,reload) {
+function buildImage(parent, file, reload) {
 
-  let type = parent.id.substr(0,parent.id.indexOf('-'));
+  let type = parent.id.substr(0, parent.id.indexOf('-'));
 
-  
 
-  let fileWrapper = $get('.image-file-container',parent)[0];
+
+  let fileWrapper = $get('.image-file-container', parent)[0];
   let newImage = document.createElement('div');
   newImage.classList = 'file-upload-container';
   newImage.id = file.id;
@@ -408,11 +412,11 @@ function buildImage(parent,file,reload) {
   xhr.open('GET', './templates/_image-file-upload.htm');
   xhr.responseType = 'document';
 
-  xhr.onload = function() {
+  xhr.onload = function () {
     if (xhr.status === 200) {
       var htmlContent = xhr.response.documentElement.outerHTML;
       newImage.innerHTML = htmlContent;
-      let name = $get('.file-upload-name',newImage)[0];
+      let name = $get('.file-upload-name', newImage)[0];
       name.textContent = file.name;
 
       //FPO – FPO WAS REMOVED
@@ -429,7 +433,7 @@ function buildImage(parent,file,reload) {
       fileWrapper.appendChild(newImage);
 
       if (!reload) {
-        setSessionData(type,file);
+        setSessionData(type, file);
       }
     }
   };
@@ -439,7 +443,6 @@ function buildImage(parent,file,reload) {
 
 //DELETE IMAGE
 function deleteImageFile(e) {
-  let parent = e.parentElement.parentElement.parentElement.parentElement;
   e.parentElement.parentElement.remove();
 
   //FPO – FPO WAS REMOVED
@@ -461,19 +464,19 @@ function previewImage(e) {
   toggleMask(mask);
   if (previewWindow.style.display !== 'none') {
     previewWindow.style.display = 'none';
-  }else {
+  } else {
     previewWindow.style.display = 'flex';
-    let imageName = $get('.file-upload-name',e.parentElement)[0];
+    let imageName = $get('.file-upload-name', e.parentElement)[0];
     let previewTitle = $get('#image-preview-header');
     previewTitle.textContent = imageName.textContent;
   }
 
-  
+
 }
 
 function toggleMask(e) {
-  $class(e,'hide-mask','toggle');
-  $class(e,'show-mask','toggle');
+  $class(e, 'hide-mask', 'toggle');
+  $class(e, 'show-mask', 'toggle');
 }
 
 
@@ -509,26 +512,25 @@ async function loadBrands() {
   //LOADING THE BRANDS INTO THE DD MENU
   let ddMenu = $get('#brand-dd-menu');
   for (let el of brandData) {
-    const parser = new DOMParser();  //MAKE THIS A MODULE
-    const serializer = new XMLSerializer();
-      
-      const parsedDocument = parser.parseFromString(brandTemplate, 'text/html');
-      const htmlElement = parsedDocument.body;
+    const parser = new DOMParser(); //MAKE THIS A MODULE
 
-      let newEl = htmlElement.firstChild;
-      newEl.textContent = el.BrandName;
+    const parsedDocument = parser.parseFromString(brandTemplate, 'text/html');
+    const htmlElement = parsedDocument.body;
 
-      ddMenu.appendChild(newEl);
+    let newEl = htmlElement.firstChild;
+    newEl.textContent = el.BrandName;
+
+    ddMenu.appendChild(newEl);
   }
 }
 
 
 //SET SESSION DATA
-function setSessionData(action,value) {
+function setSessionData(action, value) {
   let dataType = sessionData[activeWindow];
   let dataKey;
   if (activeWindow === 'brand-selection') { // SETTING THE DATA FOR BRAND-SELECTION
-    
+
     if (action === 'brand-select') {
       dataKey = 'brand';
     };
@@ -543,7 +545,7 @@ function setSessionData(action,value) {
   };
 
   if (activeWindow === 'html-selection') { // SETTING THE DATA FOR HTML UPLOAD
-    
+
     dataKey = action;
 
     if (dataKey) {
@@ -555,11 +557,11 @@ function setSessionData(action,value) {
   if (activeWindow === 'image-selection') {
 
     let primaryContainer = $get('#primary-image-upload');
-    let primaryImage = $get('.image-file-container',primaryContainer)[0];
-    let altImageContainer = $get('#alternate-image-upload');  
+    let primaryImage = $get('.image-file-container', primaryContainer)[0];
+    let altImageContainer = $get('#alternate-image-upload');
     if (!primaryImage.innerHTML) {
       $class(altImageContainer, 'disable', 'add');
-    }else {
+    } else {
       $class(altImageContainer, 'disable', 'remove');
     }
 
@@ -573,9 +575,9 @@ function setSessionData(action,value) {
     };
     if (action === 'alternate') {
       let img = {
-        "id" : value.id,
-        "name" : value.name,
-        "path" : value.path
+        "id": value.id,
+        "name": value.name,
+        "path": value.path
       };
       dataType.alternate.push(img);
     }
@@ -596,52 +598,52 @@ function loadSessionData() {
 
     let slider = $get('#selection-slider');
     if (data.default) {
-      $class(slider,'active','add');
-      $class(slider,'non-active','remove');
+      $class(slider, 'active', 'add');
+      $class(slider, 'non-active', 'remove');
     }
   }
 
-  if(activeWindow === 'html-selection') { //SETTING THE SESSION DATA FOR HTML-UPLOADS
-    let uploadTypes = ['alert','coversheet'];
-    
+  if (activeWindow === 'html-selection') { //SETTING THE SESSION DATA FOR HTML-UPLOADS
+    let uploadTypes = ['alert', 'coversheet'];
+
     for (let i = 0; i < uploadTypes.length; i++) {
       let parent = $get(`#${uploadTypes[i].toLowerCase()}-upload`);
       if (data[uploadTypes[i]].path.length) {
         let uploadData = {
-          path : data[uploadTypes[i]].path,
-          name : data[uploadTypes[i]].name
+          path: data[uploadTypes[i]].path,
+          name: data[uploadTypes[i]].name
         };
-        uploadFile(parent,uploadData)
+        uploadFile(parent, uploadData)
       }
     }
   }
 
-  if(activeWindow === 'image-selection') {
+  if (activeWindow === 'image-selection') {
 
-    let altImageContainer = $get('#alternate-image-upload');  
+    let altImageContainer = $get('#alternate-image-upload');
     if (!data.primary.name) {
       $class(altImageContainer, 'disable', 'add');
-    }else {
+    } else {
       $class(altImageContainer, 'disable', 'remove');
     }
 
     if (data.primary.name) {
       let parent = $get('#primary-image-upload');
       let primaryImage = {
-        "name" : data.primary.name,
-        "path" : data.primary.path
+        "name": data.primary.name,
+        "path": data.primary.path
       };
-      buildImage(parent,primaryImage,true);
+      buildImage(parent, primaryImage, true);
     };
     if (data.alternate.length) {
       let parent = $get('#alternate-image-upload');
       for (let el of data.alternate) {
         let image = {
-          "id" : el.id,
-          "name" : el.name,
-          "path" : el.path
+          "id": el.id,
+          "name": el.name,
+          "path": el.path
         };
-        buildImage(parent, image,true);
+        buildImage(parent, image, true);
       }
     }
   }
@@ -655,17 +657,17 @@ function checkData() {
 
   //CHECK ALERT TYPE – an alert type IS required
   let alert = sessionData['template-selection'].type;
-  
+
   //CHECK BRAND – brand IS required
   let brand = sessionData['brand-selection'].brand;
   let brandIcon = $get('#icon-brand');
 
   if (brand.length) {
     brandIcon.dataset.complete = 'Complete'
-    $class(brandIcon,'complete','add');
-  }else {
+    $class(brandIcon, 'complete', 'add');
+  } else {
     brandIcon.dataset.complete = 'Missing'
-    $class(brandIcon,'complete','remove');
+    $class(brandIcon, 'complete', 'remove');
   }
 
   //CHECK HTML – alert & coversheet ARE required
@@ -675,10 +677,10 @@ function checkData() {
 
   if (alertHTML && coversheetHTML) {
     htmlIcon.dataset.complete = 'Complete'
-    $class(htmlIcon,'complete','add');
-  }else {
+    $class(htmlIcon, 'complete', 'add');
+  } else {
     htmlIcon.dataset.complete = 'Missing'
-    $class(htmlIcon,'complete','remove');
+    $class(htmlIcon, 'complete', 'remove');
   }
 
   //CHECK IMAGES – images are optional, Primary image will show as "FPO" if not selected
@@ -687,21 +689,21 @@ function checkData() {
   let imageIcon = $get('#icon-image');
 
   if (primaryImage) {
-    $class(imageIcon,'complete','add');
+    $class(imageIcon, 'complete', 'add');
     if (alternateImage.length) {
       imageIcon.dataset.complete = 'Primary & Alt Image Loaded';
-    }else {
+    } else {
       imageIcon.dataset.complete = 'Primary Image Loaded';
     }
-  }else {
-    $class(imageIcon,'complete','remove');
+  } else {
+    $class(imageIcon, 'complete', 'remove');
     imageIcon.dataset.complete = 'No Images Selected';
   }
 
   if (alert && brand.length && alertHTML && coversheetHTML) {
-    $class(btn,'disable','remove');
-  }else {
-    $class(btn,'disable','add');
+    $class(btn, 'disable', 'remove');
+  } else {
+    $class(btn, 'disable', 'add');
   }
 }
 
@@ -709,10 +711,8 @@ function checkData() {
 
 
 async function buildTemplate() {
-  console.log(sessionData);
   let html = $get('#main-html');
   let htmlContent;
-  // html.innerHTML = '';
 
   let xhr = new XMLHttpRequest();
   xhr.open('GET', `./templates/doximity.htm`);
@@ -756,12 +756,10 @@ async function buildTemplate() {
   }
 
   // ----------- PROCESS UPLOADED IMAGES
-  let altImages = [];
   processImages();
 
   // ----------- APPLY SELECTED BRAND
   let brand = getBrand();
-  console.log(brand);
   let brandChip = $get('#alert-brand-chip');
 
   let img = document.createElement('img');
@@ -769,7 +767,6 @@ async function buildTemplate() {
   brandChip.appendChild(img);
 
   // ----------- ADD IFRAME
-  let alert = $get('#alert-body');
 
   let frame = $get('#alert-display');
   frame.src = sessionData['html-selection'].alert.path;
@@ -796,7 +793,10 @@ ipcRenderer.send('resize-window-default');
 
 function gatherTitles() {
   let data = sessionData['html-selection'].coversheet.path;
-  let csData = fs.readFileSync(data, { encoding: 'utf8', flag: 'r' });
+  let csData = fs.readFileSync(data, {
+    encoding: 'utf8',
+    flag: 'r'
+  });
   const parser = new DOMParser();
   const doc = parser.parseFromString(csData, 'text/html');
   const csTitles = doc.querySelectorAll('.body_copy');
@@ -808,9 +808,9 @@ function processTitles(data) {
   let parser = new DOMParser();
   let doc = parser.parseFromString(url, 'text/html');
 
-  let titleBlob = $get('.title-item',doc)[0];
-  let titleText = $get('.alert-title',titleBlob)[0];
-  let titleChar = $get('.alert-char-count',titleBlob)[0].getElementsByTagName('span')[0];
+  let titleBlob = $get('.title-item', doc)[0];
+  let titleText = $get('.alert-title', titleBlob)[0];
+  let titleChar = $get('.alert-char-count', titleBlob)[0].getElementsByTagName('span')[0];
 
   titleText.textContent = data;
   titleChar.textContent = data.length;
@@ -819,14 +819,13 @@ function processTitles(data) {
 }
 
 function processImages() {
-  let images = [];
   let data = sessionData['image-selection'];
-  
+
   //getting the primary image
   let primaryImage = $get('#preview-image');
   if (data.primary.fpo) {
-    $class(primaryImage,'fpo','add');
-  }else {
+    $class(primaryImage, 'fpo', 'add');
+  } else {
     let image = document.createElement('img');
     image.src = data.primary.path;
     primaryImage.appendChild(image);
@@ -834,8 +833,8 @@ function processImages() {
 
   //getting alternate images
   if (data.alternate.length) {
-    $class(primaryImage,'variable-container','add');
-    $class(primaryImage, 'blue','add');
+    $class(primaryImage, 'variable-container', 'add');
+    $class(primaryImage, 'blue', 'add');
     let alternateImages = $get('#header-options');
     alternateImages.appendChild(buildAltImage(data.primary.path));
 
@@ -852,7 +851,7 @@ function processImages() {
 
       return imageContainer;
     }
-  }else {
+  } else {
     let altContainer = $get('#alert-image-options');
     altContainer.style.display = 'none';
   };
@@ -863,7 +862,7 @@ function getBrand() {
   let brandMaster = JSON.parse(fs.readFileSync(`${__dir}/ApplicationData/BrandData/brand-list.json`));
   let selectedBrand = sessionData['brand-selection'].brand;
 
-  
+
 
   return brandMaster.find(obj => obj.BrandName === selectedBrand);
 }
@@ -871,15 +870,15 @@ function getBrand() {
 
 
 //-------------------------------------------------------- TEMPLATE
-function switchView(type,el) {
+function switchView(type, el) {
   let currentActive = $get('.active-view')[0];
   let targetView = el;
 
   if (currentActive) {
-    $class(currentActive,'active-view','remove');
+    $class(currentActive, 'active-view', 'remove');
   };
-  $class(targetView,'active-view','add');
-  
+  $class(targetView, 'active-view', 'add');
+
   let body = document.getElementsByTagName('body')[0];
   let content = $get('#container-main');
 
@@ -889,16 +888,114 @@ function switchView(type,el) {
 
   //UPDATING THE HEIGHT OF THE IFRAME
   let frame = $get('#alert-display');
-  let iframeContainer = frame.contentWindow.document.getElementById('campaign-alert-container');
   let contentHeight = frame.contentWindow.document.body.scrollHeight;
   frame.style.height = contentHeight + 'px';
 
   //SWAPPING OUT THE IMAGE
   let brandChip = $get('#alert-brand-chip').getElementsByTagName('img')[0];
   let brand = getBrand();
-  console.log(type);
   brandChip.src = `${__dir}/ApplicationSupport/images/brand-chips/${brand['Brand Chips'][type]}`;
+}
 
-  console.log(document.body.scrollWidth);
 
+async function exportPDF() {
+  let controls = $get('#template-controls');
+  controls.style.opacity = '0'
+  let docPath = path.dirname(sessionData['html-selection'].alert.path); // THE FILEPATH FOR THE PDF
+  let fileName = docPath.substring(docPath.lastIndexOf('/') + 1);
+
+  async function sendPrintToPdf(pdfOptions) {
+    return new Promise((resolve) => {
+      ipcRenderer.once('print-to-pdf-done', () => {
+        resolve();
+      });
+  
+      ipcRenderer.send('print-to-pdf', pdfOptions);
+    });
+  }
+  
+  async function generatePDFsSequentially(views, index, options) {
+    if (index >= views.length) {
+      views[0].click();
+      console.log('All PDFs generated successfully');
+      combinePDF(options);
+      return;
+    }
+  
+    const view = views[index];
+    view.click();
+    const type = view.dataset.view;
+  
+    let pageWidth = document.body.scrollWidth;
+    let pageHeight = document.body.scrollHeight;
+
+    const pdfOption = {
+      fileName: fileName,
+      filePath: `${docPath}/${fileName}-${type}.pdf`,
+      landscape: false,
+      printBackground: true,
+      margins: { right: .1, bottom: .1, top: .1, left: .1 },
+      pageSize: { width: pageWidth / 96, height: pageHeight / 96 },
+      unit: 'px',
+      pageRanges: '1'
+    };
+  
+    await sendPrintToPdf(pdfOption);
+  
+    console.log(`PDF generated: ${pdfOption.filePath}`);
+  
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  
+    generatePDFsSequentially(views, index + 1, pdfOption);
+  }
+  
+  function startPDFGeneration() {
+    const views = $get('.template-control-icon');
+    const initialIndex = 0;
+  
+    generatePDFsSequentially(views, initialIndex);
+  }
+  
+  // Call the function to start generating all PDFs
+  startPDFGeneration();
+}
+
+
+
+function combinePDF(options) {
+  let controls = $get('#template-controls');
+  controls.style.opacity = '1';
+
+  let filePath = options.filePath.substring(0, options.filePath.lastIndexOf('/') + 1);
+  console.log(filePath);
+
+  let pdfs = [];
+  pdfs.push(filePath + options.fileName + '-mobile.pdf');
+  pdfs.push(filePath + options.fileName + '-desktop.pdf');
+
+  console.log(pdfs);
+
+  let combined = filePath + options.fileName + '.pdf';
+  var merger = new PDFMerger();
+
+  (async () => {
+    for (let value of pdfs) {
+      console.log(value);
+      await merger.add(value);
+    }
+    await merger.save(combined);
+
+    for (let value of pdfs) {
+      let toDelete = value;
+      console.log('delete');
+      fs.unlink(toDelete, (err) => {
+        if (err) {
+          alert('An error occurred while deleting the files: ' + err.message);
+          console.log(err);
+          return;
+        }
+        console.log('Files removed');
+      });
+    }
+  })();
 }

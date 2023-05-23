@@ -11,13 +11,17 @@
     "type": "git",
     "url": "git+https://github.com/omnipotentOmni/Tempest.git"
   },
-  "author": "John McCall",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/omnipotentOmni/Tempest/issues"
   },
   "homepage": "https://github.com/omnipotentOmni/Tempest#readme",
   "devDependencies": {
-    "electron": "^24.3.0"
+    "electron": "^22.0.3"
+  },
+  "dependencies": {
+    "@electron/remote": "^2.0.9",
+    "pdf-merger-js": "^4.3.0"
   }
 }
