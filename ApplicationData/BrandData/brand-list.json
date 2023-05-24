@@ -1,7 +1,19 @@
 [
   {
+    "BrandName" : "Vaxneuvance",
+    "BrandChips" : {
+      "mobile" : "doximity_mobile_VAXNEUVANCE.png",
+      "desktop" : "doximity_desktop_VAXNEUVANCE.png"
+
+    },
+    "PiMedGuide" : {
+      "Prescribing Info" : [true,0],
+      "Medication Guide" : [true,1]
+    }
+  },
+  {
     "BrandName" : "Brand 01",
-    "Brand Chips" : {
+    "BrandChips" : {
       "mobile" : "doximity_mobile_brand01.png",
       "desktop" : "doximity_desktop_brand01.png"
 
@@ -13,7 +25,7 @@
   },
   {
     "BrandName" : "Brand 02",
-    "Brand Chips" : {
+    "BrandChips" : {
       "mobile" : "doximity_mobile_brand02.png",
       "desktop" : "doximity_desktop_brand02.png"
 
@@ -25,7 +37,7 @@
   },
   {
     "BrandName" : "Brand 03",
-    "Brand Chips" : {
+    "BrandChips" : {
       "mobile" : "doximity_mobile_brand03.png",
       "desktop" : "doximity_desktop_brand03.png"
 
@@ -37,7 +49,7 @@
   },
   {
     "BrandName" : "Brand 04",
-    "Brand Chips" : {
+    "BrandChips" : {
       "mobile" : "doximity_mobile_brand04.png",
       "desktop" : "doximity_desktop_brand04.png"
 
@@ -49,7 +61,7 @@
   },
   {
     "BrandName" : "Brand 05",
-    "Brand Chips" : {
+    "BrandChips" : {
       "mobile" : "doximity_mobile_brand05.png",
       "desktop" : "doximity_desktop_brand05.png"
 

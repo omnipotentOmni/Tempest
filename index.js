@@ -10,11 +10,12 @@ const BrowserWindow = electron.BrowserWindow;
 
 const createWindow = () => {
     const win = new BrowserWindow({
-      // frame: false,
+      frame: false,
+      titleBarStyle: 'hidden',
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
-        enableRemoteModule: true,
+        enableRemoteModule: true
       },
       width: 1060,
       height: 700

@@ -1,11 +1,14 @@
 {
   "name": "tempest",
-  "version": "1.0.0",
+  "productName": "Tempest",
+  "version": "0.1.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -18,7 +21,8 @@
   },
   "homepage": "https://github.com/omnipotentOmni/Tempest#readme",
   "devDependencies": {
-    "electron": "^22.0.3"
+    "electron": "^22.0.3",
+    "electron-builder": "^23.6.0"
   },
   "dependencies": {
     "@electron/remote": "^2.0.9",

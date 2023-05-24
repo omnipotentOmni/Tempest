@@ -80,7 +80,7 @@ function testingEnv() {
       "type": "doximity"
     },
     "brand-selection": {
-      "brand": "Brand 03",
+      "brand": "Vaxneuvance",
       "default": false
     },
     "html-selection": {
@@ -95,11 +95,20 @@ function testingEnv() {
     },
     "image-selection": {
       "primary": {
-        "name": "",
-        "path": "",
-        "fpo": true
+        "name": "image-test.jpeg",
+        "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test.jpeg"
       },
-      "alternate": []
+      "alternate": [{
+          "id": "alternate-image-8oe78wmhoc",
+          "name": "image-test copy.jpeg",
+          "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test copy.jpeg"
+        },
+        {
+          "id": "alternate-image-t664z4ycc4",
+          "name": "image-test copy 2.jpeg",
+          "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test copy 2.jpeg"
+        }
+      ]
     }
   }
   checkData();
@@ -217,43 +226,22 @@ function htmlSelection() {
     };
 
     function handleDrop(e) {
+      let type = e.target.dataset.type;
+      console.log(e.target);
+      console.log('drop');
       e.preventDefault();
 
       const dt = e.dataTransfer.files;
       const file = dt[0];
 
-      // let filePath = file.webkitRelativePath;
-
-      // let fileInput = $get('#drag-file-input');
-
-      // fileInput.files = e.dataTransfer.files;
-
-      // fileInput.addEventListener('change', handleUpload, false);
-
       //ADD THE FILE UPLOAD DISPLAY
       uploadFile(item.parentElement, file);
 
-
-      function handleUpload(event) {
-        console.log(event);
-      }
-
-
-      // fileInput.files.onchange = function() {
-      //   console.log('hello');
-      //   console.log(fileInput.value);
-      // }
-
-      // const dt = e.dataTransfer;
-      // const files = dt.files;
-
-      // let filePath = files[0].path;
-      // console.log(filePath);
-
-      // handleFiles(files);
+      setSessionData(type, file);
     };
 
     function handleFiles(files) {
+      console.log('needed too?');
       item.dataset.fileload = true;
       $class(item, 'active', 'add');
       console.log(files);
@@ -419,14 +407,6 @@ function buildImage(parent, file, reload) {
       let name = $get('.file-upload-name', newImage)[0];
       name.textContent = file.name;
 
-      //FPO – FPO WAS REMOVED
-
-      // if (parent.id.includes('primary')) {
-      //   if (fileWrapper.innerHTML == '') {
-      //     $get('#selection-button-base').click();
-      //   }
-      //   fileWrapper.innerHTML = '';
-      // }
       if (activeWindow === 'image-selection' && !sessionData[activeWindow][type].length) {
         fileWrapper.innerHTML = '';
       }
@@ -444,12 +424,6 @@ function buildImage(parent, file, reload) {
 //DELETE IMAGE
 function deleteImageFile(e) {
   e.parentElement.parentElement.remove();
-
-  //FPO – FPO WAS REMOVED
-
-  // if (parent.id.includes('primary')) {
-  //   $get('#selection-button-base').click();
-  // }
 
   unloadFile(e);
 }
@@ -545,7 +519,7 @@ function setSessionData(action, value) {
   };
 
   if (activeWindow === 'html-selection') { // SETTING THE DATA FOR HTML UPLOAD
-
+    console.log(action,value);
     dataKey = action;
 
     if (dataKey) {
@@ -763,7 +737,8 @@ async function buildTemplate() {
   let brandChip = $get('#alert-brand-chip');
 
   let img = document.createElement('img');
-  img.src = `${__dir}/ApplicationSupport/images/brand-chips/${brand['Brand Chips'].mobile}`;
+  img.src = `${__dir}/ApplicationData/BrandData/brand-chips/${brand['BrandChips'].mobile}`;
+  console.log(img.src);
   brandChip.appendChild(img);
 
   // ----------- ADD IFRAME
@@ -894,7 +869,7 @@ function switchView(type, el) {
   //SWAPPING OUT THE IMAGE
   let brandChip = $get('#alert-brand-chip').getElementsByTagName('img')[0];
   let brand = getBrand();
-  brandChip.src = `${__dir}/ApplicationSupport/images/brand-chips/${brand['Brand Chips'][type]}`;
+  brandChip.src = `${__dir}/ApplicationData/BrandData/brand-chips/${brand['BrandChips'][type]}`;
 }
 
 
@@ -909,11 +884,11 @@ async function exportPDF() {
       ipcRenderer.once('print-to-pdf-done', () => {
         resolve();
       });
-  
+
       ipcRenderer.send('print-to-pdf', pdfOptions);
     });
   }
-  
+
   async function generatePDFsSequentially(views, index, options) {
     if (index >= views.length) {
       views[0].click();
@@ -921,11 +896,11 @@ async function exportPDF() {
       combinePDF(options);
       return;
     }
-  
+
     const view = views[index];
     view.click();
     const type = view.dataset.view;
-  
+
     let pageWidth = document.body.scrollWidth;
     let pageHeight = document.body.scrollHeight;
 
@@ -934,28 +909,36 @@ async function exportPDF() {
       filePath: `${docPath}/${fileName}-${type}.pdf`,
       landscape: false,
       printBackground: true,
-      margins: { right: .1, bottom: .1, top: .1, left: .1 },
-      pageSize: { width: pageWidth / 96, height: pageHeight / 96 },
+      margins: {
+        right: .1,
+        bottom: .1,
+        top: 0,
+        left: .1
+      },
+      pageSize: {
+        width: pageWidth / 96,
+        height: pageHeight / 96
+      },
       unit: 'px',
       pageRanges: '1'
     };
-  
+
     await sendPrintToPdf(pdfOption);
-  
+
     console.log(`PDF generated: ${pdfOption.filePath}`);
-  
+
     await new Promise((resolve) => setTimeout(resolve, 1000));
-  
+
     generatePDFsSequentially(views, index + 1, pdfOption);
   }
-  
+
   function startPDFGeneration() {
     const views = $get('.template-control-icon');
     const initialIndex = 0;
-  
+
     generatePDFsSequentially(views, initialIndex);
   }
-  
+
   // Call the function to start generating all PDFs
   startPDFGeneration();
 }
@@ -998,4 +981,5 @@ function combinePDF(options) {
       });
     }
   })();
+  alert('PDF been been created!')
 }
