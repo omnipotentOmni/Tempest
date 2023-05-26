@@ -21,8 +21,9 @@ const createWindow = () => {
       height: 700
     })
   
-    win.loadFile('./ApplicationSupport/html/main-page.htm')
+    win.loadFile('app-page.htm')
     curWindow = win;
+
 }
   
 app.whenReady().then(() => {
@@ -77,6 +78,9 @@ ipcMain.on('print-to-pdf', async (event, options) => {
 
 
 const icon = __dirname + 'icon.icns';
+
+const documentsPath = app.getPath('documents');
+console.log(documentsPath);
 
 // const { Menu } = require('electron');
 // Menu.setApplicationMenu(null);

@@ -1,75 +1,57 @@
-<html lang="en" id="main-html">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tempest Alert Template Generator</title>
-    <script src="../scripts/_modules.js"></script>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&display=swap" rel="stylesheet">
-  </head>
-
-  <body>
-    <div id="title-bar">
-      <p>TEMPEST</p>
+<div id="title-bar">
+  <p>TEMPEST</p>
+</div>
+<div onclick="testingEnv()" style="color: #fff; position: absolute; top: 50px;">Click for test</div>
+<div id="window-mask" class="hide-mask"></div>
+<div id="main-app">
+  <div id="primary-container">
+    <div id="template-select">
+      <h1>Select Alert Vendor</h1>
+      <div class="container">
+        <div class="btn templateBtn" onclick="templateType(this)" data-type="doximity">
+          <img src="./ApplicationSupport/images/app-images/logo--doximity_ko.png">
+        </div>
+        <div class="break"></div>
+        <div class="btn templateBtn" onclick="templateType(this)" data-type="epocrates">
+          <img src="./ApplicationSupport/images/app-images/logo--ecpocrates_ko.png">
+        </div>
+        <div class="break"></div>
+        <div id="completion-section">
+          <div class="completion-image incomplete" id="icon-brand" data-complete="Missing"></div>
+          <div class="completion-image incomplete" id="icon-html" data-complete="Missing"></div>
+          <div class="completion-image incomplete" id="icon-image" data-complete="No Images Selected"></div>
+        </div>
+        <div id="submit-btn" class="btn disable" onclick="buildTemplate()">Build Template</div>
+      </div>
     </div>
-    <!-- <div onclick="testingEnv()" style="color: #fff; position: absolute; top: 50px;">Click for test</div> -->
-    <div id="window-mask" class="hide-mask"></div>
-    <div id="main-app">
-      <div id="primary-container">
-        <div id="template-select">
-          <h1>Select Alert Vendor</h1>
-          <div class="container">
-            <div class="btn templateBtn" onclick="templateType(this)" data-type="doximity">
-              <img src="../images/app-images/logo--doximity_ko.png">
-            </div>
-            <div class="break"></div>
-            <div class="btn templateBtn" onclick="templateType(this)" data-type="epocrates">
-              <img src="../images/app-images/logo--ecpocrates_ko.png">
-            </div>
-            <div class="break"></div>
-            <div id="completion-section">
-              <div class="completion-image incomplete" id="icon-brand" data-complete="Missing"></div>
-              <div class="completion-image incomplete" id="icon-html" data-complete="Missing"></div>
-              <div class="completion-image incomplete" id="icon-image" data-complete="No Images Selected"></div>
-            </div>
-            <div id="submit-btn" class="btn disable" onclick="buildTemplate()">Build Template</div>
+    <div id="template-data" class="disable">
+      <div id="template-data-header">
+        <div id="header-brand" class="header-item" onclick="swapWindow(this)" data-title="brand-selection" data-function="brandSelection">
+          <div id="icon-brand-select" class="header-bar">
+          </div>
+          <div id="header-brand-select" class="header-text">
+            Select your Brand
           </div>
         </div>
-        <div id="template-data" class="disable">
-          <div id="template-data-header">
-            <div id="header-brand" class="header-item" onclick="swapWindow(this)" data-title="brand-selection" data-function="brandSelection">
-              <div id="icon-brand-select" class="header-bar">
-              </div>
-              <div id="header-brand-select" class="header-text">
-                Select your Brand
-              </div>
-            </div>
-            <div id="header-code" class="header-item" onclick="swapWindow(this)" data-title="html-selection" data-function="htmlSelection">
-              <div id="icon-code-select" class="header-bar">
-              </div>
-              <div id="header-brand-select" class="header-text">
-                Upload your Data Files
-              </div>
-            </div>
-            <div id="header-images" class="header-item" onclick="swapWindow(this)" data-title="image-selection" data-function="imageSelection">
-              <div id="icon-images-select" class="header-bar">
-              </div>
-              <div id="header-brand-select" class="header-text">
-                Select & Upload your Image(s)
-              </div>
-            </div>
+        <div id="header-code" class="header-item" onclick="swapWindow(this)" data-title="html-selection" data-function="htmlSelection">
+          <div id="icon-code-select" class="header-bar">
           </div>
-          <div class="break"></div>
-          <div id="template-main-content"> <!-- THIS IS WHERE THE CONTENT OF THE TEMPLATE UPLOADES GO -->
+          <div id="header-brand-select" class="header-text">
+            Upload your Data Files
+          </div>
+        </div>
+        <div id="header-images" class="header-item" onclick="swapWindow(this)" data-title="image-selection" data-function="imageSelection">
+          <div id="icon-images-select" class="header-bar">
+          </div>
+          <div id="header-brand-select" class="header-text">
+            Select & Upload your Image(s)
           </div>
         </div>
       </div>
-      <div id="app-data">Tempest v.0.1.2 &ensp; | &ensp; 05/23</div>
+      <div class="break"></div>
+      <div id="template-main-content"> <!-- THIS IS WHERE THE CONTENT OF THE TEMPLATE UPLOADES GO -->
+      </div>
     </div>
-    <script src="../scripts/main-page.js"></script>
-  </body>
-</html>
+  </div>
+  <div id="app-data">Tempest v.0.1.3 &ensp; | &ensp; 05/23</div>
+</div>

@@ -25,18 +25,9 @@
 
 //--------------------------------------------------------MAIN
 
-//TEMPLATE SELECTION
-const path = require('path');
-var fs = require('fs');
-const PDFMerger = require('pdf-merger-js');
-const {
-  app,
-  BrowserWindow
-} = require('electron');
+console.log('hello');
 
-const {
-  ipcRenderer
-} = require('electron');
+//TEMPLATE SELECTION
 let dir = ipcRenderer.sendSync('get-dir-path');
 
 let __dir = path.join(dir, 'Tempest');
@@ -152,7 +143,7 @@ async function swapWindow(selection) {
   activeWindow = windowTitle;
 
   let xhr = new XMLHttpRequest();
-  xhr.open('GET', `./templates/_${windowTitle}.htm`);
+  xhr.open('GET', `./ApplicationSupport/html/templates/_${windowTitle}.htm`);
   xhr.responseType = 'text';
 
   const sendRequest = new Promise((resolve, reject) => {
@@ -397,7 +388,7 @@ function buildImage(parent, file, reload) {
   newImage.id = file.id;
 
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', './templates/_image-file-upload.htm');
+  xhr.open('GET', './ApplicationSupport/html/templates/_image-file-upload.htm');
   xhr.responseType = 'document';
 
   xhr.onload = function () {
@@ -473,7 +464,7 @@ async function loadBrands() {
   //CREATING THE INDIVIDUAL DROP DOWN ITEMS
   let brandTemplate;
   try {
-    let response = await fetch('../html/templates/_brand-item.htm');
+    let response = await fetch('./ApplicationSupport/html/templates/_brand-item.htm');
     if (response.ok) {
       brandTemplate = await response.text();
     } else {
@@ -689,7 +680,7 @@ async function buildTemplate() {
   let htmlContent;
 
   let xhr = new XMLHttpRequest();
-  xhr.open('GET', `./templates/doximity.htm`);
+  xhr.open('GET', `./ApplicationSupport/html/templates/doximity.htm`);
   xhr.responseType = 'text';
 
   const sendRequest = new Promise((resolve, reject) => {
