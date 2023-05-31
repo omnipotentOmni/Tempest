@@ -1,7 +1,7 @@
 {
   "name": "tempest",
   "productName": "Tempest",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,11 +21,13 @@
   },
   "homepage": "https://github.com/omnipotentOmni/Tempest#readme",
   "devDependencies": {
+    "archiver": "^5.3.1",
     "electron": "^22.0.3",
     "electron-builder": "^23.6.0"
   },
   "dependencies": {
     "@electron/remote": "^2.0.9",
+    "adm-zip": "^0.5.10",
     "fs-extra": "^11.1.1",
     "pdf-merger-js": "^4.3.0"
   }

@@ -25,7 +25,8 @@
 
 //--------------------------------------------------------MAIN
 
-console.log('hello');
+
+//SWAP USERNAME
 
 //TEMPLATE SELECTION
 let dir = ipcRenderer.sendSync('get-dir-path');
@@ -143,7 +144,7 @@ async function swapWindow(selection) {
   activeWindow = windowTitle;
 
   let xhr = new XMLHttpRequest();
-  xhr.open('GET', `./ApplicationSupport/html/templates/_${windowTitle}.htm`);
+  xhr.open('GET', `${dirLocation}ApplicationSupport/html/templates/_${windowTitle}.htm`);
   xhr.responseType = 'text';
 
   const sendRequest = new Promise((resolve, reject) => {
@@ -388,7 +389,7 @@ function buildImage(parent, file, reload) {
   newImage.id = file.id;
 
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', './ApplicationSupport/html/templates/_image-file-upload.htm');
+  xhr.open('GET', `${dirLocation}ApplicationSupport/html/templates/_image-file-upload.htm`);
   xhr.responseType = 'document';
 
   xhr.onload = function () {
@@ -451,7 +452,7 @@ async function loadBrands() {
   //CREATING THE BRAND DATA (DROP DOWN)
   let brandData;
   try {
-    const response = await fetch(`${__dir}/ApplicationData/BrandData/brand-list.json`);
+    const response = await fetch(`${dirLocation}ApplicationData/BrandData/brand-list.json`);
     if (response.ok) {
       brandData = await response.json();
     } else {
@@ -464,7 +465,7 @@ async function loadBrands() {
   //CREATING THE INDIVIDUAL DROP DOWN ITEMS
   let brandTemplate;
   try {
-    let response = await fetch('./ApplicationSupport/html/templates/_brand-item.htm');
+    let response = await fetch(`${dirLocation}ApplicationSupport/html/templates/_brand-item.htm`);
     if (response.ok) {
       brandTemplate = await response.text();
     } else {
@@ -680,7 +681,7 @@ async function buildTemplate() {
   let htmlContent;
 
   let xhr = new XMLHttpRequest();
-  xhr.open('GET', `./ApplicationSupport/html/templates/doximity.htm`);
+  xhr.open('GET', `${dirLocation}ApplicationSupport/html/templates/doximity.htm`);
   xhr.responseType = 'text';
 
   const sendRequest = new Promise((resolve, reject) => {
@@ -728,7 +729,7 @@ async function buildTemplate() {
   let brandChip = $get('#alert-brand-chip');
 
   let img = document.createElement('img');
-  img.src = `${__dir}/ApplicationData/BrandData/brand-chips/${brand['BrandChips'].mobile}`;
+  img.src = `${dirLocation}ApplicationData/BrandData/brand-chips/${brand['BrandChips'].mobile}`;
   console.log(img.src);
   brandChip.appendChild(img);
 
@@ -770,7 +771,7 @@ function gatherTitles() {
 }
 
 function processTitles(data) {
-  let url = fs.readFileSync(`${__dir}/ApplicationSupport/html/templates/_title-item.htm`);
+  let url = fs.readFileSync(`${dirLocation}ApplicationSupport/html/templates/_title-item.htm`);
   let parser = new DOMParser();
   let doc = parser.parseFromString(url, 'text/html');
 
@@ -825,7 +826,7 @@ function processImages() {
 
 //GETTING THE BRAND
 function getBrand() {
-  let brandMaster = JSON.parse(fs.readFileSync(`${__dir}/ApplicationData/BrandData/brand-list.json`));
+  let brandMaster = JSON.parse(fs.readFileSync(`${dirLocation}ApplicationData/BrandData/brand-list.json`));
   let selectedBrand = sessionData['brand-selection'].brand;
 
 
@@ -860,7 +861,7 @@ function switchView(type, el) {
   //SWAPPING OUT THE IMAGE
   let brandChip = $get('#alert-brand-chip').getElementsByTagName('img')[0];
   let brand = getBrand();
-  brandChip.src = `${__dir}/ApplicationData/BrandData/brand-chips/${brand['BrandChips'][type]}`;
+  brandChip.src = `${dirLocation}ApplicationData/BrandData/brand-chips/${brand['BrandChips'][type]}`;
 }
 
 

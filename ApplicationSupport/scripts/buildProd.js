@@ -1,12 +1,17 @@
 const escapeStringRegexp = require('escape-string-regexp');
+const archiver = require('archiver');
 
 function sendToProd() { // UPLOAD FILE CHANGES TO PROD
+
+  devVersion = false;
+
+  console.log(dir);
 
   let devDir = path.join(dir, 'Tempest');
   let prodDir = path.join(os.homedir(), 'Documents/Tempest');
   let distDir = path.join(dir, 'Tempest_Dist');
   let prodExclude = [
-    '.git', 
+    '.git',
     '.gitignore',
     'icon.icns',
     'index.js',
@@ -29,6 +34,22 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
     'ApplicationData',
     'ApplicationSupport'
   ]
+
+  const sourcePath = [
+    devDir + '/ApplicationData',
+    devDir + '/ApplicationSupport'
+  ];
+
+  const zipPath = devDir + '/MASTER-ZIP.zip';
+
+  createZipFile(sourcePath, zipPath)
+  .then(() => {
+    console.log('Zip File Created');
+  })
+  .catch(error => {
+    console.error('An error ocurred: ', error);
+  });
+
 
   if (fs.existsSync(prodDir)) {
     fs.removeSync(prodDir);
@@ -74,17 +95,17 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
 
   function replaceLines(filePath, replacementMap) {
     const content = fs.readFileSync(filePath, 'utf8');
-  
+
     let modifiedContent = content;
     for (const line in replacementMap) {
       const escapedLine = escapeStringRegexp(line);
       const pattern = new RegExp(escapedLine, 'g');
       modifiedContent = modifiedContent.replace(pattern, replacementMap[line]);
     }
-  
+
     fs.writeFileSync(filePath, modifiedContent);
   }
-  
+
   // Usage example
   let filePath = path.join(prodDir, 'ApplicationSupport/scripts/main-page.js');
   let replacementMap = {
@@ -92,50 +113,51 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
     "let __dir = path.join(dir, 'Tempest');": `let __dir = '${prodDir}';`,
     "./": `${prodDir}/`
   };
-  
+
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(distDir, 'index.js');
   replacementMap = {
-    "'./ApplicationSupport/html/main-page.htm'" : `'${prodDir}/ApplicationSupport/html/main-page.htm'`
+    "'./ApplicationSupport/html/main-page.htm'": `'${prodDir}/ApplicationSupport/html/main-page.htm'`
   };
 
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(distDir, 'app-page.htm');
   replacementMap = {
-    '"./ApplicationSupport/css/styles.css"' : `"${prodDir}/ApplicationSupport/css/styles.css"`,
-    '"./ApplicationSupport/scripts/_modules.js"' : `"${prodDir}/ApplicationSupport/scripts/_modules.js"`,
-    '<script src="./ApplicationSupport/scripts/buildProd.js"></script>' : ''
+    '"./ApplicationSupport/css/styles.css"': `"${prodDir}/ApplicationSupport/css/styles.css"`,
+    '"./ApplicationSupport/scripts/_modules.js"': `"${prodDir}/ApplicationSupport/scripts/_modules.js"`,
+    '<script src="./ApplicationSupport/scripts/buildProd.js"></script>': ''
   };
 
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(distDir, 'loadReqs.js');
   replacementMap = {
-    "./ApplicationSupport/html/main-page.htm" : `${prodDir}/ApplicationSupport/html/main-page.htm`,
-    "./ApplicationSupport/scripts/main-page.js" : `${prodDir}/ApplicationSupport/scripts/main-page.js`
+    "./ApplicationSupport/html/main-page.htm": `${prodDir}/ApplicationSupport/html/main-page.htm`,
+    "./ApplicationSupport/scripts/main-page.js": `${prodDir}/ApplicationSupport/scripts/main-page.js`,
+    "let devVersion = true;": 'let devVersion = false;'
   };
 
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(prodDir, 'ApplicationSupport/html/main-page.htm');
   replacementMap = {
-    "./" : `${prodDir}/`
+    "./": `${prodDir}/`
   }
 
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(prodDir, 'ApplicationSupport/html/templates/_brand-selection.htm');
   replacementMap = {
-    "./" : `${prodDir}/`
+    "./": `${prodDir}/`
   }
 
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(prodDir, 'ApplicationSupport/html/templates/_image-file-upload.htm');
   replacementMap = {
-    "./" : `${prodDir}/`
+    "./": `${prodDir}/`
   }
 
   replaceLines(filePath, replacementMap);
@@ -143,17 +165,58 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
 
   filePath = path.join(prodDir, 'ApplicationSupport/html/templates/doximity.htm');
   replacementMap = {
-    "./" : `${prodDir}/`
+    "./": `${prodDir}/`
   }
 
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(prodDir, 'ApplicationSupport/html/templates/_html-selection.htm');
   replacementMap = {
-    "./" : `${prodDir}/`
+    "./": `${prodDir}/`
   }
 
   replaceLines(filePath, replacementMap);
 
+
+
+  //MAKING A ZIP OF THE FILE STRUCTURE
+  function createZipFile(source, exportPath) {
+    const output = fs.createWriteStream(exportPath);
+    const archive = archiver('zip', {
+      zlib: {
+        level: 9
+      }
+    });
+
+    return new Promise((resolve, reject) => {
+      output.on('close', () => {
+        resolve();
+      });
+
+      archive.on('warning', err => {
+        if (err.code === 'ENOENT') {
+          console.warn('Warning:', err);
+        } else {
+          reject(err);
+        }
+      });
+
+      archive.on('error', err => {
+        reject(err);
+      });
+
+      archive.pipe(output);
+
+      source.forEach(sourcePath => {
+        archive.directory(sourcePath, path.basename(sourcePath));
+      });
+
+      archive.finalize();
+    });
+  };
+
   alert('Did you copy NodeModules?')
+
+
+
 };

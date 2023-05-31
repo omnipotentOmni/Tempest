@@ -3,6 +3,7 @@ const {app, dialog, ipcMain, ipcRenderer, shell} = require('electron');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const { Menu } = require('electron');
 var dir = path.join(path.dirname(__dirname));
 var curWindow;
 
@@ -17,7 +18,7 @@ const createWindow = () => {
         contextIsolation: false,
         enableRemoteModule: true
       },
-      width: 1060,
+      width: 360,
       height: 700
     })
   
@@ -27,7 +28,9 @@ const createWindow = () => {
 }
   
 app.whenReady().then(() => {
-    createWindow()
+  createWindow();
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
 })
 
 ipcMain.on('get-dir-path', (event) => {
@@ -82,7 +85,54 @@ const icon = __dirname + 'icon.icns';
 const documentsPath = app.getPath('documents');
 console.log(documentsPath);
 
-// const { Menu } = require('electron');
-// Menu.setApplicationMenu(null);
+
+const menuTemplate = [
+  {
+    label: 'Null'
+  },
+  {
+    label: 'File',
+    submenu: [
+      {
+        label: 'Create New Alert',
+        accelerator: 'CmdOrCtrl+N',
+        click: () => {
+          console.log('New Alert');
+        }
+      },
+      {
+        label: 'Update',
+        accelerator: 'CmdOrCtrl+U',
+        click: () => {
+          console.log('updating');
+        }
+      },
+      {
+        label: 'Quit',
+        accelerator: 'CmdOrCtrl+Q',
+        click: () => {
+          app.quit();
+        }
+      }
+      // Add additional submenu items for the "Edit" menu
+    ]
+  },
+  {
+    label: 'Settings',
+    submenu: [
+      {
+        label: 'View DevTools',
+        accelerator: 'CmdOrCtrl+Alt+I',
+        click: (menuItem, browserWindow) => {
+          browserWindow.webContents.toggleDevTools();
+        }
+      }
+    ]
+  }
+  // Add more top-level menu items as needed
+];
+
+
+
 
 
