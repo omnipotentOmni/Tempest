@@ -864,10 +864,50 @@ function switchView(type, el) {
   brandChip.src = `${dirLocation}ApplicationData/BrandData/brand-chips/${brand['BrandChips'][type]}`;
 }
 
+async function home() {
+  let html = $get('#main-html');
+  let htmlContent;
+
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', `./app-page.htm`);
+  xhr.responseType = 'text';
+
+  const sendRequest = new Promise((resolve, reject) => {
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        let parser = new DOMParser();
+        let htmlDoc = parser.parseFromString(xhr.responseText, 'text/html');
+        htmlContent = htmlDoc.documentElement.innerHTML;
+
+        html.innerHTML = htmlContent;
+        loadStyleSheet(`${dirLocation}ApplicationSupport/css/styles.css`);
+        let body = document.body;
+        let content = fs.readFileSync(`${dirLocation}ApplicationSupport/html/main-page.htm`, 'utf-8');
+        body.innerHTML = content;
+
+        resolve();
+      } else {
+        reject(new Error(`Error: Template did not load. Please contact Support.`));
+      }
+    };
+
+    xhr.onerror = function () {
+      reject(new Error('An error occurred while making the request.'));
+    };
+
+    xhr.send(); // Send the request
+  });
+
+  await sendRequest;
+  ipcRenderer.send('resize-window-default');
+}
+
 
 async function exportPDF() {
   let controls = $get('#template-controls');
-  controls.style.opacity = '0'
+  let homeBtn = $get('#title-bar');
+  homeBtn.style.opacity = '0';
+  controls.style.opacity = '0';
   let docPath = path.dirname(sessionData['html-selection'].alert.path); // THE FILEPATH FOR THE PDF
   let fileName = docPath.substring(docPath.lastIndexOf('/') + 1);
 
@@ -939,6 +979,8 @@ async function exportPDF() {
 
 function combinePDF(options) {
   let controls = $get('#template-controls');
+  let homeBtn = $get('#title-bar');
+  homeBtn.style.opacity = '1';
   controls.style.opacity = '1';
 
   let filePath = options.filePath.substring(0, options.filePath.lastIndexOf('/') + 1);

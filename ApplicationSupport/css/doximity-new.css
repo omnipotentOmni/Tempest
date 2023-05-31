@@ -122,7 +122,7 @@ body.desktop {
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
 }
-#template-controls .template-control-icon {
+#template-controls .template-control-icon, #template-controls .app-icon {
   width: 35px;
   height: 35px;
   background: #fff;
@@ -135,21 +135,26 @@ body.desktop {
   margin-right: 10px;
   cursor: pointer;
 }
-#template-controls .template-control-icon img {
+#template-controls .template-control-icon img, #template-controls .app-icon img {
   transition: 0.25s;
   height: 20px;
   filter: invert(15%) sepia(24%) saturate(691%) hue-rotate(207deg) brightness(90%) contrast(95%);
 }
-#template-controls .template-control-icon:hover img {
+#template-controls .template-control-icon:hover img, #template-controls .app-icon:hover img {
   filter: invert(17%) sepia(100%) saturate(3422%) hue-rotate(251deg) brightness(88%) contrast(105%);
 }
-#template-controls .template-control-icon.active-view {
+#template-controls .template-control-icon.active-view, #template-controls .app-icon.active-view {
   background: #502ae4;
   border-color: #502ae4;
   pointer-events: none;
 }
-#template-controls .template-control-icon.active-view img {
+#template-controls .template-control-icon.active-view img, #template-controls .app-icon.active-view img {
   filter: invert(99%) sepia(100%) saturate(0%) hue-rotate(303deg) brightness(103%) contrast(100%);
+}
+
+.vert-border {
+  border-left: 2px solid black;
+  margin-right: 10px;
 }
 
 #submit-btn-container {

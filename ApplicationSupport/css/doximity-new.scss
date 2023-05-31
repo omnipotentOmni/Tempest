@@ -136,7 +136,7 @@ body {
   backdrop-filter: blur(5px);
 
 
-  & .template-control-icon {
+  & .template-control-icon, .app-icon {
     width: 35px;
     height: 35px;
     background: #fff;
@@ -171,6 +171,11 @@ body {
       }
     }
   }
+}
+
+.vert-border {
+  border-left: 2px solid black;
+  margin-right: 10px;
 }
 
 #submit-btn-container {

@@ -7,7 +7,7 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
 
   console.log(dir);
 
-  let devDir = path.join(dir, 'Tempest');
+  let devDir = __dir;
   let prodDir = path.join(os.homedir(), 'Documents/Tempest');
   let distDir = path.join(dir, 'Tempest_Dist');
   let prodExclude = [
@@ -22,7 +22,8 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
     '.DS_Store',
     'app-page.htm',
     'loadReqs.js',
-    'buildProd.js'
+    'buildProd.js',
+    'MASTERFILES.zip'
   ];
 
   let distExclude = [
@@ -40,7 +41,7 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
     devDir + '/ApplicationSupport'
   ];
 
-  const zipPath = devDir + '/MASTER-ZIP.zip';
+  const zipPath = devDir + '/MASTERFILES.zip';
 
   createZipFile(sourcePath, zipPath)
   .then(() => {
@@ -142,6 +143,7 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(prodDir, 'ApplicationSupport/html/main-page.htm');
+  console.log(filePath);
   replacementMap = {
     "./": `${prodDir}/`
   }

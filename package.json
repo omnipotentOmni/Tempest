@@ -1,7 +1,7 @@
 {
   "name": "tempest",
   "productName": "Tempest",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,25 @@
   "dependencies": {
     "@electron/remote": "^2.0.9",
     "adm-zip": "^0.5.10",
+    "asar": "^3.2.0",
     "fs-extra": "^11.1.1",
     "pdf-merger-js": "^4.3.0"
+  },
+  "build": {
+    "mac": {
+      "target": [
+        "default"
+      ],
+      "arch": [
+        "x64",
+        "arm64"
+      ]
+    },
+    "extraFiles": [
+      {
+        "from": "./MASTERFILES.zip",
+        "to": "./MASTERFILES.zip"
+      }
+    ]
   }
 }

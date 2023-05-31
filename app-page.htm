@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tempest Alert Template Generator</title>
     <script src="./loadReqs.js"></script>
-    <!-- <link rel="stylesheet" href="./ApplicationSupport/css/styles.css"> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
@@ -16,8 +15,14 @@
   <body>
     <style>
       body {
+        background: #13121c;
         display: flex;
+        flex-flow: row wrap;
         align-content: center;
+        align-items: center;
+        justify-content: center;
+        margin: 0px;
+        width: 360px;
       }
 
       #modal {
@@ -28,6 +33,7 @@
         z-index: 900;
         align-items: center;
         justify-content: center;
+        font-family: 'Asap'
       }
 
       #modal:not(.disable) {
@@ -52,6 +58,7 @@
       }
 
       #modal-header {
+        margin: 0;
         font-weight: 700;
         padding-bottom: 5px;
         width: 100%;
@@ -63,6 +70,7 @@
       }
 
       #save-path {
+        margin: 0;
         font-size: .75rem;
         width: 100%;
         text-align: center;
@@ -158,10 +166,10 @@
         font-weight: 400;
         letter-spacing: .3rem;
         font-size: .8rem;
-        z-index: 1000;
       }
 
       #title-bar-p {
+        margin: 0;
         background: linear-gradient(
             to right,
             #7953cd 20%,
@@ -169,10 +177,20 @@
             #0190cd 70%,
             #764ada 80%
         );
+        -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
         background-size: 150px auto;
         animation: textShine 60s ease-in-out infinite alternate;
+      }
+
+      @keyframes textShine {
+        0% {
+            background-position: 0% 50%;
+        }
+        100% {
+            background-position: 100% 50%;
+        }
       }
 
     </style>
@@ -187,7 +205,6 @@
       </div>
     </div>
     <div id="svg-container"></div>
-    <!-- <img src="../../../../test.gif" width="100px"> -->
     <div id="title">TEMPEST</div>
     <div id="progress" data-action=""></div>
     

@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const { Menu } = require('electron');
+const asar = require('asar');
 var dir = path.join(path.dirname(__dirname));
 var curWindow;
 
@@ -79,6 +80,28 @@ ipcMain.on('print-to-pdf', async (event, options) => {
   }
 });
 
+ipcMain.handle('extractAsar', async (event, asarFilePath, outputDir) => {
+  try {
+    await extractAsar(asarFilePath, outputDir);
+    return true;
+  } catch (error) {
+    console.error('Error extracting ASAR:', error);
+    return false;
+  }
+});
+
+async function extractAsar(asarFilePath, outputDir) {
+  return new Promise((resolve, reject) => {
+    asar.extractAll(asarFilePath, outputDir, (error) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
 
 const icon = __dirname + 'icon.icns';
 
@@ -98,6 +121,15 @@ const menuTemplate = [
         accelerator: 'CmdOrCtrl+N',
         click: () => {
           console.log('New Alert');
+        }
+      },
+      {
+        label: 'Reload',
+        accelerator: 'CmdOrCtrl+R',
+        click: (menuItem, browserWindow) => {
+          if (browserWindow) {
+            browserWindow.reload();
+          }
         }
       },
       {

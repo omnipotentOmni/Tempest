@@ -1,0 +1,17 @@
+[
+  {
+    "Version" : "0.1.0",
+    "Stage" : "Initial Build",
+    "Description" : "Tempest is an Application for the automating of Doximity / Epocrates templates – replacing the current InDesign version of these templates. Tempest is self containing and has logic in place to handle updates that do not require the re-installation of the Application. Tempest was built by John McCall in 2023."
+  },
+  {
+    "Version" : "0.1.5",
+    "Stage" : "Testing",
+    "Description" : "In the 0.1.5 release, Tempest has been reconfigured to allow running, with ApplicationSupports hard loaded into 'Documents'. Further testing is required before automating this process."
+  },
+  {
+    "Version" : "0.2.0",
+    "Stage" : "Testing",
+    "Description" : "In the 0.2.0 release, Tempest is now fully capable of running without pre-loading ApplicationSupports into 'Documents'. Testing is in progress prior to a full update and release. Tempest Splash screen and logo have been added to the Application"
+  }
+]
