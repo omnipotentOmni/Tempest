@@ -905,8 +905,8 @@ async function home() {
 
 async function exportPDF() {
   let controls = $get('#template-controls');
-  let homeBtn = $get('#title-bar');
-  homeBtn.style.opacity = '0';
+  let titleBar = $get('#title-bar');
+  titleBar.style.opacity = '0';
   controls.style.opacity = '0';
   let docPath = path.dirname(sessionData['html-selection'].alert.path); // THE FILEPATH FOR THE PDF
   let fileName = docPath.substring(docPath.lastIndexOf('/') + 1);
@@ -928,14 +928,15 @@ async function exportPDF() {
       combinePDF(options);
       return;
     }
-
+  
     const view = views[index];
     view.click();
+  
     const type = view.dataset.view;
-
+  
     let pageWidth = document.body.scrollWidth;
     let pageHeight = document.body.scrollHeight;
-
+  
     const pdfOption = {
       fileName: fileName,
       filePath: `${docPath}/${fileName}-${type}.pdf`,
@@ -954,14 +955,36 @@ async function exportPDF() {
       unit: 'px',
       pageRanges: '1'
     };
-
-    await sendPrintToPdf(pdfOption);
-
-    console.log(`PDF generated: ${pdfOption.filePath}`);
-
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    generatePDFsSequentially(views, index + 1, pdfOption);
+  
+    const iFrame = document.getElementById('alert-display');
+  
+    if (iFrame.contentDocument.readyState === 'complete') {
+      // If the iframe is already loaded, proceed immediately
+      await sendPrintToPdf(pdfOption);
+  
+      console.log(`PDF generated: ${pdfOption.filePath}`);
+  
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+  
+      generatePDFsSequentially(views, index + 1, pdfOption);
+    } else {
+      await new Promise((resolve) => {
+        const handleLoad = () => {
+          iFrame.removeEventListener('load', handleLoad);
+          resolve();
+        };
+  
+        iFrame.addEventListener('load', handleLoad);
+      });
+  
+      await sendPrintToPdf(pdfOption);
+  
+      console.log(`PDF generated: ${pdfOption.filePath}`);
+  
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+  
+      generatePDFsSequentially(views, index + 1, pdfOption);
+    }
   }
 
   function startPDFGeneration() {
@@ -979,8 +1002,8 @@ async function exportPDF() {
 
 function combinePDF(options) {
   let controls = $get('#template-controls');
-  let homeBtn = $get('#title-bar');
-  homeBtn.style.opacity = '1';
+  let titleBar = $get('#title-bar');
+  titleBar.style.opacity = '1';
   controls.style.opacity = '1';
 
   let filePath = options.filePath.substring(0, options.filePath.lastIndexOf('/') + 1);

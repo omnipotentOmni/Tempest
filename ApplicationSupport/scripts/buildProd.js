@@ -1,3 +1,5 @@
+// NEED TO ADD LOGIC TO UPDATE THE VERSION NUMBER AND 
+
 const escapeStringRegexp = require('escape-string-regexp');
 const archiver = require('archiver');
 
@@ -36,20 +38,22 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
     'ApplicationSupport'
   ]
 
-  const sourcePath = [
-    devDir + '/ApplicationData',
-    devDir + '/ApplicationSupport'
-  ];
+  // const sourcePath = [
+  //   devDir + '/ApplicationData',
+  //   devDir + '/ApplicationSupport'
+  // ];
 
-  const zipPath = devDir + '/MASTERFILES.zip';
+  // const zipPath = devDir + '/MASTERFILES.zip';
 
-  createZipFile(sourcePath, zipPath)
-  .then(() => {
-    console.log('Zip File Created');
-  })
-  .catch(error => {
-    console.error('An error ocurred: ', error);
-  });
+  // console.log(sourcePath, prodDir);
+
+  // createZipFile(sourcePath, zipPath)
+  // .then(() => {
+  //   console.log('Zip File Created');
+  // })
+  // .catch(error => {
+  //   console.error('An error ocurred: ', error);
+  // });
 
 
   if (fs.existsSync(prodDir)) {
@@ -93,6 +97,23 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
     console.error(error);
   }
 
+  const sourcePath = [
+    prodDir + '/ApplicationData',
+    prodDir + '/ApplicationSupport'
+  ];
+
+  const zipPath = devDir + '/MASTERFILES.zip';
+
+  console.log(sourcePath, prodDir);
+
+  createZipFile(sourcePath, zipPath)
+  .then(() => {
+    console.log('Zip File Created');
+  })
+  .catch(error => {
+    console.error('An error ocurred: ', error);
+  });
+
 
   function replaceLines(filePath, replacementMap) {
     const content = fs.readFileSync(filePath, 'utf8');
@@ -103,25 +124,21 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
       const pattern = new RegExp(escapedLine, 'g');
       modifiedContent = modifiedContent.replace(pattern, replacementMap[line]);
     }
-
     fs.writeFileSync(filePath, modifiedContent);
   }
 
-  // Usage example
+
   let filePath = path.join(prodDir, 'ApplicationSupport/scripts/main-page.js');
   let replacementMap = {
     "let dir = ipcRenderer.sendSync('get-dir-path');": '',
-    "let __dir = path.join(dir, 'Tempest');": `let __dir = '${prodDir}';`,
-    "./": `${prodDir}/`
+    "let __dir = path.join(dir, 'Tempest');": `let __dir = '${prodDir}';`
   };
-
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(distDir, 'index.js');
   replacementMap = {
     "'./ApplicationSupport/html/main-page.htm'": `'${prodDir}/ApplicationSupport/html/main-page.htm'`
   };
-
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(distDir, 'app-page.htm');
@@ -130,7 +147,6 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
     '"./ApplicationSupport/scripts/_modules.js"': `"${prodDir}/ApplicationSupport/scripts/_modules.js"`,
     '<script src="./ApplicationSupport/scripts/buildProd.js"></script>': ''
   };
-
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(distDir, 'loadReqs.js');
@@ -139,29 +155,24 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
     "./ApplicationSupport/scripts/main-page.js": `${prodDir}/ApplicationSupport/scripts/main-page.js`,
     "let devVersion = true;": 'let devVersion = false;'
   };
-
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(prodDir, 'ApplicationSupport/html/main-page.htm');
-  console.log(filePath);
   replacementMap = {
     "./": `${prodDir}/`
   }
-
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(prodDir, 'ApplicationSupport/html/templates/_brand-selection.htm');
   replacementMap = {
     "./": `${prodDir}/`
   }
-
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(prodDir, 'ApplicationSupport/html/templates/_image-file-upload.htm');
   replacementMap = {
     "./": `${prodDir}/`
   }
-
   replaceLines(filePath, replacementMap);
 
 
@@ -169,7 +180,6 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
   replacementMap = {
     "./": `${prodDir}/`
   }
-
   replaceLines(filePath, replacementMap);
 
   filePath = path.join(prodDir, 'ApplicationSupport/html/templates/_html-selection.htm');

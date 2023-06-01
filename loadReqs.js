@@ -72,6 +72,13 @@ async function launchLoadScreen() {
   await delay(setDelay * 2);
   progress.dataset.action = 'Launching Tempest';
   await delay(setDelay * 3);
+
+  console.log(username, userPath);
+
+  if (!devVersion) {
+    await replaceInFiles(userPath, 'mccajoh3', username);
+  }
+  
   launchTempest();
 }
 
@@ -294,52 +301,31 @@ function replaceLines(filePath, replacementMap) {
 
 
 
-function replaceStringInFiles(dirPath, searchString, replacementString) {
-  console.log('replacing-running');
-  // Read the contents of the directory
-  fs.readdir(dirPath, (error, files) => {
-    if (error) {
-      console.error('Error reading directory:', error);
-      return;
+
+function replaceInFiles(directoryPath, searchString, replaceString) {
+  const files = fs.readdirSync(directoryPath);
+
+  files.forEach((file) => {
+    const filePath = path.join(directoryPath, file);
+    const stat = fs.statSync(filePath);
+
+    if (stat.isDirectory()) {
+      replaceInFiles(filePath, searchString, replaceString);
+    } else {
+      const fileExtension = path.extname(file).toLowerCase();
+      const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif']; // Add more image extensions if needed
+
+      if (!imageExtensions.includes(fileExtension)) {
+        replaceInFile(filePath, searchString, replaceString);
+      }
     }
-
-    // Iterate over each file
-    files.forEach((file) => {
-      const filePath = path.join(dirPath, file);
-
-      // Check if the current path is a directory
-      fs.stat(filePath, (error, stats) => {
-        if (error) {
-          console.error('Error retrieving file stats:', error);
-          return;
-        }
-
-        if (stats.isDirectory()) {
-          // Recursively process subdirectories
-          replaceStringInFiles(filePath, searchString, replacementString);
-        } else {
-          // Process files
-          fs.readFile(filePath, 'utf8', (error, data) => {
-            if (error) {
-              console.error('Error reading file:', error);
-              return;
-            }
-
-            // Replace the string in file contents
-            const updatedData = data.replace(new RegExp(searchString, 'g'), replacementString);
-
-            // Write the updated contents back to the file
-            fs.writeFile(filePath, updatedData, 'utf8', (error) => {
-              if (error) {
-                console.error('Error writing file:', error);
-              }
-            });
-          });
-        }
-      });
-    });
   });
 }
 
+function replaceInFile(filePath, searchString, replaceString) {
+  let fileContent = fs.readFileSync(filePath, 'utf-8');
+  fileContent = fileContent.replace(new RegExp(searchString, 'g'), replaceString);
+  fs.writeFileSync(filePath, fileContent, 'utf-8');
+}
 
 

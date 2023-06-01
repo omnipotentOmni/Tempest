@@ -13,5 +13,10 @@
     "Version" : "0.2.0",
     "Stage" : "Testing",
     "Description" : "In the 0.2.0 release, Tempest is now fully capable of running without pre-loading ApplicationSupports into 'Documents'. Testing is in progress prior to a full update and release. Tempest Splash screen and logo have been added to the Application"
+  },
+  {
+    "Version" : "0.2.1",
+    "Stage" : "Testing",
+    "Description" : "In the 0.2.1 release, Tempest should now be mapping all interactions correctly and ready for a Full release. The Home button in the template screen now acts as expected, still need to add a functionality that it will automatically 'click' the appropriate Template Type upon reloading the home screen. Will be adding future menu functionality prior to 1.0 release, will need to add all the brands and User Settings, as well as adding a 'Release Notes' menu item."
   }
 ]
