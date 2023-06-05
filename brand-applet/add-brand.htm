@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="main-container">
+      <div class="heading">Add-a-Brand</div>
+      <div class="break hz"></div>
+      <div id="content">
+        <div class="input-item">
+          <div class="input-label" data-label="Brand Name"></div>
+          <div class="input-value" contenteditable="true" id="brandName"></div>
+        </div>
+        <div class="break hz"></div>
+        <div class="input-item">
+          <div class="input-label" data-label="Brand Chip Name"></div>
+          <div class="input-value" contenteditable="true" id="chipName"></div>
+        </div>
+        <div class="break hz line"></div>
+        <div class="heading">PI / MED GUIDE</div>
+        <div class="break hz"></div>
+        <div class="click-item active" id="pi" data-label="Prescribing Info." onclick="piMedGuide(this)"></div>
+        <div class="click-item active" id="med-guide" data-label="Med Guide" onclick="piMedGuide(this)"></div>
+        <div class="heading-small" data-label="Which Displays First?"></div>
+        <div class="input-item radio" id="pi-radio">
+          <div class="input-radio active" id="pi-radio-option" onclick="display(this)">
+            <div class="input-radio-inset"></div>
+          </div>
+          <div class="input-label-radio" data-label="Prescribing Info."></div>
+        </div>
+        <div class="input-item radio" id="mg-radio">
+          <div class="input-radio" id="mg-radio-option" onclick="display(this)">
+            <div class="input-radio-inset"></div>
+          </div>
+          <div class="input-label-radio" data-label="Med Guide"></div>
+        </div>
+      </div>
+      <div class="btn active" id="continue" onclick="addMore(this)">Keep Adding</div>
+      <div class="break"></div>
+      <div class="btn" id="add-brand" onclick="addBrand()">Add Brand</div>
+    </div>
+    
+    <script src="./add-brand.js"></script>
+  </body>
+</html>

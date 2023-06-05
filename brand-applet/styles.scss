@@ -1,0 +1,236 @@
+//-------------------------------------------------------------------------- COLOR STYLES
+$color--dark: #24272d;
+$color--light: #5f6675;
+$color--xlight: #939db2;
+$color--highlight: dodgerblue;
+
+//-------------------------------------------------------------------------- FONT STYLES
+$font--w-str: 700;
+$font--w-reg: 400;
+$font--w-lgt: 300;
+
+$font--s-lg: 1.5rem;
+$font--s-md: 1rem;
+$font--s-sm: .8rem;
+
+//-------------------------------------------------------------------------- PADDING or MARGIN
+$space--sm: 5px;
+$space--md: 10px;
+$space--lg: 20px;
+
+//-------------------------------------------------------------------------- STYLES
+$border-radius--sm: 5px;
+$border-radius--md: 15px;
+$border-radius--lg: 30px;
+$border-radius--mx: 100%;
+
+
+//-------------------------------------------------------------------------- GLOBAL STYLES
+html {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: $font--w-reg;
+  background: $color--dark;
+}
+
+body {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.break {
+  display: flex;
+
+  &.hz {
+    min-width: 100%;
+    height: 0;
+
+    &.line {
+      border: .5px solid white;
+      margin: $space--md 0;
+    }
+  }
+}
+
+.heading {
+  font-size: $font--s-lg;
+  font-weight: $font--w-str;
+  align-self: flex-start;
+}
+
+//-------------------------------------------------------------------------- CONTENT STLYES
+#main-container {
+  margin: 0;
+  padding: 0;
+  width: 300px;
+  background: $color--light;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  border-radius: $border-radius--md;
+  padding: $space--md;
+
+  & .heading {
+    color: white;
+    display: flex;
+    justify-content: center;
+    margin-bottom: $space--lg;
+  }
+}
+
+#content {
+  width: 100%;
+  align-self: flex-start;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding-bottom: $space--lg;
+}
+
+.input-item {
+  width: 100%;
+  padding: $space--sm;
+  outline: none;
+  padding: 0;
+  margin-bottom: $space--md;
+  display: flex;
+  flex-flow: row wrap;
+
+  & .input-value {
+    background: $color--xlight;
+    outline: none;
+    padding: 0;
+    padding: $space--sm;
+    width: 100%;
+
+    &:focus {
+      background: white;
+    }
+  }
+
+  & .input-label {
+    margin-bottom: $space--sm;
+
+    &::before {
+      content: attr(data-label);
+      font-weight: $font--w-str;
+      font-size: $font--s-sm;
+      color: white;
+    }
+  }
+
+  & .input-radio {
+    width: 20px;
+    height: 20px;
+    border-radius: $border-radius--mx;
+    border: 1px solid $color--highlight;
+    margin-right: $space--sm;
+    box-sizing: border-box;
+    background: $color--highlight;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      border-width: 2px;
+      border-color: $color--highlight;
+    }
+
+    &:not(.active) {
+      background: transparent;
+      border-color: white;
+
+      .input-radio-inset {
+        display: none;
+      }
+    }
+  }
+
+  & .input-radio-inset {
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: $border-radius--mx;
+  }
+
+  & .input-label-radio {
+    color: white;
+      &::before {
+        content: attr(data-label);
+        font-weight: $font--w-str;
+        font-size: $font--s-sm;
+      }
+  }
+
+  &.radio {
+    align-items: center;
+  }
+}
+
+#chipName {
+  text-transform: uppercase;
+}
+
+.heading-small {
+  margin-top: $space--md;
+  margin-bottom: $space--lg;
+
+  &::before {
+    content: attr(data-label);
+    font-weight: $font--w-str;
+    font-size: $font--s-sm;
+    color: white;
+  }
+}
+
+
+.click-item {
+  padding: $space--md;
+  border: 1px solid white;
+  color: white;
+  width: 40%;
+  text-align: center;
+  margin-bottom: $space--md;
+  
+  &::before {
+    content: attr(data-label);
+  }
+
+  &:hover {
+    border-color: $color--highlight;
+  }
+
+  &.active {
+    background-color: $color--highlight;
+    border-color: $color--highlight;
+    &::before {
+      font-weight: $font--w-str;
+    }
+
+    &:hover {
+      border-color: white;
+    }
+  }
+}
+
+.btn {
+  margin: 0 auto;
+  padding: 10px 20px;
+  border-radius: $border-radius--lg;
+  margin-bottom: $space--md;
+  border: 2px solid white;
+  color: white;
+  transition: all .2s;
+  cursor: pointer;
+
+  &.active {
+    border-color: $color--highlight;
+    background: $color--highlight;
+  }
+
+  &:hover {
+    border-color: $color--highlight;
+    background: $color--highlight;
+  }
+}

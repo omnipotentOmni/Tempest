@@ -1,0 +1,14 @@
+[
+  {
+    "BrandName" : "Delstrigo",
+    "BrandChips" : {
+      "mobile" : "doximity_mobile_DELSTRIGO.png",
+      "desktop" : "doximity_desktop_DELSTRIGO.png"
+
+    },
+    "PiMedGuide" : {
+      "Prescribing Info" : [true,0],
+      "Medication Guide" : [true,1]
+    }
+  }
+]

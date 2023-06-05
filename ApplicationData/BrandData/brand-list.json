@@ -1,74 +1,495 @@
 [
   {
-    "BrandName" : "Vaxneuvance",
-    "BrandChips" : {
-      "mobile" : "doximity_mobile_VAXNEUVANCE.png",
-      "desktop" : "doximity_desktop_VAXNEUVANCE.png"
-
+    "BrandName": "Belsomra",
+    "BrandChips": {
+      "mobile": "doximity_mobile_BELSOMRA.png",
+      "desktop": "doximity_desktop_BELSOMRA.png"
     },
-    "PiMedGuide" : {
-      "Prescribing Info" : [true,0],
-      "Medication Guide" : [true,1]
+    "PiMedGuide": {
+      "Medication Guide": [
+        true,
+        0
+      ],
+      "Prescribing Info": [
+        true,
+        1
+      ]
     }
   },
   {
-    "BrandName" : "Brand 01",
-    "BrandChips" : {
-      "mobile" : "doximity_mobile_brand01.png",
-      "desktop" : "doximity_desktop_brand01.png"
-
+    "BrandName": "Bridion",
+    "BrandChips": {
+      "mobile": "doximity_mobile_BRIDION.png",
+      "desktop": "doximity_desktop_BRIDION.png"
     },
-    "PiMedGuide" : {
-      "Prescribing Info" : [true,0],
-      "Medication Guide" : [true,1]
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
     }
   },
   {
-    "BrandName" : "Brand 02",
-    "BrandChips" : {
-      "mobile" : "doximity_mobile_brand02.png",
-      "desktop" : "doximity_desktop_brand02.png"
-
+    "BrandName": "Delstrigo",
+    "BrandChips": {
+      "mobile": "doximity_mobile_DELSTRIGO.png",
+      "desktop": "doximity_desktop_DELSTRIGO.png"
     },
-    "PiMedGuide" : {
-      "Prescribing Info" : [true,0],
-      "Medication Guide" : [true,1]
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        0
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
     }
   },
   {
-    "BrandName" : "Brand 03",
-    "BrandChips" : {
-      "mobile" : "doximity_mobile_brand03.png",
-      "desktop" : "doximity_desktop_brand03.png"
-
+    "BrandName": "Dificid",
+    "BrandChips": {
+      "mobile": "doximity_mobile_DIFICID.png",
+      "desktop": "doximity_desktop_DIFICID.png"
     },
-    "PiMedGuide" : {
-      "Prescribing Info" : [false,0],
-      "Medication Guide" : [true,0]
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
     }
   },
   {
-    "BrandName" : "Brand 04",
-    "BrandChips" : {
-      "mobile" : "doximity_mobile_brand04.png",
-      "desktop" : "doximity_desktop_brand04.png"
-
+    "BrandName": "Entereg",
+    "BrandChips": {
+      "mobile": "doximity_mobile_ENTEREG.png",
+      "desktop": "doximity_desktop_ENTEREG.png"
     },
-    "PiMedGuide" : {
-      "Prescribing Info" : [true,0],
-      "Medication Guide" : [false,0]
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
     }
   },
   {
-    "BrandName" : "Brand 05",
-    "BrandChips" : {
-      "mobile" : "doximity_mobile_brand05.png",
-      "desktop" : "doximity_desktop_brand05.png"
-
+    "BrandName": "Gardasil 9",
+    "BrandChips": {
+      "mobile": "doximity_mobile_GARDASIL-9.png",
+      "desktop": "doximity_desktop_GARDASIL-9.png"
     },
-    "PiMedGuide" : {
-      "Prescribing Info" : [true,1],
-      "Medication Guide" : [true,0]
+    "PiMedGuide": {
+      "Medication Guide": [
+        true,
+        0
+      ],
+      "Prescribing Info": [
+        true,
+        1
+      ]
+    }
+  },
+  {
+    "BrandName": "Isentress",
+    "BrandChips": {
+      "mobile": "doximity_mobile_ISENTRESS.png",
+      "desktop": "doximity_desktop_ISENTRESS.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Isentress HD",
+    "BrandChips": {
+      "mobile": "doximity_mobile_ISENTRESS-HD.png",
+      "desktop": "doximity_desktop_ISENTRESS-HD.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Janumet",
+    "BrandChips": {
+      "mobile": "doximity_mobile_JANUMET.png",
+      "desktop": "doximity_desktop_JANUMET.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        true,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Janumet XR",
+    "BrandChips": {
+      "mobile": "doximity_mobile_JANUMET-XR.png",
+      "desktop": "doximity_desktop_JANUMET-XR.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        true,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Januvia",
+    "BrandChips": {
+      "mobile": "doximity_mobile_JANUVIA.png",
+      "desktop": "doximity_desktop_JANUVIA.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        true,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Keytruda",
+    "BrandChips": {
+      "mobile": "doximity_mobile_KEYTRUDA.png",
+      "desktop": "doximity_desktop_KEYTRUDA.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        true,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Lagevrio",
+    "BrandChips": {
+      "mobile": "doximity_mobile_LAGEVRIO.png",
+      "desktop": "doximity_desktop_LAGEVRIO.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Pifeltro",
+    "BrandChips": {
+      "mobile": "doximity_mobile_PIFELTRO.png",
+      "desktop": "doximity_desktop_PIFELTRO.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Pneumovax 23",
+    "BrandChips": {
+      "mobile": "doximity_mobile_PNEUMOVAX-23.png",
+      "desktop": "doximity_desktop_PNEUMOVAX-23.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Prevymis Combo",
+    "BrandChips": {
+      "mobile": "doximity_mobile_PREVYMIS-COMBO.png",
+      "desktop": "doximity_desktop_PREVYMIS-COMBO.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Prevymis Injection",
+    "BrandChips": {
+      "mobile": "doximity_mobile_PREVYMIS-INJECTION.png",
+      "desktop": "doximity_desktop_PREVYMIS-INJECTION.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "ProQuad",
+    "BrandChips": {
+      "mobile": "doximity_mobile_PROQUAD.png",
+      "desktop": "doximity_desktop_PROQUAD.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "ProQuad Family",
+    "BrandChips": {
+      "mobile": "doximity_mobile_PROQUAD-FAMILY.png",
+      "desktop": "doximity_desktop_PROQUAD-FAMILY.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Recarbrio",
+    "BrandChips": {
+      "mobile": "doximity_mobile_RECARBRIO.png",
+      "desktop": "doximity_desktop_RECARBRIO.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Rotateq",
+    "BrandChips": {
+      "mobile": "doximity_mobile_ROTATEQ.png",
+      "desktop": "doximity_desktop_ROTATEQ.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Sivextro",
+    "BrandChips": {
+      "mobile": "doximity_mobile_SIVEXTRO.png",
+      "desktop": "doximity_desktop_SIVEXTRO.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Steglatro",
+    "BrandChips": {
+      "mobile": "doximity_mobile_STEGLATRO.png",
+      "desktop": "doximity_desktop_STEGLATRO.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        true,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Vaqta",
+    "BrandChips": {
+      "mobile": "doximity_mobile_VAQTA.png",
+      "desktop": "doximity_desktop_VAQTA.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Vaxneuvance",
+    "BrandChips": {
+      "mobile": "doximity_mobile_VAXNEUVANCE.png",
+      "desktop": "doximity_desktop_VAXNEUVANCE.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Verquvo",
+    "BrandChips": {
+      "mobile": "doximity_mobile_VERQUVO.png",
+      "desktop": "doximity_desktop_VERQUVO.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        true,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Zepatier",
+    "BrandChips": {
+      "mobile": "doximity_mobile_ZEPATIER.png",
+      "desktop": "doximity_desktop_ZEPATIER.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Zerbaxa",
+    "BrandChips": {
+      "mobile": "doximity_mobile_ZERBAXA.png",
+      "desktop": "doximity_desktop_ZERBAXA.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
+    "BrandName": "Zinplava",
+    "BrandChips": {
+      "mobile": "doximity_mobile_ZINPLAVA.png",
+      "desktop": "doximity_desktop_ZINPLAVA.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
     }
   }
 ]

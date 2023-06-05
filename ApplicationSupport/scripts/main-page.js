@@ -72,7 +72,7 @@ function testingEnv() {
       "type": "doximity"
     },
     "brand-selection": {
-      "brand": "Vaxneuvance",
+      "brand": "Zinplava",
       "default": false
     },
     "html-selection": {
@@ -106,8 +106,6 @@ function testingEnv() {
   checkData();
   $get('#submit-btn').click();
 }
-
-console.log(sessionData)
 
 function templateType(el) {
   let templateData = $get('#template-data');
@@ -449,6 +447,7 @@ function toggleMask(e) {
 
 //LOADING THE BRANDS
 async function loadBrands() {
+  console.log(dirLocation);
   //CREATING THE BRAND DATA (DROP DOWN)
   let brandData;
   try {
@@ -692,6 +691,64 @@ async function buildTemplate() {
         htmlContent = htmlDoc.documentElement.innerHTML;
 
         html.innerHTML = htmlContent;
+
+        let previewPIMed = $get('#preview-pi-med-guide');
+        let alertPIMed = $get('#alert-pi-med-guide');
+
+        let PI = 'Prescribing Info';
+        let medGuide = 'Med Guide';
+
+        if (sessionData['brand-selection'].brand == 'Gardasil 9') {
+          medGuide = 'Patient Info'
+        };
+
+        let brandGuide = fs.readFileSync(`${dirLocation}ApplicationData/BrandData/brand-list.json`);
+        brandGuide = JSON.parse(brandGuide);
+
+        let activeBrandName = sessionData['brand-selection'].brand;
+
+        let activeBrand = brandGuide.find(obj => obj.BrandName === activeBrandName);
+        let activeBrandPiMedGuide = activeBrand['PiMedGuide'];
+
+        console.log(activeBrandPiMedGuide);
+        
+        console.log(activeBrandPiMedGuide['Medication Guide'][0]);
+
+        if (!activeBrandPiMedGuide['Medication Guide'][0]) {
+          medGuide = '';
+        }
+        if (!activeBrandPiMedGuide['Prescribing Info'][0]) {
+          PI = '';
+        }
+
+        let firstDisplay;
+        let secondDisplay;
+        if (activeBrandPiMedGuide['Medication Guide'][1] === 0) {
+          console.log('medguide first');
+          firstDisplay = medGuide;
+          secondDisplay = PI;
+        }else {
+          console.log('pi first');
+          firstDisplay = PI;
+          secondDisplay = medGuide;
+        }
+
+        let textTable = [firstDisplay, secondDisplay];
+
+        for (display of textTable) {
+          console.log(display);
+          if (display !== '') {
+            let div = document.createElement('div');
+            div.classList = 'text';
+            div.textContent = display;
+
+            let previewDiv = div.cloneNode(true);
+            previewPIMed.appendChild(previewDiv);
+
+            let alertDiv = div.cloneNode(true);
+            alertPIMed.appendChild(alertDiv);
+          }
+        }
 
         resolve();
       } else {
