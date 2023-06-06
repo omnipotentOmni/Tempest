@@ -1,13 +1,13 @@
 [
   {
-    "Version" : "0.1.0",
-    "Stage" : "Initial Build",
-    "Description" : "Tempest is an Application for the automating of Doximity / Epocrates templates – replacing the current InDesign version of these templates. Tempest is self containing and has logic in place to handle updates that do not require the re-installation of the Application. Tempest was built by John McCall in 2023."
+    "Version" : "0.3.0",
+    "Stage" : "Beta",
+    "Description" : "In the 3.0 version, Tempest is now in it's Beta release. Brands have been added to the Brand List, along with corresensponding images. A typo was fixed, 'GARDISIL' has been updated to 'GARDASIL'."
   },
   {
-    "Version" : "0.1.5",
+    "Version" : "0.2.1",
     "Stage" : "Testing",
-    "Description" : "In the 0.1.5 release, Tempest has been reconfigured to allow running, with ApplicationSupports hard loaded into 'Documents'. Further testing is required before automating this process."
+    "Description" : "In the 0.2.1 release, Tempest should now be mapping all interactions correctly and ready for a Full release. The Home button in the template screen now acts as expected, still need to add a functionality that it will automatically 'click' the appropriate Template Type upon reloading the home screen. Will be adding future menu functionality prior to 1.0 release, will need to add all the brands and User Settings, as well as adding a 'Release Notes' menu item."
   },
   {
     "Version" : "0.2.0",
@@ -15,8 +15,13 @@
     "Description" : "In the 0.2.0 release, Tempest is now fully capable of running without pre-loading ApplicationSupports into 'Documents'. Testing is in progress prior to a full update and release. Tempest Splash screen and logo have been added to the Application"
   },
   {
-    "Version" : "0.2.1",
+    "Version" : "0.1.5",
     "Stage" : "Testing",
-    "Description" : "In the 0.2.1 release, Tempest should now be mapping all interactions correctly and ready for a Full release. The Home button in the template screen now acts as expected, still need to add a functionality that it will automatically 'click' the appropriate Template Type upon reloading the home screen. Will be adding future menu functionality prior to 1.0 release, will need to add all the brands and User Settings, as well as adding a 'Release Notes' menu item."
+    "Description" : "In the 0.1.5 release, Tempest has been reconfigured to allow running, with ApplicationSupports hard loaded into 'Documents'. Further testing is required before automating this process."
+  },
+  {
+    "Version" : "0.1.0",
+    "Stage" : "Initial Build",
+    "Description" : "Tempest is an Application for the automating of Doximity / Epocrates templates – replacing the current InDesign version of these templates. Tempest is self containing and has logic in place to handle updates that do not require the re-installation of the Application. Tempest was built by John McCall in 2023."
   }
 ]
