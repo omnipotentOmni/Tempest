@@ -1,8 +1,18 @@
 [
   {
+    "Version" : "0.3.2",
+    "Stage" : "Beta",
+    "Description" : "In the 3.2 version, Bug 06-002, Titles not appearing has been fixed. Vaxneuvance Combo has been added to the brand list."
+  },
+  {
+    "Version" : "0.3.1",
+    "Stage" : "Beta",
+    "Description" : "In the 3.1 version, UI/UX updates include adding click functionality on the left icon buttons, the buttons will now load the corresponding windows. The Brand Drop Down bar is now selectable, not just the icon."
+  },
+  {
     "Version" : "0.3.0",
     "Stage" : "Beta",
-    "Description" : "In the 3.0 version, Tempest is now in it's Beta release. Brands have been added to the Brand List, along with corresensponding images. A typo was fixed, 'GARDISIL' has been updated to 'GARDASIL'."
+    "Description" : "In the 3.0 version, Tempest is now in it's Beta release. Brands have been added to the Brand List, along with corresponding images. A typo was fixed, 'GARDISIL' has been updated to 'GARDASIL'."
   },
   {
     "Version" : "0.2.1",

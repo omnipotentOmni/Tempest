@@ -272,8 +272,6 @@ body {
   justify-content: center;
 }
 
-$prefix: 'Hello World';
-
 .completion-image {
   display: flex;
   flex-flow: row wrap;
@@ -289,6 +287,12 @@ $prefix: 'Hello World';
   position: relative;
   font-size: $font--small;
   transition: all $timing--fast;
+  box-sizing: border-box;
+
+  &:hover {
+    transition: all $timing--instant;
+    border: 1px solid white;
+  }
 
   &.complete {
     background-color: $color--green;
@@ -356,6 +360,8 @@ $prefix: 'Hello World';
     }
   }
 }
+
+
 
 //MAIN PAGE - RIGHT
 #template-data {
@@ -457,6 +463,7 @@ $prefix: 'Hello World';
   width: 80%;
   height: 30px;
   position: relative;
+  cursor: pointer;
 }
 
 #brand-selection-content {

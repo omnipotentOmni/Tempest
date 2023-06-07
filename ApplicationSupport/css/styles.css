@@ -212,6 +212,11 @@ body {
   position: relative;
   font-size: 0.75rem;
   transition: all 0.25s;
+  box-sizing: border-box;
+}
+.completion-image:hover {
+  transition: all 0s;
+  border: 1px solid white;
 }
 .completion-image.complete {
   background-color: #2ae497;
@@ -355,6 +360,7 @@ body {
   width: 80%;
   height: 30px;
   position: relative;
+  cursor: pointer;
 }
 
 #brand-selection-content {

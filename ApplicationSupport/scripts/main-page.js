@@ -9,17 +9,18 @@
 // – HTML Selection Window
 // – DragDrop & Click to Upload **NEEDS WORK IN ELECTRON ENV**
 // – IMAGE SELECTION WINDOW
-
-//ON DECK
 // – Doximity Alert (Desktop) Build
 // – Build the Brand List
 // – Save User Settings
 // – Save Session Settings
 // – Add for Saving Template
 
+//ON DECK
+
+
 //BUGS
 // – REMOVING AN IMAGE BY CLICKING 'FPO' DOES NOT UNLOAD THE IMAGE – needs to unload the file
-// – HTML / IMAGE UPLOADS NEED TO BE CONFGIURED FOR ELECTRON
+// – RENDERING THE MOBILE VIEW, FAILS ON THE FIRST TIME, USING 0003, FORCES THIS TO WORK – need to figure out why. 
 
 // const appPath = app.getAppPath();
 
@@ -132,6 +133,24 @@ function templateType(el) {
 
 //WINDOW CHOICES
 async function swapWindow(selection) {
+
+  if ($class(selection,'completion-image', 'contains')) {
+    
+    let isActive = false;
+    let activeBtn = $get('.templateBtn');
+    for (let el of activeBtn) {
+      if ($class(el,'active','contains')) {
+        isActive = true;
+        break;
+      }
+    }
+    if (isActive) {
+      selection = $get(`#${selection.dataset.window}`);
+    }else {
+      return;
+    }
+  }
+
   let windows = $get('.header-item');
   for (let window of windows) {
     $class(window, 'active', 'remove');
@@ -217,8 +236,6 @@ function htmlSelection() {
 
     function handleDrop(e) {
       let type = e.target.dataset.type;
-      console.log(e.target);
-      console.log('drop');
       e.preventDefault();
 
       const dt = e.dataTransfer.files;
@@ -231,10 +248,8 @@ function htmlSelection() {
     };
 
     function handleFiles(files) {
-      console.log('needed too?');
       item.dataset.fileload = true;
       $class(item, 'active', 'add');
-      console.log(files);
     }
   }
 }
@@ -337,8 +352,8 @@ function unloadFile(el) {
 }
 
 //BRAND DROPDOWN
-function brandDropDown(icon) {
-  let carrot = icon;
+function brandDropDown() {
+  let carrot = $get('#brand-dd');
   let ddMenu = $get('#brand-selection-display');
   $class(carrot, 'active', 'toggle');
   $class(ddMenu, 'open', 'toggle');
@@ -350,6 +365,8 @@ function setBrand(brand) {
 
   brandDropDown($get('#brand-dd'));
   setSessionData('brand-select', brand.textContent);
+  let ddMenu = $get('#brand-selection-display');
+  $class(ddMenu, 'open', 'toggle');
 }
 
 //DEFAULT SELECTOR
@@ -510,7 +527,6 @@ function setSessionData(action, value) {
   };
 
   if (activeWindow === 'html-selection') { // SETTING THE DATA FOR HTML UPLOAD
-    console.log(action,value);
     dataKey = action;
 
     if (dataKey) {
@@ -710,10 +726,6 @@ async function buildTemplate() {
         let activeBrand = brandGuide.find(obj => obj.BrandName === activeBrandName);
         let activeBrandPiMedGuide = activeBrand['PiMedGuide'];
 
-        console.log(activeBrandPiMedGuide);
-        
-        console.log(activeBrandPiMedGuide['Medication Guide'][0]);
-
         if (!activeBrandPiMedGuide['Medication Guide'][0]) {
           medGuide = '';
         }
@@ -736,7 +748,6 @@ async function buildTemplate() {
         let textTable = [firstDisplay, secondDisplay];
 
         for (display of textTable) {
-          console.log(display);
           if (display !== '') {
             let div = document.createElement('div');
             div.classList = 'text';
@@ -787,7 +798,6 @@ async function buildTemplate() {
 
   let img = document.createElement('img');
   img.src = `${dirLocation}ApplicationData/BrandData/brand-chips/${brand['BrandChips'].mobile}`;
-  console.log(img.src);
   brandChip.appendChild(img);
 
   // ----------- ADD IFRAME
@@ -823,7 +833,7 @@ function gatherTitles() {
   });
   const parser = new DOMParser();
   const doc = parser.parseFromString(csData, 'text/html');
-  const csTitles = doc.querySelectorAll('.body_copy');
+  const csTitles = doc.querySelectorAll('p');
   return csTitles;
 }
 
@@ -1064,27 +1074,22 @@ function combinePDF(options) {
   controls.style.opacity = '1';
 
   let filePath = options.filePath.substring(0, options.filePath.lastIndexOf('/') + 1);
-  console.log(filePath);
 
   let pdfs = [];
   pdfs.push(filePath + options.fileName + '-mobile.pdf');
   pdfs.push(filePath + options.fileName + '-desktop.pdf');
-
-  console.log(pdfs);
 
   let combined = filePath + options.fileName + '.pdf';
   var merger = new PDFMerger();
 
   (async () => {
     for (let value of pdfs) {
-      console.log(value);
       await merger.add(value);
     }
     await merger.save(combined);
 
     for (let value of pdfs) {
       let toDelete = value;
-      console.log('delete');
       fs.unlink(toDelete, (err) => {
         if (err) {
           alert('An error occurred while deleting the files: ' + err.message);

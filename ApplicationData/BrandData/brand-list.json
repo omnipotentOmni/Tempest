@@ -425,6 +425,23 @@
     }
   },
   {
+    "BrandName": "Vaxneuvance Combo",
+    "BrandChips": {
+      "mobile": "doximity_mobile_VAXNEUVANCE_COMBO.png",
+      "desktop": "doximity_desktop_VAXNEUVANCE_COMBO.png"
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        true,
+        0
+      ]
+    }
+  },
+  {
     "BrandName": "Verquvo",
     "BrandChips": {
       "mobile": "doximity_mobile_VERQUVO.png",
