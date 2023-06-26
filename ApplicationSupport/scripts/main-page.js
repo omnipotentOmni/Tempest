@@ -39,6 +39,8 @@ let templateItem = $get('.templateBtn', templateSelector);
 
 let activeWindow = '';
 
+let tacticType;
+
 let sessionData = {
   "template-selection": {
     "type": ""
@@ -67,10 +69,12 @@ let sessionData = {
   }
 };
 
+//******************************************************** EPOC TESTING ENV */
+
 function testingEnv() {
   sessionData = {
     "template-selection": {
-      "type": "doximity"
+      "type": "epocrates"
     },
     "brand-selection": {
       "brand": "Zinplava",
@@ -78,37 +82,70 @@ function testingEnv() {
     },
     "html-selection": {
       "alert": {
-        "name": "Doximity Alert_US-MMR-00003.html",
-        "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Doximity Alert_US-MMR-00003.html"
+        "name": "US-ANV-00399 Jose Epocrates Alert_US-ANV-00399.html",
+        "path": "/Users/mccajoh3/Desktop/US-ANV-00399/US-ANV-00399 Jose Epocrates Alert_US-ANV-00399.html"
       },
       "coversheet": {
-        "name": "Title sheet_US-MMR-00003.html",
-        "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Title sheet_US-MMR-00003.html"
+        "name": "Title Sheet_US-ANV-00399.html",
+        "path": "/Users/mccajoh3/Desktop/US-ANV-00399/Title Sheet_US-ANV-00399.html"
       }
-    },
-    "image-selection": {
-      "primary": {
-        "name": "image-test.jpeg",
-        "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test.jpeg"
-      },
-      "alternate": [{
-          "id": "alternate-image-8oe78wmhoc",
-          "name": "image-test copy.jpeg",
-          "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test copy.jpeg"
-        },
-        {
-          "id": "alternate-image-t664z4ycc4",
-          "name": "image-test copy 2.jpeg",
-          "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test copy 2.jpeg"
-        }
-      ]
     }
   }
   checkData();
+  $get('#epocrates-btn').click();
   $get('#submit-btn').click();
 }
 
+//******************************************************** DOXIMITY TESTING ENV */
+
+// function testingEnv() {
+//   sessionData = {
+//     "template-selection": {
+//       "type": "doximity"
+//     },
+//     "brand-selection": {
+//       "brand": "Zinplava",
+//       "default": false
+//     },
+//     "html-selection": {
+//       "alert": {
+//         "name": "Doximity Alert_US-MMR-00003.html",
+//         "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Doximity Alert_US-MMR-00003.html"
+//       },
+//       "coversheet": {
+//         "name": "Title sheet_US-MMR-00003.html",
+//         "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Title sheet_US-MMR-00003.html"
+//       }
+//     },
+//     "image-selection": {
+//       "primary": {
+//         "name": "image-test.jpeg",
+//         "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test.jpeg"
+//       },
+//       "alternate": [{
+//           "id": "alternate-image-8oe78wmhoc",
+//           "name": "image-test copy.jpeg",
+//           "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test copy.jpeg"
+//         },
+//         {
+//           "id": "alternate-image-t664z4ycc4",
+//           "name": "image-test copy 2.jpeg",
+//           "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test copy 2.jpeg"
+//         }
+//       ]
+//     }
+//   }
+//   $get('#doximity-btn').click();
+//   checkData();
+//   $get('#submit-btn').click();
+// }
+
 function templateType(el) {
+  let doximityBtn = $get('.doximity-btn');
+  let epocratesBtn = $get('.epocrates-btn');
+
+  tacticType = el.dataset.type;
+  console.log(tacticType);
   let templateData = $get('#template-data');
   let toggle = false;
   if ($class(el, 'active', 'contains')) {
@@ -127,6 +164,22 @@ function templateType(el) {
     $class(el, 'active', 'remove');
     sessionData['template-selection'].type = '';
     $class(templateData, 'disable', 'add');
+  }
+
+  if (tacticType === 'epocrates') {
+    let imageIcon = $get('#icon-image');
+    let imageWindow = $get('#header-images');
+
+    let classesToAdd = ['disable','tactic'];
+    imageIcon.classList.add(...classesToAdd);
+    imageWindow.classList.add(...classesToAdd);
+  }else {
+    let imageIcon = $get('#icon-image');
+    let imageWindow = $get('#header-images');
+
+    let classesToAdd = ['disable','tactic'];
+    imageIcon.classList.remove(...classesToAdd);
+    imageWindow.classList.remove(...classesToAdd);
   }
   checkData();
 }
@@ -464,7 +517,6 @@ function toggleMask(e) {
 
 //LOADING THE BRANDS
 async function loadBrands() {
-  console.log(dirLocation);
   //CREATING THE BRAND DATA (DROP DOWN)
   let brandData;
   try {
@@ -665,20 +717,22 @@ function checkData() {
   }
 
   //CHECK IMAGES – images are optional, Primary image will show as "FPO" if not selected
-  let primaryImage = sessionData['image-selection'].primary.name;
-  let alternateImage = sessionData['image-selection'].alternate; //IS AN ARRAY AND WILL NEED TO ITERATE THROUGH
-  let imageIcon = $get('#icon-image');
+  if (tacticType === 'doximity') {
+    let primaryImage = sessionData['image-selection'].primary.name;
+    let alternateImage = sessionData['image-selection'].alternate; //IS AN ARRAY AND WILL NEED TO ITERATE THROUGH
+    let imageIcon = $get('#icon-image');
 
-  if (primaryImage) {
-    $class(imageIcon, 'complete', 'add');
-    if (alternateImage.length) {
-      imageIcon.dataset.complete = 'Primary & Alt Image Loaded';
+    if (primaryImage) {
+      $class(imageIcon, 'complete', 'add');
+      if (alternateImage.length) {
+        imageIcon.dataset.complete = 'Primary & Alt Image Loaded';
+      } else {
+        imageIcon.dataset.complete = 'Primary Image Loaded';
+      }
     } else {
-      imageIcon.dataset.complete = 'Primary Image Loaded';
+      $class(imageIcon, 'complete', 'remove');
+      imageIcon.dataset.complete = 'No Images Selected';
     }
-  } else {
-    $class(imageIcon, 'complete', 'remove');
-    imageIcon.dataset.complete = 'No Images Selected';
   }
 
   if (alert && brand.length && alertHTML && coversheetHTML) {
@@ -696,7 +750,8 @@ async function buildTemplate() {
   let htmlContent;
 
   let xhr = new XMLHttpRequest();
-  xhr.open('GET', `${dirLocation}ApplicationSupport/html/templates/doximity.htm`);
+  let templateName;
+  xhr.open('GET', `${dirLocation}ApplicationSupport/html/templates/${tacticType}.htm`);
   xhr.responseType = 'text';
 
   const sendRequest = new Promise((resolve, reject) => {
@@ -775,7 +830,7 @@ async function buildTemplate() {
   });
 
   await sendRequest;
-  ipcRenderer.send('resize-window');
+  ipcRenderer.send('resize-window',tacticType);
 
   // ----------- PROCESS UPLOADED TITLES
   let alertTitles = [];
@@ -790,7 +845,9 @@ async function buildTemplate() {
   }
 
   // ----------- PROCESS UPLOADED IMAGES
-  processImages();
+  if (tacticType === 'doximity') {
+    processImages();
+  }
 
   // ----------- APPLY SELECTED BRAND
   let brand = getBrand();
@@ -806,7 +863,17 @@ async function buildTemplate() {
   frame.src = sessionData['html-selection'].alert.path;
 
   frame.addEventListener('load', () => {
-    let iframeContainer = frame.contentWindow.document.getElementById('campaign-alert-container');
+    console.log(frame.contentWindow.document);
+    let iFrameContainer;
+    if (tacticType === 'doximity') {
+      iframeContainer = frame.contentWindow.document.getElementById('campaign-alert-container');
+    }else if (tacticType === 'epocrates') {
+      let alertBox = $get('#alert-scroll');
+      let ribbon = frame.contentWindow.document.getElementsByClassName('staticRibbon')[0];
+
+      alertBox.style.top = (alertBox.offsetHeight * -1) + ribbon.clientHeight + 'px';
+      iframeContainer = frame.contentWindow.document.getElementsByClassName('alert_wrap')[0];
+    }
     iframeContainer.style.paddingBottom = '0px';
     let contentHeight = frame.contentWindow.document.body.scrollHeight;
     frame.style.height = contentHeight + 'px';
@@ -817,8 +884,12 @@ async function buildTemplate() {
     title.style.padding = '5px';
 
   });
-}
 
+  if (tacticType === 'epocrates') {
+    let ribbon = frame.contentWindow.document.getElementsByClassName('staticRibbon');
+    console.log(ribbon.clientHeight);
+  }
+}
 ipcRenderer.send('resize-window-default');
 
 
@@ -838,7 +909,7 @@ function gatherTitles() {
 }
 
 function processTitles(data) {
-  let url = fs.readFileSync(`${dirLocation}ApplicationSupport/html/templates/_title-item.htm`);
+  let url = fs.readFileSync(`${dirLocation}ApplicationSupport/html/templates/_${tacticType}-title-item.htm`);
   let parser = new DOMParser();
   let doc = parser.parseFromString(url, 'text/html');
 
@@ -952,6 +1023,15 @@ async function home() {
         let content = fs.readFileSync(`${dirLocation}ApplicationSupport/html/main-page.htm`, 'utf-8');
         body.innerHTML = content;
 
+        let templateTypeBtn;
+        if (tacticType === 'doximity') {
+          templateTypeBtn = $get('#doximity-btn');
+        }else if (tacticType === 'epocrates') {
+          templateTypeBtn = $get('#epocrates-btn');
+        }
+
+        templateTypeBtn.click();
+
         resolve();
       } else {
         reject(new Error(`Error: Template did not load. Please contact Support.`));
@@ -989,6 +1069,7 @@ async function exportPDF() {
   }
 
   async function generatePDFsSequentially(views, index, options) {
+
     if (index >= views.length) {
       views[0].click();
       console.log('All PDFs generated successfully');
@@ -1033,7 +1114,15 @@ async function exportPDF() {
   
       await new Promise((resolve) => setTimeout(resolve, 2000));
   
-      generatePDFsSequentially(views, index + 1, pdfOption);
+      if (tacticType === 'doximity') {
+        generatePDFsSequentially(views, index + 1, pdfOption);
+      } else if (tacticType === 'epocrates') {
+        let controls = $get('#template-controls');
+        let titleBar = $get('#title-bar');
+        titleBar.style.opacity = '1';
+        controls.style.opacity = '1';
+      }
+      
     } else {
       await new Promise((resolve) => {
         const handleLoad = () => {

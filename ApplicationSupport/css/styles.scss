@@ -65,6 +65,10 @@ p {
 .disable {
   opacity: .5;
   pointer-events: none;
+
+  &.tactic {
+    opacity: .1;
+  }
 }
 
 body {

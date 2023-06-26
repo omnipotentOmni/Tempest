@@ -19,6 +19,9 @@ p {
   opacity: 0.5;
   pointer-events: none;
 }
+.disable.tactic {
+  opacity: 0.1;
+}
 
 body {
   background: #13121c;

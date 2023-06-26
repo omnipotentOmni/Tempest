@@ -1,6 +1,6 @@
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="./ApplicationSupport/css/doximity.css"> <!--needs to be ../css... for prod-->
+    <link rel="stylesheet" href="./ApplicationSupport/css/epocrates.css"> <!--needs to be ../css... for prod-->
     <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
   </head>
   <body class="mobile">
@@ -11,7 +11,6 @@
       <div class="app-icon" onclick="home()">
         <img src="./ApplicationSupport/images/app-images/icon--home.png">
       </div>
-      <div class="vert-border"></div>
       <div class="template-control-icon active-view" data-view="mobile" onclick="switchView('mobile',this)">
         <img src="./ApplicationSupport/images/app-images/icon--mobile.png">
       </div>
@@ -24,11 +23,11 @@
     </div>
     <div id="container-main" class="mobile">
       <div id="template-version">
-        <p id="template-version-text"></p>
+        <p id="template-version-text"> </p>
       </div>
       <div id="header">
         <div id="template-logo">
-          <img src="./ApplicationSupport/images/_template-images/doximity/og_doximity_trans.png">
+          <img src="./ApplicationSupport/images/_template-images/epocrates/epocrates--alert-head.png">
           <div id="header-disclaimer" class="variable-item variable-text">
             <strong>NOTE TO REVIEWER:</strong> Boxed content is variable and may change if multiple titles and images are presented. Unboxed content will not change. 
           </div>
@@ -41,11 +40,11 @@
             <div id="title-options" class="variable-container">
             </div>
           </div>
-          <div id="alert-image-options" class="section">
+          <!-- <div id="alert-image-options" class="section">
             <div id="header-label" class="label variable-text">Variable Feature Image Options</div>
             <div id="header-options" class="variable-container blue">
             </div>
-          </div>
+          </div> -->
         </div>
         <div id="column-center" class="column">
           <div id="doximity-preview-container">
@@ -69,16 +68,16 @@
               <img src="./ApplicationSupport/images/_template-images/doximity/icon--like.png" />
               <img src="./ApplicationSupport/images/_template-images/doximity/icon--share.png" />
               <div id="preview-pi-med-guide">
-                <!-- <div class="text">Prescribing Info</div>
-                <div class="text">Med Guide</div> -->
+                <div class="text">Prescribing Info</div>
+                <div class="text">Med Guide</div>
               </div>
             </div>
           </div>
         </div>
         <div id="column-right" class="column">
           <div id="alert-header">
-            <img class="dox-image mobile" src="./ApplicationSupport/images/_template-images/doximity/doximity--alert-head.png">
-            <img class="dox-image desktop" src="./ApplicationSupport/images/_template-images/doximity/doximity--desktop-alert-head.png">
+            <img class="dox-image mobile" src="./ApplicationSupport/images/_template-images/epocrates/epocrates_header.png">
+            <!-- <img class="dox-image desktop" src="./ApplicationSupport/images/_template-images/doximity/doximity--desktop-alert-head.png"> -->
             <div id="alert-header-logo">
               <img src="./ApplicationSupport/images/_template-images/doximity/merck_c_LO.png">
             </div>
@@ -99,6 +98,11 @@
             </div>
           </div>
           <div id="alert-body">
+            <div id="alert-scroll">
+              <div class="alert-box">iPhone 6s/7/8 375px by 667px</div>
+              <div class="break"></div>
+              <div class="alert-box no-border">Content above this line remains static</div>
+            </div>
             <iframe id="alert-display" src="" scrolling="no"></iframe>
           </div>
           <div id="alert-footer">

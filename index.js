@@ -38,14 +38,29 @@ ipcMain.on('get-dir-path', (event) => {
   event.returnValue = dir;
 });
 
-ipcMain.on('resize-window', (event) => {
+ipcMain.on('resize-window', (event,tacticType) => {
+  let winWidth;
+  if (tacticType === 'doximity') {
+    winWidth = 1400;
+  }else if (tacticType === 'epocrates') {
+    winWidth = 1020;
+  }
   const mainWindow = BrowserWindow.getFocusedWindow(); 
-  mainWindow.setSize(1400, 900);
+  mainWindow.setSize(winWidth, 900);
 })
 
-ipcMain.on('resize-window-default', (event) => {
+ipcMain.on('resize-window-default', (event, tacticType) => {
+  let winWidth;
+  if (tacticType === 'doximity') {
+    winWidth = 1060;
+  }else if (tacticType === 'epocrates') {
+    winWidth = 1020;
+  }else if (!tacticType) {
+    winWidth = 1060;
+  }
+
   const mainWindow = BrowserWindow.getFocusedWindow(); 
-  mainWindow.setSize(1060, 700);
+  mainWindow.setSize(winWidth, 700);
 })
 
 ipcMain.on('print-to-pdf', async (event, options) => {
