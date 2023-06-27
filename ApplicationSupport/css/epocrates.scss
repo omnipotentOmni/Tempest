@@ -12,6 +12,7 @@ html {
 body {
   margin: 0 auto;
   padding: 0px;
+  // padding-bottom: 50px;
   
   min-height: 100%;
   display: block;
@@ -62,7 +63,7 @@ body {
 
 #alert-body {
   position: relative;
-  margin-bottom: 50px;
+  padding-bottom: 30px;
 }
 
 #alert-scroll {
@@ -327,7 +328,7 @@ body {
 
 #header-disclaimer {
   margin-top: 10px;
-  width: 315px;
+  width: 320px;
   padding: 10px;
   box-sizing: border-box;
   border: 1px solid red;

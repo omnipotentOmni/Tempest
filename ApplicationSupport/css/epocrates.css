@@ -51,7 +51,7 @@ body.desktop {
 
 #alert-body {
   position: relative;
-  margin-bottom: 50px;
+  padding-bottom: 30px;
 }
 
 #alert-scroll {
@@ -284,7 +284,7 @@ body.desktop {
 
 #header-disclaimer {
   margin-top: 10px;
-  width: 315px;
+  width: 320px;
   padding: 10px;
   box-sizing: border-box;
   border: 1px solid red;

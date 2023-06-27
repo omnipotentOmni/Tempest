@@ -71,7 +71,13 @@ let sessionData = {
 
 //******************************************************** EPOC TESTING ENV */
 
-function testingEnv() {
+let testBtn = $get('#test-env');
+if (testBtn) {
+  testBtn.click();
+}
+
+
+function testingEnvEpoc() {
   sessionData = {
     "template-selection": {
       "type": "epocrates"
@@ -98,54 +104,56 @@ function testingEnv() {
 
 //******************************************************** DOXIMITY TESTING ENV */
 
-// function testingEnv() {
-//   sessionData = {
-//     "template-selection": {
-//       "type": "doximity"
-//     },
-//     "brand-selection": {
-//       "brand": "Zinplava",
-//       "default": false
-//     },
-//     "html-selection": {
-//       "alert": {
-//         "name": "Doximity Alert_US-MMR-00003.html",
-//         "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Doximity Alert_US-MMR-00003.html"
-//       },
-//       "coversheet": {
-//         "name": "Title sheet_US-MMR-00003.html",
-//         "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Title sheet_US-MMR-00003.html"
-//       }
-//     },
-//     "image-selection": {
-//       "primary": {
-//         "name": "image-test.jpeg",
-//         "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test.jpeg"
-//       },
-//       "alternate": [{
-//           "id": "alternate-image-8oe78wmhoc",
-//           "name": "image-test copy.jpeg",
-//           "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test copy.jpeg"
-//         },
-//         {
-//           "id": "alternate-image-t664z4ycc4",
-//           "name": "image-test copy 2.jpeg",
-//           "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test copy 2.jpeg"
-//         }
-//       ]
-//     }
-//   }
-//   $get('#doximity-btn').click();
-//   checkData();
-//   $get('#submit-btn').click();
-// }
+function testingEnvDox() {
+  sessionData = {
+    "template-selection": {
+      "type": "doximity"
+    },
+    "brand-selection": {
+      "brand": "Zinplava",
+      "default": false
+    },
+    "html-selection": {
+      "alert": {
+        "name": "Doximity Alert_US-MMR-00003.html",
+        "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Doximity Alert_US-MMR-00003.html"
+      },
+      "coversheet": {
+        "name": "Title sheet_US-MMR-00003.html",
+        "path": "/Users/mccajoh3/Desktop/US-MMR-00003/Title sheet_US-MMR-00003.html"
+      }
+    },
+    "image-selection": {
+      "primary": {
+        "name": "image-test.jpeg",
+        "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test.jpeg"
+      },
+      "alternate": [{
+          "id": "alternate-image-8oe78wmhoc",
+          "name": "image-test copy.jpeg",
+          "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test copy.jpeg"
+        },
+        {
+          "id": "alternate-image-t664z4ycc4",
+          "name": "image-test copy 2.jpeg",
+          "path": "/Users/mccajoh3/Desktop/US-MMR-00003/image-test copy 2.jpeg"
+        }
+      ]
+    }
+  }
+  $get('#doximity-btn').click();
+  checkData();
+  $get('#submit-btn').click();
+}
 
 function templateType(el) {
-  let doximityBtn = $get('.doximity-btn');
-  let epocratesBtn = $get('.epocrates-btn');
+  let doximityBtn = $get('#doximity-btn');
+  let epocratesBtn = $get('#epocrates-btn');
+
+  $class(doximityBtn, 'active', 'remove');
+  $class(epocratesBtn, 'active', 'remove');
 
   tacticType = el.dataset.type;
-  console.log(tacticType);
   let templateData = $get('#template-data');
   let toggle = false;
   if ($class(el, 'active', 'contains')) {
@@ -618,8 +626,6 @@ function setSessionData(action, value) {
   checkData();
 }
 
-
-
 //LOAD AND APPLY SESSION DATA
 function loadSessionData() {
   let data = sessionData[activeWindow];
@@ -682,7 +688,6 @@ function loadSessionData() {
   }
   checkData();
 }
-
 
 //CHECK TO SEE IF REQUIRED ELEMENTS ARE FILLED IN
 function checkData() {
@@ -863,8 +868,7 @@ async function buildTemplate() {
   frame.src = sessionData['html-selection'].alert.path;
 
   frame.addEventListener('load', () => {
-    console.log(frame.contentWindow.document);
-    let iFrameContainer;
+    let iframeContainer;
     if (tacticType === 'doximity') {
       iframeContainer = frame.contentWindow.document.getElementById('campaign-alert-container');
     }else if (tacticType === 'epocrates') {
@@ -874,9 +878,18 @@ async function buildTemplate() {
       alertBox.style.top = (alertBox.offsetHeight * -1) + ribbon.clientHeight + 'px';
       iframeContainer = frame.contentWindow.document.getElementsByClassName('alert_wrap')[0];
     }
+
+    let alertBody = $get('#alert-body');
+    console.log(alertBody);
+
     iframeContainer.style.paddingBottom = '0px';
     let contentHeight = frame.contentWindow.document.body.scrollHeight;
     frame.style.height = contentHeight + 'px';
+
+    console.log(contentHeight);
+    console.log(frame.contentWindow.document.body.clientHeight)
+    console.log(frame.contentWindow.document.body.offsetHeight)
+  
 
     let title = frame.contentWindow.document.getElementsByTagName('h1')[0];
     title.style.border = '1px solid red';
@@ -884,11 +897,6 @@ async function buildTemplate() {
     title.style.padding = '5px';
 
   });
-
-  if (tacticType === 'epocrates') {
-    let ribbon = frame.contentWindow.document.getElementsByClassName('staticRibbon');
-    console.log(ribbon.clientHeight);
-  }
 }
 ipcRenderer.send('resize-window-default');
 
@@ -994,6 +1002,9 @@ function switchView(type, el) {
   //UPDATING THE HEIGHT OF THE IFRAME
   let frame = $get('#alert-display');
   let contentHeight = frame.contentWindow.document.body.scrollHeight;
+  console.log(contentHeight);
+  console.log(frame.contentWindow.document.body.clientHeight)
+  console.log(frame.contentWindow.document.body.offsetHeight)
   frame.style.height = contentHeight + 'px';
 
   //SWAPPING OUT THE IMAGE
@@ -1051,130 +1062,108 @@ async function home() {
 
 
 async function exportPDF() {
+  //DISABLE THE CONTROLS
   let controls = $get('#template-controls');
   let titleBar = $get('#title-bar');
-  titleBar.style.opacity = '0';
-  controls.style.opacity = '0';
+  let controlsDisplay = window.getComputedStyle($get('#template-controls')).getPropertyValue('display');
+  let titleBarDisplay = window.getComputedStyle($get('#title-bar')).getPropertyValue('display');
+  titleBar.style.display = 'none';
+  controls.style.display = 'none';
+  // controls.style.opacity = '0';
+
+  //SETTING PATH / NAME
   let docPath = path.dirname(sessionData['html-selection'].alert.path); // THE FILEPATH FOR THE PDF
   let fileName = docPath.substring(docPath.lastIndexOf('/') + 1);
 
-  async function sendPrintToPdf(pdfOptions) {
-    return new Promise((resolve) => {
-      ipcRenderer.once('print-to-pdf-done', () => {
-        resolve();
-      });
+  //PRINT THE PDF
+  let type;
+  //setting the print environment for TacticType
+  if (tacticType === 'doximity') {
+    let viewBtn = $get('.template-control-icon');
 
-      ipcRenderer.send('print-to-pdf', pdfOptions);
+    for (let i = 0 ; i < viewBtn.length; i++) {
+      viewBtn[i].click();
+      type = `-${viewBtn[i].dataset.view}`;
+      await printPDF(type);
+      viewBtn[0].click();
+    }
+
+    await combinePDF();
+
+  }else if (tacticType === 'epocrates') {
+    await loadFrame();
+    type = '';
+    await printPDF(type);
+  }
+
+  alert('PDF been been created!')
+
+  //RESET THE DISPLAY
+  controls.style.display = controlsDisplay;
+  titleBar.style.display = titleBarDisplay;
+}
+
+async function loadFrame() {
+  let iFrame = $get('#alert-display');
+  let header = $get('#alert-header');
+  let alertBody = $get('#alert-body');
+  iFrame.style.height = iFrame.clientHeight + header.offsetHeight + 30;
+  alertBody.style.height = alertBody.clientHeight + header.offsetHeight;
+}
+
+async function printPDF(type) {
+
+  //SET THE PDF OPTIONS
+  let pageWidth = document.body.scrollWidth;
+  let pageHeight = document.body.scrollHeight;
+  let docPath = path.dirname(sessionData['html-selection'].alert.path); // THE FILEPATH FOR THE PDF
+  let fileName = docPath.substring(docPath.lastIndexOf('/') + 1);
+  
+  const pdfOptions = {
+    fileName: fileName,
+    filePath: `${docPath}/${fileName}${type}.pdf`,
+    landscape: false,
+    printBackground: true,
+    margins: {
+      right: .1,
+      bottom: 0,
+      top: 0,
+      left: .1
+    },
+    pageSize: {
+      width: pageWidth / 96,
+      height: (pageHeight / 96),
+    },
+    unit: 'px',
+    pageRanges: '1'
+  };
+
+  return new Promise((resolve) => {
+    ipcRenderer.once('print-to-pdf-done', () => {
+      resolve();
     });
-  }
 
-  async function generatePDFsSequentially(views, index, options) {
-
-    if (index >= views.length) {
-      views[0].click();
-      console.log('All PDFs generated successfully');
-      combinePDF(options);
-      return;
-    }
-  
-    const view = views[index];
-    view.click();
-  
-    const type = view.dataset.view;
-  
-    let pageWidth = document.body.scrollWidth;
-    let pageHeight = document.body.scrollHeight;
-  
-    const pdfOption = {
-      fileName: fileName,
-      filePath: `${docPath}/${fileName}-${type}.pdf`,
-      landscape: false,
-      printBackground: true,
-      margins: {
-        right: .1,
-        bottom: .1,
-        top: 0,
-        left: .1
-      },
-      pageSize: {
-        width: pageWidth / 96,
-        height: pageHeight / 96
-      },
-      unit: 'px',
-      pageRanges: '1'
-    };
-  
-    const iFrame = document.getElementById('alert-display');
-  
-    if (iFrame.contentDocument.readyState === 'complete') {
-      // If the iframe is already loaded, proceed immediately
-      await sendPrintToPdf(pdfOption);
-  
-      console.log(`PDF generated: ${pdfOption.filePath}`);
-  
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-  
-      if (tacticType === 'doximity') {
-        generatePDFsSequentially(views, index + 1, pdfOption);
-      } else if (tacticType === 'epocrates') {
-        let controls = $get('#template-controls');
-        let titleBar = $get('#title-bar');
-        titleBar.style.opacity = '1';
-        controls.style.opacity = '1';
-      }
-      
-    } else {
-      await new Promise((resolve) => {
-        const handleLoad = () => {
-          iFrame.removeEventListener('load', handleLoad);
-          resolve();
-        };
-  
-        iFrame.addEventListener('load', handleLoad);
-      });
-  
-      await sendPrintToPdf(pdfOption);
-  
-      console.log(`PDF generated: ${pdfOption.filePath}`);
-  
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-  
-      generatePDFsSequentially(views, index + 1, pdfOption);
-    }
-  }
-
-  function startPDFGeneration() {
-    const views = $get('.template-control-icon');
-    const initialIndex = 0;
-
-    generatePDFsSequentially(views, initialIndex);
-  }
-
-  // Call the function to start generating all PDFs
-  startPDFGeneration();
+    ipcRenderer.send('print-to-pdf', pdfOptions);
+  });
 }
 
 
 
-function combinePDF(options) {
-  let controls = $get('#template-controls');
-  let titleBar = $get('#title-bar');
-  titleBar.style.opacity = '1';
-  controls.style.opacity = '1';
-
-  let filePath = options.filePath.substring(0, options.filePath.lastIndexOf('/') + 1);
-
+async function combinePDF() {
+  let filePath = path.dirname(sessionData['html-selection'].alert.path); // THE FILEPATH FOR THE PDF
+  let fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
   let pdfs = [];
-  pdfs.push(filePath + options.fileName + '-mobile.pdf');
-  pdfs.push(filePath + options.fileName + '-desktop.pdf');
+  pdfs.push(filePath + '/' + fileName + '-mobile.pdf');
+  pdfs.push(filePath + '/' + fileName + '-desktop.pdf');
 
-  let combined = filePath + options.fileName + '.pdf';
-  var merger = new PDFMerger();
+  let combined = filePath + '/' + fileName + '.pdf';
+  let merger = new PDFMerger();
 
   (async () => {
     for (let value of pdfs) {
       await merger.add(value);
     }
+    console.log(combined);
     await merger.save(combined);
 
     for (let value of pdfs) {
@@ -1189,5 +1178,4 @@ function combinePDF(options) {
       });
     }
   })();
-  alert('PDF been been created!')
 }
