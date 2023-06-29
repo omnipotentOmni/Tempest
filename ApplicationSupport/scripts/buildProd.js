@@ -182,6 +182,12 @@ function sendToProd() { // UPLOAD FILE CHANGES TO PROD
   }
   replaceLines(filePath, replacementMap);
 
+  filePath = path.join(prodDir, 'ApplicationSupport/html/templates/epocrates.htm');
+  replacementMap = {
+    "./": `${prodDir}/`
+  }
+  replaceLines(filePath, replacementMap);
+
   filePath = path.join(prodDir, 'ApplicationSupport/html/templates/_html-selection.htm');
   replacementMap = {
     "./": `${prodDir}/`
