@@ -875,21 +875,15 @@ async function buildTemplate() {
       let alertBox = $get('#alert-scroll');
       let ribbon = frame.contentWindow.document.getElementsByClassName('staticRibbon')[0];
 
-      alertBox.style.top = (alertBox.offsetHeight * -1) + ribbon.clientHeight + 'px';
+      alertBox.style.bottom = (ribbon.clientHeight * -1) + 'px';
       iframeContainer = frame.contentWindow.document.getElementsByClassName('alert_wrap')[0];
     }
 
     let alertBody = $get('#alert-body');
-    console.log(alertBody);
 
     iframeContainer.style.paddingBottom = '0px';
     let contentHeight = frame.contentWindow.document.body.scrollHeight;
     frame.style.height = contentHeight + 'px';
-
-    console.log(contentHeight);
-    console.log(frame.contentWindow.document.body.clientHeight)
-    console.log(frame.contentWindow.document.body.offsetHeight)
-  
 
     let title = frame.contentWindow.document.getElementsByTagName('h1')[0];
     title.style.border = '1px solid red';
@@ -1002,9 +996,6 @@ function switchView(type, el) {
   //UPDATING THE HEIGHT OF THE IFRAME
   let frame = $get('#alert-display');
   let contentHeight = frame.contentWindow.document.body.scrollHeight;
-  console.log(contentHeight);
-  console.log(frame.contentWindow.document.body.clientHeight)
-  console.log(frame.contentWindow.document.body.offsetHeight)
   frame.style.height = contentHeight + 'px';
 
   //SWAPPING OUT THE IMAGE
@@ -1069,7 +1060,6 @@ async function exportPDF() {
   let titleBarDisplay = window.getComputedStyle($get('#title-bar')).getPropertyValue('display');
   titleBar.style.display = 'none';
   controls.style.display = 'none';
-  // controls.style.opacity = '0';
 
   //SETTING PATH / NAME
   let docPath = path.dirname(sessionData['html-selection'].alert.path); // THE FILEPATH FOR THE PDF
@@ -1091,9 +1081,12 @@ async function exportPDF() {
     await combinePDF();
 
   }else if (tacticType === 'epocrates') {
+    let iFrame = $get('#alert-display');
+    frameBase = iFrame.clientHeight;
     await loadFrame();
     type = '';
     await printPDF(type);
+    iFrame.style.height = frameBase;
   }
 
   alert('PDF been been created!')
@@ -1103,12 +1096,14 @@ async function exportPDF() {
   titleBar.style.display = titleBarDisplay;
 }
 
+
+
 async function loadFrame() {
   let iFrame = $get('#alert-display');
   let header = $get('#alert-header');
   let alertBody = $get('#alert-body');
-  iFrame.style.height = iFrame.clientHeight + header.offsetHeight + 30;
-  alertBody.style.height = alertBody.clientHeight + header.offsetHeight;
+  iFrame.style.height = iFrame.clientHeight + 100;
+  // alertBody.style.height = alertBody.clientHeight;
 }
 
 async function printPDF(type) {

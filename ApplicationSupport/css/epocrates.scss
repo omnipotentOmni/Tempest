@@ -64,6 +64,7 @@ body {
 #alert-body {
   position: relative;
   padding-bottom: 30px;
+  overflow-y: hidden;
 }
 
 #alert-scroll {
@@ -73,7 +74,8 @@ body {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
-  top: -117px;
+  bottom: 0;
+  z-index: 999;
 
   .alert-box {
     max-width: 100px;
@@ -480,6 +482,7 @@ body {
         flex-flow: row wrap;
         align-self: flex-start;
         width: 100%;
+        position: relative;
 
         & .dox-image {
           align-self: flex-start;
