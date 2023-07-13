@@ -39,6 +39,7 @@ ipcMain.on('get-dir-path', (event) => {
 });
 
 ipcMain.on('resize-window', (event,tacticType) => {
+  console.log('number1');
   let winWidth;
   if (tacticType === 'doximity') {
     winWidth = 1400;
@@ -50,6 +51,7 @@ ipcMain.on('resize-window', (event,tacticType) => {
 })
 
 ipcMain.on('resize-window-default', (event, tacticType) => {
+  console.log('number2');
   let winWidth;
   if (tacticType === 'doximity') {
     winWidth = 1060;

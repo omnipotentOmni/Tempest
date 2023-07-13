@@ -24,6 +24,17 @@
 
 // const appPath = app.getAppPath();
 
+//VERSION TRACKING
+let workingVersion = document.getElementById('version-tracker').textContent.replace(/\./g, "");;
+let masterVersion = document.querySelector('meta[version]').getAttribute('version').replace(/\./g, "");;
+
+
+if (masterVersion > workingVersion) {
+  let modal = $get('#version-modal');
+  modal.style.display = 'flex';
+  console.log('need to update files');
+}
+
 //--------------------------------------------------------MAIN
 
 
@@ -1173,4 +1184,23 @@ async function combinePDF() {
       });
     }
   })();
+}
+
+
+//VERSION TRACKING
+async function installFiles() {
+  const AdmZip = require('adm-zip');
+  let content = $get('#modal-content');
+  let btn = $get('#modal-btn');
+
+
+  let rootFilePath = userPath;
+  let appPath = path.dirname(path.dirname(__dirname));
+  let masterFile = path.join(appPath, 'MASTERFILES.zip');
+
+  const zip = new AdmZip(masterFile);
+  zip.extractAllTo(rootFilePath, true);
+  content.textContent = 'Please Reload TEMPEST';
+  content.style.alignSelf = 'inherit';
+  btn.style.display = 'none';
 }

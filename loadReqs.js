@@ -115,6 +115,8 @@ async function loadDependencies(action) {
       progress.dataset.action = 'Dependencies Loaded';
       resolve();
     }
+
+
   });
 }
 

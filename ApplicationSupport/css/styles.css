@@ -50,6 +50,7 @@ body {
   font-weight: 400;
   letter-spacing: 0.3rem;
   font-size: 0.8rem;
+  z-index: 9900;
 }
 #title-bar p {
   background: linear-gradient(to right, #7953cd 20%, #00affa 30%, #0190cd 70%, #764ada 80%);
@@ -68,6 +69,36 @@ body {
     background-position: 100% 50%;
   }
 }
+#version-modal {
+  color: white;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(19, 18, 28, 0.8);
+  z-index: 9800;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row wrap;
+}
+#version-modal #modal-content {
+  align-self: flex-end;
+  width: 100%;
+  text-align: center;
+}
+#version-modal #modal-content strong {
+  color: #e42a49;
+}
+#version-modal #modal-btn {
+  background: #502ae4;
+  margin-top: 20px;
+  align-self: flex-start;
+  opacity: 0.8;
+}
+#version-modal #modal-btn:hover {
+  opacity: 1;
+}
+
 #main-app {
   padding-top: 25px;
 }
