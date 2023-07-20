@@ -1,7 +1,7 @@
 {
   "name": "tempest",
   "productName": "Tempest",
-  "version": "0.4.2",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
