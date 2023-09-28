@@ -1208,7 +1208,6 @@ async function combinePDF() {
   })();
 }
 
-
 //VERSION TRACKING
 async function installFiles() {
   const AdmZip = require('adm-zip');
