@@ -508,5 +508,22 @@
         0
       ]
     }
+  },
+  {
+    "BrandName": "Unbranded",
+    "BrandChips": {
+      "mobile": "",
+      "desktop": ""
+    },
+    "PiMedGuide": {
+      "Medication Guide": [
+        false,
+        1
+      ],
+      "Prescribing Info": [
+        false,
+        0
+      ]
+    }
   }
 ]

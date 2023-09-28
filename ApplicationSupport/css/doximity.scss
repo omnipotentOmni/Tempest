@@ -436,12 +436,14 @@ body {
       border: 2px solid #a1a1a1;
 
       & #alert-header {
+        padding-top: 20px;
         display: flex;
         flex-flow: row wrap;
         align-self: flex-start;
         width: 100%;
 
         & .dox-image {
+          display: none;
           align-self: flex-start;
           max-width: 100%;
           height: auto;
@@ -524,6 +526,7 @@ body {
       & #alert-footer {
         margin-top: 13px;
         width: 100%;
+        padding-bottom: 20px;
 
         & #alert-footer-icons {
           display: flex;
@@ -541,6 +544,7 @@ body {
           }
 
           & #footer-app {
+            display: none;
             width: 100%;
             margin-top: 8px;
 
@@ -697,6 +701,7 @@ body {
         width: 100%;
 
         & .dox-image {
+          display: none;
           align-self: flex-start;
           max-width: 100%;
           height: auto;

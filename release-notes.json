@@ -1,5 +1,25 @@
 [
   {
+    "Version" : "1.1.2",
+    "Stage" : "Stable Release / No Update Required",
+    "Description" : "Unbranded tactics are now supported."
+  },
+  {
+    "Version" : "1.1.1",
+    "Stage" : "Functionality for having 'Italicized' Titles has been added.",
+    "Description" : "Doximity Platform Headers/Footers have been removed."
+  },
+  {
+    "Version" : "1.1.0",
+    "Stage" : "Stable Release / Update Required",
+    "Description" : "Doximity Platform Headers/Footers have been removed."
+  },
+  {
+    "Version" : "1.0.0",
+    "Stage" : "Stable Release / Update Required",
+    "Description" : "Epocrates alerts have been included and ready for use."
+  },
+  {
     "Version" : "0.3.2",
     "Stage" : "Beta",
     "Description" : "In the 3.2 version, Bug 06-002, Titles not appearing has been fixed. Vaxneuvance Combo has been added to the brand list."

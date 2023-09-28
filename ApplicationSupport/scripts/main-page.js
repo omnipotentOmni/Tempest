@@ -850,8 +850,20 @@ async function buildTemplate() {
 
   // ----------- PROCESS UPLOADED TITLES
   let alertTitles = [];
+  let combinedContent;
   for (let title of gatherTitles()) {
-    alertTitles.push(title.textContent);
+    let textContent = title.textContent;
+    let emContent = title.querySelector('em');
+    if (emContent) {
+      emContent = emContent.textContent;
+      console.log(emContent);
+      combinedContent = `${textContent.replace(emContent, '')}<em>${emContent}</em>`;
+      console.log(combinedContent);
+    }else {
+      combinedContent = textContent;
+    }
+    // combinedContent = textContent.replace(emContent, `<em>${emContent}</em>`);
+    alertTitles.push(combinedContent);
   }
   let titleContainer = $get('#title-options');
   let primaryTitle = $get('#preview-title');
@@ -870,9 +882,13 @@ async function buildTemplate() {
   let brandChip = $get('#alert-brand-chip');
 
   let img = document.createElement('img');
-  img.src = `${dirLocation}ApplicationData/BrandData/brand-chips/${brand['BrandChips'].mobile}`;
-  brandChip.appendChild(img);
-
+  console.log(brand);
+  
+  if (brand.BrandName !== 'Unbranded') {
+    img.src = `${dirLocation}ApplicationData/BrandData/brand-chips/${brand['BrandChips'].mobile}`;
+    brandChip.appendChild(img);
+  }
+  
   // ----------- ADD IFRAME
 
   let frame = $get('#alert-display');
@@ -898,7 +914,9 @@ async function buildTemplate() {
 
     let title = frame.contentWindow.document.getElementsByTagName('h1')[0];
     title.style.border = '1px solid red';
-    title.style.margin = '-5px';
+    title.style.marginTop = '0px';
+    title.style.marginLeft = '-5px';
+    title.style.marginRight = '-5px';
     title.style.padding = '5px';
 
   });
@@ -930,7 +948,8 @@ function processTitles(data) {
   let titleText = $get('.alert-title', titleBlob)[0];
   let titleChar = $get('.alert-char-count', titleBlob)[0].getElementsByTagName('span')[0];
 
-  titleText.textContent = data;
+  console.log(data);
+  titleText.innerHTML = data;
   titleChar.textContent = data.length;
 
   return titleBlob;
@@ -1009,10 +1028,13 @@ function switchView(type, el) {
   let contentHeight = frame.contentWindow.document.body.scrollHeight;
   frame.style.height = contentHeight + 'px';
 
+
   //SWAPPING OUT THE IMAGE
-  let brandChip = $get('#alert-brand-chip').getElementsByTagName('img')[0];
   let brand = getBrand();
-  brandChip.src = `${dirLocation}ApplicationData/BrandData/brand-chips/${brand['BrandChips'][type]}`;
+  if (brand.BrandName !== 'Unbranded') {
+    let brandChip = $get('#alert-brand-chip').getElementsByTagName('img')[0];
+    brandChip.src = `${dirLocation}ApplicationData/BrandData/brand-chips/${brand['BrandChips'][type]}`;
+  }
 }
 
 async function home() {
